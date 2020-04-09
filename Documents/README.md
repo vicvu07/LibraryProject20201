@@ -7,13 +7,13 @@ Hệ thống gồm 3 actor chính:
 - Actor Admin : Là người quản trị hệ thống
 ### 1.2 Biểu đồ UseCase:
 #### 1.1.1 Biểu đồ Usecase tổng quan
-![UseCaseTongQuan](Documents/UseCaseDigrams/UseCaseTongQuan.png)
+![UseCaseTongQuan](UseCaseDigrams/UseCaseTongQuan.png)
 #### 1.1.2 Biểu đồ Usecase chi tiết
 - UseCase chi tiết của Thủ thư
-![UseCaseThuThu](Documents/UseCaseDigrams/UseCaseThuThu.png)
+![UseCaseThuThu](UseCaseDigrams/UseCaseThuThu.png)
 - UseCase chi tiết của Sinh Viên
-![UseCaseSinhVien](Documents/UseCaseDigrams/UseCaseSinhVien.png)
+![UseCaseSinhVien](UseCaseDigrams/UseCaseSinhVien.png)
 - UseCase chi tiết của Admin 
-![UseCaseAdmin](Documents/UseCaseDigrams/UseCaseAdmin.png)
+![UseCaseAdmin](UseCaseDigrams/UseCaseAdmin.png)
 ### 1.2 Đặc tả chi tiết Usecase:
 - [Tại đây](https://drive.google.com/file/d/1E4QsfgcYECWx2HlTyU-J6KisU6yErmQ3/view?usp=sharing)
