@@ -17,3 +17,16 @@ Hệ thống gồm 3 actor chính:
 ![UseCaseAdmin](UseCaseDigrams/UseCaseAdmin.png)
 ### 1.2 Đặc tả chi tiết Usecase:
 - [Tại đây](https://drive.google.com/file/d/1E4QsfgcYECWx2HlTyU-J6KisU6yErmQ3/view?usp=sharing)
+### 1.2 Biểu đồ cộng tác 
+- Biểu đồ cộng tác cho chức năng tạo phiếu mượn sách
+![CommunicationDiagram](CommunicationDigrams/Borrow1.png)
+- Biểu đồ cộng tác cho chức năng trả sách và thanh toán phụ phí (nếu có)
+![CommunicationDiagram](CommunicationDigrams/trasach.png)
+- Biểu đồ cộng tác cho chức năng thống kê
+![CommunicationDiagram](CommunicationDigrams/ThongKe.png)
+- Biểu đồ cộng tác cho chức năng theo dõi sách đang mượn
+![CommunicationDiagram](CommunicationDigrams/xemTTmuonsach.png)
+### 1.3 Biểu đồ lớp
+
+### 1.4 Biểu đồ ER
+![ERDiagram](dbdiagram.png)
