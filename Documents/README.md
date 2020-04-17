@@ -27,6 +27,6 @@ Hệ thống gồm 3 actor chính:
 - Biểu đồ cộng tác cho chức năng theo dõi sách đang mượn
 ![CommunicationDiagram](CommunicationDiagrams/xemTTmuonsach.png)
 ### 1.3 Biểu đồ lớp
-
+![ClassDiagram](ClassDiagram.png)
 ### 1.4 Biểu đồ ER
 ![ERDiagram](dbdiagram.png)
