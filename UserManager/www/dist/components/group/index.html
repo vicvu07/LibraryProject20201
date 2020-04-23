@@ -1,0 +1,303 @@
+<div class='container'>
+    <div class="row">
+        <div class="typography-line">
+            <h5>Group Management</h5>
+        </div>
+    </div>
+</div>
+<div class='container-fluid' id='tblGROUP'>
+    <div class='row'>
+        <table class='table'>
+            <thead>
+                <tr>
+                    <th>Group Name</th>
+                    <th>Description</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for='group in groups'>
+                    <td>
+                        {{ group.Name }}
+                    </td>
+                    <td>
+                        {{ group.Description }}
+                    </td>
+                    <td>
+                        <a href='' v-on:click.stop.prevent='loadPermissionModal(group.Name)'>Permissions</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class='row justify-content-center'>
+        <ul v-bind:class="[isLoad ? 'pagination' : 'hide']">
+            <li v-bind:class="[page > 1 ? 'page-item' : 'hide']">
+                <a class='page-link' aria-label='Trước' v-on:click='pageChange(-1)'>
+                    <span aria-hidden='true'>
+                        <i class='fa fa-angle-double-left' aria-hidden='true'></i>
+                    </span>
+                </a>
+            </li>
+            <li class='page-item active'>
+                <a class='page-link' href='#'>{{ page }}</a>
+            </li>
+            <li class='page-item'>
+                <a class='page-link' aria-label='Sau' v-on:click='pageChange(1)'>
+                    <span aria-hidden='true '>
+                        <i class='fa fa-angle-double-right' aria-hidden='true'></i>
+                    </span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class='row justify-content-center'>
+        <button type='button' class='btn btn-primary' data-toggle='modal' id='btnCreate'>
+            Create New Group
+        </button>
+    </div>
+</div>
+
+<div class='modal fade' id='saveGroupModal'>
+    <div class='modal-dialog modal-lg' role='document'>
+        <div class='modal-content' id='formSaveGroup'>
+            <div class='modal-header'>
+                <h5 class='modal-title'>Save Group</h5>
+                <button type='button' class='close' data-dismiss='modal' aria-label='Close' v-on:click='reload'>
+                    <span aria-hidden='true'>&times;</span>
+                </button>
+            </div>
+            <div class='modal-body'>
+                <form class='form-horizontal col-sm-12'>
+                    <div class='form-group'>
+                        <label>Group Name</label>
+                        <input class='form-control' name='GroupName' type='text' v-model='group.GroupName' />
+                    </div>
+                    <div class='form-group'>
+                        <label>Description</label>
+                        <input class='form-control' name='Description' type='text' v-model='group.Description' />
+                    </div>
+                </form>
+            </div>
+            <div class='modal-footer'>
+                <button type='button' class='btn btn-primary' v-on:click.stop.prevent='save(group)'>Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class='modal fade' id="updatePermissionGroupModal">
+    <div class='modal-dialog modal-lg' role='document'>
+        <div class='modal-content' id='formUpdateGroupPermission'>
+            <div class='modal-header'>
+                <h5 class='modal-title'>Permission</h5>
+                <button type='button' class='close' data-dismiss='modal' aria-label='Close' v-on:click='reload'>
+                    <span aria-hidden='true'>&times;</span>
+                </button>
+            </div>
+            <div class='modal-body'>
+                <form class='form-horizontal col-sm-12' id="permissionUpdate">
+                    <div v-for="(row, idx1) in perm">
+                        <input type="checkbox" :value="perm[idx1]" v-model="resp.Permission" />{{perm[idx1]}}
+                    </div>
+                    {{resp.Permission}}
+                </form>
+            </div>
+            <div class='modal-footer'>
+                <button type='button' class='btn btn-primary' v-on:click.stop.prevent='update(resp)'>Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var groups = new Vue({
+        el: '#tblGROUP',
+        data: {
+            groups: [],
+            page: 1,
+            isLoad: false,
+        },
+        methods: {
+            displayTime: (t) => {
+                if (!t.seconds)
+                    return '';
+                return new Date(t.seconds * 1000).format('d/m/Y');
+            },
+
+            loadPermissionModal: (Name) => {
+                post('/r/user/allpermission').then(res => {
+                    if (res.Data) {
+                        formUpdateGroupPermission.perm = res.Data;
+                    }
+                }).catch(err => {
+                    if (isAuthenTokenOK())
+                        $.notify({
+                            message: err.data,
+                            type: 'danger',
+                            placement: {
+                                from: 'top',
+                                align: 'center'
+                            }
+                        });
+                });
+                post('/r/group/loadpermission', {
+                    GroupName: Name
+                }).then(res => {
+                    formUpdateGroupPermission.tperm = res.Data.TPerm;
+                    formUpdateGroupPermission.resp.GroupName = Name;
+                    if (res.Data.TPerm) {
+                        formUpdateGroupPermission.resp.Permission = res.Data.TPerm;
+                    } else {
+                        formUpdateGroupPermission.resp.Permission = [];
+                    }
+                    $('#updatePermissionGroupModal').modal('show');
+
+                }).catch(err => {
+                    if (isAuthenTokenOK())
+                        $.notify({
+                            message: err.data,
+                            type: 'danger',
+                            placement: {
+                                from: 'top',
+                                align: 'center'
+                            }
+                        });
+                });
+            },
+
+            loadGroupsTable: () => {
+                p = groups.page;
+                post('/r/group/view', {
+                    offset: (p - 1) * 5,
+                    limit: 10
+                }).then(res => {
+                    groups.isLoad = true;
+                    if (!res.Data)
+                        groups.groups = [];
+                    else
+                        groups.groups = res.Data;
+                }).catch(err => {
+                    if (isAuthenTokenOK())
+                        $.notify({
+                            message: 'Fail to load from server',
+                            type: 'danger',
+                            placement: {
+                                from: 'top',
+                                align: 'center'
+                            }
+                        });
+                });
+            },
+
+            pageChange: (v) => {
+                groups.page = groups.page + v < 1 ? 1 : groups.page + v;
+                groups.loadGroupsTable();
+            },
+        }
+    });
+
+    var formUpdateGroupPermission = new Vue({
+        el: '#formUpdateGroupPermission',
+        data: {
+            res: [],
+            act: [],
+            perm: [
+                []
+            ],
+            tperm: [
+                []
+            ],
+            resp: {
+                GroupName: [],
+                Permission: [
+                    []
+                ],
+            }
+        },
+        methods: {
+            update: (resp) => {
+                post('/r/group/permission', resp).then(res => {
+                    $('#updatePermissionGroupModal').modal('hide');
+                    groups.loadGroupsTable();
+                    $.notify({
+                        message: 'Success',
+                        type: 'success',
+                        placement: {
+                            from: 'top',
+                            align: 'center'
+                        }
+                    });
+                }).catch(err => {
+                    if (isAuthenTokenOK())
+                        $.notify({
+                            message: err.data,
+                            type: 'danger',
+                            placement: {
+                                from: 'top',
+                                align: 'center'
+                            }
+                        });
+                });
+            },
+            reload: () => {
+                groups.loadGroupsTable();
+            },
+        }
+    });
+
+    var formSaveGroup = new Vue({
+        el: '#formSaveGroup',
+        data: {
+            group: {},
+        },
+        methods: {
+            save: (group) => {
+                post('/r/group/save', group).then(res => {
+                    $('#saveGroupModal').modal('hide');
+                    groups.loadGroupsTable();
+                    $.notify({
+                        message: 'Success',
+                        type: 'success',
+                        placement: {
+                            from: 'top',
+                            align: 'center'
+                        }
+                    });
+                }).catch(err => {
+                    if (isAuthenTokenOK())
+                        $.notify({
+                            message: err.data,
+                            type: 'danger',
+                            placement: {
+                                from: 'top',
+                                align: 'center'
+                            }
+                        });
+                });
+            },
+            reload: () => {
+                groups.loadGroupsTable();
+            }
+        }
+    });
+
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip({
+            html: true
+        });
+
+        // load group table
+        groups.loadGroupsTable();
+
+        $('#btnCreate').unbind('click').click(e => doubleClickPrevent($(this), function (e) {
+            e.preventDefault();
+            formSaveGroup.group = {
+                GroupName: '',
+                Description: '',
+            }
+            $('#saveGroupModal').modal('show');
+        }, e));
+    });
+</script>

@@ -1,0 +1,361 @@
+<div class='container'>
+    <div class="row">
+        <div class="typography-line">
+            <h5>Department Management</h5>
+        </div>
+    </div>
+</div>
+<div class='container-fluid' id='tblDEPARTMENT'>
+    <div class='row'>
+        <table class='table'>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for='department in departments'>
+                    <td>
+                        {{ department.ID }}
+                    </td>
+                    <td>
+                        {{ department.Name }}
+                    </td>
+                    <td>
+                        <a href='' v-on:click.stop.prevent='loadUpdateDepartmentModal(department.ID)'>Details</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class='row justify-content-center'>
+        <ul v-bind:class="[isLoad ? 'pagination' : 'hide']">
+            <li v-bind:class="[page > 1 ? 'page-item' : 'hide']">
+                <a class='page-link' aria-label='Trước' v-on:click='pageChange(-1)'>
+                    <span aria-hidden='true'>
+                        <i class='fa fa-angle-double-left' aria-hidden='true'></i>
+                    </span>
+                </a>
+            </li>
+            <li class='page-item active'>
+                <a class='page-link' href='#'>{{ page }}</a>
+            </li>
+            <li class='page-item'>
+                <a class='page-link' aria-label='Sau' v-on:click='pageChange(1)'>
+                    <span aria-hidden='true '>
+                        <i class='fa fa-angle-double-right' aria-hidden='true'></i>
+                    </span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class='row justify-content-center'>
+        <button type='button' class='btn btn-primary' data-toggle='modal' id='btnCreate'>
+            Create New Department
+        </button>
+    </div>
+</div>
+
+<div class='modal fade' id="updateDepartmentModal">
+    <div class='modal-dialog modal-lg' role='document'>
+        <div class='modal-content' id='formUpdateDepartment'>
+            <div class='modal-header'>
+                <h5 class='modal-title'>Details</h5>
+                <button type='button' class='close' data-dismiss='modal' aria-label='Close' v-on:click='reload'>
+                    <span aria-hidden='true'>&times;</span>
+                </button>
+            </div>
+            <div class='modal-body'>
+                <form class='form-horizontal col-sm-12' id="permissionUpdate">
+                    <div class='form-group'>
+                        <label>Name</label>
+                        <input class='form-control' name='Name' type='text' v-model='department.Name'/>
+                    </div>
+                    <div class='form-group'>
+                        <label>Description</label>
+                        <input class='form-control' name='Description' type='text' v-model='department.Description'/>
+                    </div>
+                    <div class='form-group'>
+                        <label>Total Salary: </label>
+                        <label>{{department.TotalSalary}}</label>
+                    </div>
+                </form>
+                <h6> Old Member </h6>
+                <table class='table'>
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>User Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for='data in users.OldUser'>
+                            <td> {{ data.ID }}</td>
+                            <td> {{ data.Name }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h6> Current Member </h6>
+                <table class='table'>
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>User Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for='data in users.NewUser'>
+                            <td> {{ data.ID }}</td>
+                            <td> {{ data.Name }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+    
+                    <h6> Done Plans </h6>
+                    <table class='table'>
+                        <thead>
+                            <tr>
+                                <th>Plan ID</th>
+                                <th>Plan Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for='data in plans.DonePlan'>
+                                <td> {{ data.ID }}</td>
+                                <td> {{ data.Name }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h6> On Going Plans </h6>
+                    <table class='table'>
+                        <thead>
+                            <tr>
+                                <th>Plan ID</th>
+                                <th>Plan Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for='data in plans.OnGoingPlan'>
+                                <td> {{ data.ID }}</td>
+                                <td> {{ data.Name }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+            </div>
+            <div class='modal-footer'>
+                <button type='button' class='btn btn-primary' v-on:click.stop.prevent='update(department)'>Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class='modal fade' id="saveDepartmentModal">
+    <div class='modal-dialog modal-lg' role='document'>
+        <div class='modal-content' id='formSaveDepartment'>
+            <div class='modal-header'>
+                <h5 class='modal-title'>Save Department</h5>
+                <button type='button' class='close' data-dismiss='modal' aria-label='Close' v-on:click='reload'>
+                    <span aria-hidden='true'>&times;</span>
+                </button>
+            </div>
+            <div class='modal-body'>
+                <form class='form-horizontal col-sm-12' id="permissionUpdate">
+                    <div class='form-group'>
+                        <label>Name</label>
+                        <input class='form-control' name='Name' type='text' v-model='department.Name'/>
+                    </div>
+                    <div class='form-group'>
+                        <label>Description</label>
+                        <input class='form-control' name='Description' type='text' v-model='department.Description'/>
+                    </div>
+                </form>
+            </div>
+            <div class='modal-footer'>
+                <button type='button' class='btn btn-primary' v-on:click.stop.prevent='save(department)'>save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var departments = new Vue({
+        el: '#tblDEPARTMENT',
+        data: {
+            departments: [],
+            page: 1,
+            isLoad: false,
+        },
+        methods: {
+            displayTime: (t) => {
+                if (!t.seconds)
+                    return '';
+                return new Date(t.seconds * 1000).format('d/m/Y');
+            },
+
+            loadUpdateDepartmentModal: (ID) => {
+                post('/r/department/member',{ID: ID}).then(res => {
+                    if (res.Data) {
+                        tmp = res.Data
+                        formUpdateDepartment.users.OldUser = tmp.OldUser;
+                        formUpdateDepartment.users.NewUser = tmp.NewUser;
+                    } else {
+                        formUpdateDepartment.users.OldUser = [];
+                        formUpdateDepartment.users.NewUser =[];
+                    }
+                }).catch(err => {
+                    if (isAuthenTokenOK())
+                        $.notify({
+                            message: err.data,
+                            type: 'danger',
+                            placement: {
+                                from: 'top',
+                                align: 'center'
+                            }
+                        });
+                });
+                
+                post('/r/department/plan',{ID: ID}).then(res => {
+                    if (res.Data) {
+                        tmp = res.Data
+                        formUpdateDepartment.plans.OnGoingPlan = tmp.OnGoingPlan;
+                        formUpdateDepartment.plans.DonePlan = tmp.DonePlan;
+                    } else {
+                        formUpdateDepartment.plans.OnGoingPlan = [];
+                        formUpdateDepartment.plans.DonePlan = [];
+                    }
+                }).catch(err => {
+                    if (isAuthenTokenOK())
+                        $.notify({
+                            message: err.data,
+                            type: 'danger',
+                            placement: {
+                                from: 'top',
+                                align: 'center'
+                            }
+                        });
+                });
+
+                post('/r/department/loadUpdateForm',{ID: ID}).then(res => {
+                    if (res.Data) {
+                        tmp = res.Data
+                        formUpdateDepartment.department = tmp;
+                        $('#updateDepartmentModal').modal('show');
+                    }
+                }).catch(err => {
+                    if (isAuthenTokenOK())
+                        $.notify({
+                            message: err.data,
+                            type: 'danger',
+                            placement: {
+                                from: 'top',
+                                align: 'center'
+                            }
+                        });
+                });
+            },
+
+            loadDepartmentTable: () => {
+                p = departments.page;
+                post('/r/department/view', {
+                    offset: (p - 1) * 5,
+                    limit: 10
+                }).then(res => {
+                    departments.isLoad = true;
+                    if (!res.Data)
+                        departments.departments = [];
+                    else
+                        departments.departments = res.Data;
+                }).catch(err => {
+                    if (isAuthenTokenOK())
+                        $.notify({
+                            message: 'Fail to load from server',
+                            type: 'danger',
+                            placement: {
+                                from: 'top',
+                                align: 'center'
+                            }
+                        });
+                });
+            },
+
+            pageChange: (v) => {
+                departments.page = departments.page + v < 1 ? 1 : departments.page + v;
+                departments.loadDepartmentTable();
+            },
+        }
+    });
+
+    var formUpdateDepartment = new Vue({
+        el: '#formUpdateDepartment',
+        data: {
+            department: {},
+            users:{
+                OldUser: [],
+                NewUser: [],
+            },
+            plans: {
+                DonePlan: [],
+                OnGoingPlan: [],
+            },
+        },
+        methods: {
+            update: (department) => {
+                post('/r/department/update', department).then(res => {
+                    $('#updateDepartmentModal').modal('hide');
+                    departments.loadDepartmentTable();
+                    $.notify({ message: 'Success', type: 'success', placement: { from: 'top', align: 'center' } });
+                }).catch(err => {
+                    if (isAuthenTokenOK())
+                        $.notify({ message: err.data, type: 'danger', placement: { from: 'top', align: 'center' } });
+                });
+            },
+            reload: () => {
+                departments.loadDepartmentTable();
+            },
+        }
+    });
+    
+    var formSaveDepartment = new Vue({
+        el: '#formSaveDepartment',
+        data: {
+            department: {
+                Name: '',
+                Description: '',
+            },
+        },
+        methods: {
+            save: (department) => {
+                post('/r/department/save', department).then(res => {
+                    $('#saveDepartmentModal').modal('hide');
+                    departments.loadDepartmentTable();
+                    $.notify({ message: 'Success', type: 'success', placement: { from: 'top', align: 'center' } });
+                }).catch(err => {
+                    if (isAuthenTokenOK())
+                        $.notify({ message: err.data, type: 'danger', placement: { from: 'top', align: 'center' } });
+                });
+            },
+            reload: () => {
+                departments.loadDepartmentTable();
+            },
+        }
+    });
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip({
+            html: true
+        });
+
+        // load department table
+        departments.loadDepartmentTable();
+
+        $('#btnCreate').unbind('click').click(e => doubleClickPrevent($(this), function (e) {
+            e.preventDefault();
+            formSaveDepartment.department = {
+                Name: '',
+                Description: '',
+            }
+            $('#saveDepartmentModal').modal('show');
+        }, e));
+    });
+</script>
