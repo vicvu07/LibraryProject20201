@@ -11,6 +11,10 @@
 **Ngôn ngữ sử dụng** :
 - Golang
 
+**Các opensource softwares sử dụng**:
+- [etcd](https://etcd.io/)
+- [gRPC](https://grpc.io/)
+
 **Các tài liệu khác** :
 - [Phân tích yêu cầu phần mềm](https://drive.google.com/open?id=1XAD5SHuuKTj9p12JePVix_pfcdow-a6jhYzckpSOWxE)
 - [Sprint planning](https://drive.google.com/file/d/1zRfYP8E_dr7blH6TxqzpF_2vAYAuWGDo/view?usp=sharing)
