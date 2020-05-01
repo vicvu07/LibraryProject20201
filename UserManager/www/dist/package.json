@@ -1,0 +1,16 @@
+{
+  "name": "portal",
+  "version": "1.0.0",
+  "description": "Leadgen Portal",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "bootstrap": "^4.0.0",
+    "bootstrap-datepicker": "^1.7.1",
+    "font-awesome": "^4.7.0",
+    "jwt-decode": "^2.2.0",
+    "now-ui-kit": "^1.1.0"
+  }
+}
