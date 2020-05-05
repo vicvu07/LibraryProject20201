@@ -1,7 +1,8 @@
 syntax = "proto3";
 
 package model;
-option go_package = "github.com/pinezapple/LibraryProject20201/skeleton/model";
+option go_package = "github.com/pinezapple/LibraryProject20201/skeleton/model/docmanagerModel";
+//option go_package = "skeleton/model";
 import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 //import "model/time.proto";
 
@@ -15,6 +16,14 @@ option (gogoproto.marshaler_all) = true;
 option (gogoproto.sizer_all) = true;
 option (gogoproto.unmarshaler_all) = true;
 
+service Docmanager {
+	rpc SelectAllDoc (SelectAllDocReq) returns (SelectAllDocResp) {}
+	rpc SelectDocByID (SelectDocByIDReq) returns (SelectDocByIDResp) {}
+	rpc SaveDoc (SaveDocReq) returns (SaveDocResp) {}
+	rpc UpdateDoc (UpdateDocReq) returns (UpdateDocResp) {}
+	rpc DeleteDoc (DeleteDocReq) returns (DeleteDocResp) {}
+}
+
 message Doc {
 	uint64 ID = 1 [(gogoproto.jsontag) = "id_doc", (gogoproto.moretags) = "db:\"id_doc\""];	
 	string Name = 2 [(gogoproto.jsontag) = "doc_name", (gogoproto.moretags) = "db:\"doc_name\""];
@@ -27,13 +36,6 @@ message Doc {
 	string updated_at = 9 [(gogoproto.jsontag) = "updated_at", (gogoproto.moretags) = "db:\"updated_at\""];
 }
 
-service Docmanager {
-	rpc SelectAllDoc(SelectAllDocReq) returns (SelectAllDocResp);
-	rpc SelectDocByID(SelectDocByIDReq) returns (SelectDocByIDResp);
-	rpc SaveDoc(SaveDocReq) returns (SaveDocResp);
-	rpc UpdateDoc(UpdateDocReq) returns (UpdateDocResp);
-	rpc DeleteDoc(DeleteDocReq) returns (DeleteDocResp);
-}
 
 message SelectAllDocReq {
 }
