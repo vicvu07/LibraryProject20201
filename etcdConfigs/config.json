@@ -1,0 +1,46 @@
+{
+   "DocManager": {
+        "Database": {
+            "Args": "charset=utf8&collation=utf8_general_ci&parseTime=true&loc=Asia%2FHo_Chi_Minh",
+            "CaCert": "",
+            "ClientCert": "",
+            "ClientKey": "",
+            "DB": "clients",
+            "Masters": [
+                "127.0.0.1:3306"
+            ],
+            "MaxIdleConn": 2,
+            "MaxOpenConn": 4,
+            "Password": "123",
+            "Slaves": [
+                "127.0.0.1:3306"
+            ],
+            "Type": "mysql",
+            "Username": "root",
+            "IsWsrep": false,
+            "TLS": ""
+        }
+    },
+    "docmanager": {
+        "Database": {
+            "Args": "charset=utf8&collation=utf8_general_ci&parseTime=true&loc=Asia%2FHo_Chi_Minh",
+            "CaCert": "",
+            "ClientCert": "",
+            "ClientKey": "",
+            "DB": "docmanager",
+            "Masters": [
+                "127.0.0.1:3306"
+            ],
+            "MaxIdleConn": 2,
+            "MaxOpenConn": 4,
+            "Password": "123",
+            "Slaves": [
+                "127.0.0.1:3306"
+            ],
+            "Type": "mysql",
+            "Username": "root",
+            "IsWsrep": false,
+            "TLS": ""
+        }
+    }
+}
