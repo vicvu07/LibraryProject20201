@@ -3,6 +3,8 @@ module github.com/pinezapple/LibraryProject20201/skeleton
 require (
 	github.com/go-sql-driver/mysql v1.4.1-0.20191114115753-b4242bab7dc5
 	github.com/gogo/protobuf v1.3.1 // indirect
+	github.com/hashicorp/go-multierror v1.1.0 // indirect
+	github.com/linxGnu/mssqlx v1.0.7 // indirect
 	github.com/pkg/errors v0.8.2-0.20191109102316-7f95ac13edff // indirect
 	github.com/prometheus/client_golang v1.2.2-0.20191024231915-333f01cef0d6 // indirect
 	github.com/sirupsen/logrus v1.4.2
