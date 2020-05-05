@@ -3,8 +3,8 @@ package etcd
 import (
 	"context"
 
-	"github.com/LibraryProject20201/skeleton/logger"
-	"github.com/LibraryProject20201/skeleton/model"
+	"github.com/pinezapple/LibraryProject20201/skeleton/logger"
+	"github.com/pinezapple/LibraryProject20201/skeleton/model"
 
 	etcdClient "go.etcd.io/etcd/clientv3"
 	etcdSync "go.etcd.io/etcd/clientv3/concurrency"

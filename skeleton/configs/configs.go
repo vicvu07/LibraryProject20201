@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/LibraryProject20201/skeleton/libs"
+	"github.com/pinezapple/LibraryProject20201/skeleton/libs"
 )
 
 // ErrOnlySupportMysql indicate that we only support mysql

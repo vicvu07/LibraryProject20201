@@ -3,7 +3,7 @@ package logger
 import (
 	"encoding/json"
 
-	"github.com/LibraryProject20201/skeleton/model"
+	"github.com/pinezapple/LibraryProject20201/skeleton/model"
 
 	log "github.com/sirupsen/logrus"
 )

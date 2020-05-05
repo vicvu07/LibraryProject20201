@@ -8,11 +8,11 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/LibraryProject20201/skeleton/configs"
-	"github.com/LibraryProject20201/skeleton/libs"
-	"github.com/LibraryProject20201/skeleton/libs/etcd"
-	"github.com/LibraryProject20201/skeleton/logger"
-	"github.com/LibraryProject20201/skeleton/model"
+	"github.com/pinezapple/LibraryProject20201/skeleton/configs"
+	"github.com/pinezapple/LibraryProject20201/skeleton/libs"
+	"github.com/pinezapple/LibraryProject20201/skeleton/libs/etcd"
+	"github.com/pinezapple/LibraryProject20201/skeleton/logger"
+	"github.com/pinezapple/LibraryProject20201/skeleton/model"
 
 	etcdClient "go.etcd.io/etcd/clientv3"
 	grpc "google.golang.org/grpc"

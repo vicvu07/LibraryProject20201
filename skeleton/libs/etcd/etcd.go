@@ -8,9 +8,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/LibraryProject20201/skeleton/libs"
-	"github.com/LibraryProject20201/skeleton/logger"
-	"github.com/LibraryProject20201/skeleton/model"
+	"github.com/pinezapple/LibraryProject20201/skeleton/libs"
+	"github.com/pinezapple/LibraryProject20201/skeleton/logger"
+	"github.com/pinezapple/LibraryProject20201/skeleton/model"
 
 	etcdClient "go.etcd.io/etcd/clientv3"
 	etcdNaming "go.etcd.io/etcd/clientv3/naming"

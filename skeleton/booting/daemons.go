@@ -6,7 +6,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/LibraryProject20201/skeleton/model"
+	"github.com/pinezapple/LibraryProject20201/skeleton/model"
 )
 
 // BootstrapDaemons start daemons and handling os signal.
