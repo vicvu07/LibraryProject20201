@@ -1,4 +1,4 @@
-module github.com/LibraryProject20201/docmanager
+module github.com/pinezapple/LibraryProject20201/docmanager
 
 go 1.13
 
