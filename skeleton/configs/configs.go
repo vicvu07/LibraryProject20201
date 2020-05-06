@@ -215,33 +215,20 @@ func (c *ClickhouseConnConfig) Equal(x *ClickhouseConnConfig) bool {
 	return c.Args == x.Args
 }
 
-// SMSGWConf ..
-type SMSGWConf struct {
-	Debug bool
-	SMPPConnection
-	KafkaConnection
-	RedisConnection
+// HTTPClientConf  ...
+type HTTPClientConf struct {
+	ClientCert string
+	ClientKey  string
+	ServerCAs  string // csv list of trusted CAs
 }
 
-// SMPPConnection ...
-type SMPPConnection struct {
-	Address                string
-	Port                   int
-	SystemID               string
-	Password               string
-	SystemType             string
-	DebugMode              bool
-	HeartBeat              bool
-	ShortCode              string
-	FilterChanSize         int
-	SubmitSMChanSize       int
-	NumberOfMOHandler      int
-	NumberOfMTHandler      int
-	NumberOfFilterHandler  int
-	MTIntervalMiliSec      int
-	EnquireLinkIntervalSec int
-	SeqMod                 int
-	SeqSeed                int
+// HTTPServerConf binding configuration for webserver
+type HTTPServerConf struct {
+	PublicIP  string
+	Port      int
+	Cert      string
+	Key       string
+	ClientCAs string // csv list of trusted CAs
 }
 
 // KafkaConnection ...

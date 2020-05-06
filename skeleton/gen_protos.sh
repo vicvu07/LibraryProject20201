@@ -16,16 +16,16 @@ cd ../../../../
 # current working directory now in /some/directory/
 
 ## generate models
-protoc \
-    -I=$GOPATH/src                                    ` #include gogoproto package in $GOPATH/src                                ` \
-    -I=$(pwd)                                         ` #include  /some/directory/                                               ` \
-    --gogofaster_out=$(pwd)                           ` #output in /some/directory/                                                ` \
-    github.com/pinezapple/LibraryProject20201/skeleton/model/*.proto ` #input file in /some/directory/github.com/cicdata-io/smartcic-core/model `
+#protoc \
+#    -I=$GOPATH/src                                    ` #include gogoproto package in $GOPATH/src                                ` \
+#    -I=$(pwd)                                         ` #include  /some/directory/                                               ` \
+#    --gogofaster_out=$(pwd)                           ` #output in /some/directory/                                                ` \
+#    github.com/pinezapple/LibraryProject20201/skeleton/model/*.proto ` #input file in /some/directory/github.com/cicdata-io/smartcic-core/model `
 
 ## generate rpc
-#protoc \
-#    -I=$GOPATH/src                                   ` #include gogoproto package in $GOPATH/src                              ` \
-#    -I=$(pwd)                                        ` #include  /some/directory/                                             ` \
-#    --gogofaster_out=plugins=grpc:$(pwd)             ` #output in /some/director                                              ` \
-#    -I=$GOPATH/src/github.com/gogo/protobuf/protobuf ` #runs fine without this line                                           ` \
-#    github.com/pinezapple/LibraryProject20201/skeleton/rpc/*.proto  ` #input file in /some/directory/github.com/cicdata-io/smartcic-core/rpc `
+protoc \
+    -I=$GOPATH/src                                   ` #include gogoproto package in $GOPATH/src                              ` \
+    -I=$(pwd)                                        ` #include  /some/directory/                                             ` \
+    --gogofaster_out=plugins=grpc:$(pwd)             ` #output in /some/director                                              ` \
+    -I=$GOPATH/src/github.com/gogo/protobuf/protobuf ` #runs fine without this line                                           ` \
+    github.com/pinezapple/LibraryProject20201/skeleton/model/*.proto  ` #input file in /some/directory/github.com/cicdata-io/smartcic-core/rpc `

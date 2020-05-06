@@ -1,0 +1,84 @@
+syntax = "proto3";
+
+package model;
+//option go_package = "github.com/pinezapple/LibraryProject20201/skeleton/model";
+option go_package = "skeleton/model";
+//import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+//import "model/time.proto";
+
+//option (gogoproto.gostring_all) = true;
+//option (gogoproto.equal_all) = true;
+//option (gogoproto.verbose_equal_all) = true;
+//option (gogoproto.populate_all) = true;
+//option (gogoproto.testgen_all) = true;
+//option (gogoproto.benchgen_all) = false;
+//option (gogoproto.marshaler_all) = true;
+//option (gogoproto.sizer_all) = true;
+//option (gogoproto.unmarshaler_all) = true;
+
+service Docmanager {
+	rpc SelectAllDoc (SelectAllDocReq) returns (SelectAllDocResp) {}
+	rpc SelectDocByID (SelectDocByIDReq) returns (SelectDocByIDResp) {}
+	rpc SaveDoc (SaveDocReq) returns (SaveDocResp) {}
+	rpc UpdateDoc (UpdateDocReq) returns (UpdateDocResp) {}
+	rpc DeleteDoc (DeleteDocReq) returns (DeleteDocResp) {}
+}
+
+message Doc {
+	uint64 ID = 1; //[(gogoproto.jsontag) = "id_doc", (gogoproto.moretags) = "db:\"id_doc\""];	
+	string Name = 2; //[(gogoproto.jsontag) = "doc_name", (gogoproto.moretags) = "db:\"doc_name\""];
+	string Author = 3; //[(gogoproto.jsontag) = "doc_author", (gogoproto.moretags) = "db:\"doc_author\""];
+	string Type = 4; //[(gogoproto.jsontag) = "doc_type", (gogoproto.moretags) = "db:\"doc_type\""];
+	string Description = 5; //[(gogoproto.jsontag) = "doc_description", (gogoproto.moretags) = "db:\"doc_description\""];
+ 	uint32 Status = 6; //[(gogoproto.jsontag) = "status", (gogoproto.moretags) = "db:\"status\""];
+	uint32 Fee = 7; //[(gogoproto.jsontag) = "fee", (gogoproto.moretags) = "db:\"fee\""];
+	string created_at = 8; //[(gogoproto.jsontag) = "created_at", (gogoproto.moretags) = "db:\"created_at\""];
+	string updated_at = 9; //[(gogoproto.jsontag) = "updated_at", (gogoproto.moretags) = "db:\"updated_at\""];
+}
+
+
+message SelectAllDocReq {
+}
+
+message SelectAllDocResp {
+	int32 code = 1;
+	string message = 2;
+	repeated Doc documents = 3; //[(gogoproto.nullable) = true];
+}
+
+message SelectDocByIDReq {
+	uint64 DocID = 1;
+}
+
+message SelectDocByIDResp {
+	int32 code = 1;
+	string message = 2;
+	Doc documents = 3; //[(gogoproto.nullable) = true];
+}
+
+message SaveDocReq {
+	Doc doc = 1;
+}
+
+message SaveDocResp {
+	int32 code = 1;
+	string message = 2;
+}
+
+message UpdateDocReq {
+	Doc doc = 1;
+}
+
+message UpdateDocResp {
+	int32 code = 1;
+	string message = 2;
+}
+
+message DeleteDocReq {
+	uint64 id = 1;
+}
+
+message DeleteDocResp {
+	int32 code = 1;
+	string message = 2;
+}
