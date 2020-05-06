@@ -23,6 +23,14 @@ const (
 	ServiceName = "docmanager"
 )
 
+var (
+	ErrBadRequest = fmt.Errorf("Bad request")
+
+	ErrExtTermChanCapInvalid = fmt.Errorf("Term chan capacity is invalid")
+
+	// ErrDBObjNull indicate DB Object is nil
+	ErrDBObjNull = fmt.Errorf("DB Object is nil")
+)
 var lg *model.LogFormat
 
 // ------------------------- Etcd Client -------------------------
