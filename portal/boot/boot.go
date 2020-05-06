@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/pinezapple/LibraryProject20201/portal/core"
+	"github.com/pinezapple/LibraryProject20201/portal/microservice"
 	"github.com/pinezapple/LibraryProject20201/portal/webserver"
 	"github.com/pinezapple/LibraryProject20201/skeleton/booting"
 	"github.com/pinezapple/LibraryProject20201/skeleton/configs"
@@ -29,11 +30,13 @@ var (
 	webServerCertFile = flag.String("web_cert", "", "A PEM eoncoded certificate file.")
 	webServerKeyFile  = flag.String("web_key", "", "A PEM encoded private key file.")
 	clientCAs         = flag.String("client_ca", "", "A CSV list of client's certs trusted by server")
+
+	shardNumber = flag.Int("shard_number", 0, "Docmanager Shards number")
 )
 
 func Boot() {
 	flag.Parse()
-	core.InitCore()
+	core.InitCore(*shardNumber)
 
 	lg := core.GetLogger()
 	logger.LogInfo(lg, "Booting")
@@ -69,5 +72,6 @@ func Boot() {
 	booting.BootstrapDaemons(context.Background(),
 		core.WatchConfig,
 		webserver.WebServer,
+		microservice.DocmanagerShardServices,
 	)
 }

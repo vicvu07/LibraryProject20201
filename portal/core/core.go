@@ -58,9 +58,21 @@ var (
 	httpServerConf atomic.Value // *configs.HTTPClientConf
 	loggerLock     = &sync.Mutex{}
 	lg             *model.LogFormat
+	numShard       uint64
 )
 
-func InitCore() {
+// SetNumShards set number of shards.
+func SetNumShards(v int) {
+	atomic.StoreUint64(&numShard, uint64(v))
+}
+
+// GetNumShards get number of shards.
+func GetNumShards() uint64 {
+	return atomic.LoadUint64(&numShard)
+}
+
+func InitCore(shardNumber int) {
+	SetNumShards(shardNumber)
 	lg = logger.MustGet(ServiceName)
 
 	config.Store(&Config{
