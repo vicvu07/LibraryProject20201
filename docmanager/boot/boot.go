@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/pinezapple/LibraryProject20201/docmanager/core"
+	grpcService "github.com/pinezapple/LibraryProject20201/docmanager/service"
 	"github.com/pinezapple/LibraryProject20201/skeleton/booting"
 	"github.com/pinezapple/LibraryProject20201/skeleton/configs"
 	etcd "github.com/pinezapple/LibraryProject20201/skeleton/libs/etcd"
@@ -48,12 +49,13 @@ func Boot() {
 	})
 	// get config from etcd
 	if err = core.GetConfigFromEtcd(); err != nil {
-		core.Logger().Fatal("failed to get config from etcd", err)
+		logger.LogErr(lg, err)
+		panic("failed to get config from etcd")
 	}
 
 	booting.BootstrapDaemons(context.Background(),
 		core.WatchConfig,
-	//	grpcService.GRPCServer,
+		grpcService.GRPCServer,
 	)
 
 }

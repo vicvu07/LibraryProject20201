@@ -20,7 +20,7 @@ import (
 
 const (
 	testDSN     = "root:123@/test?charset=utf8&collation=utf8_general_ci&parseTime=true&loc=Asia%2FHo_Chi_Minh"
-	ServiceName = "DocManager"
+	ServiceName = "docmanager"
 )
 
 var lg *model.LogFormat
@@ -126,7 +126,7 @@ func WatchConfig(ctx context.Context) (model.Daemon, error) {
 		panic("etcd client fault")
 	}
 
-	return etcd.Watch(ctx, cl, "DocManager", GetConfigFromEtcd)
+	return etcd.Watch(ctx, cl, ServiceName, GetConfigFromEtcd)
 }
 
 // GetConfigFromEtcd get and update global configuration from etcd
@@ -139,7 +139,8 @@ func GetConfigFromEtcd() (err error) {
 		panic("etcd client fault")
 	}
 
-	return etcd.Get(cl, "DocManager", &Config{}, func(expect interface{}) (err error) {
+	fmt.Println(cl)
+	return etcd.Get(cl, ServiceName, &Config{}, func(expect interface{}) (err error) {
 		if expect == nil {
 			return
 		}
@@ -149,6 +150,7 @@ func GetConfigFromEtcd() (err error) {
 			return
 		}
 
+		fmt.Println(obj)
 		defer func() {
 			if err == nil {
 				config.Store(obj)
