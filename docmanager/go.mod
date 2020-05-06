@@ -1,6 +1,8 @@
 module github.com/pinezapple/LibraryProject20201/docmanager
 
 require (
+	github.com/cicdata-io/smartcic v0.1.5 // indirect
+	github.com/cicdata-io/smartcic-core v0.1.30 // indirect
 	github.com/go-sql-driver/mysql v1.4.1-0.20191114115753-b4242bab7dc5
 	github.com/golang/protobuf v1.4.1 // indirect
 	github.com/hashicorp/go-multierror v1.1.0

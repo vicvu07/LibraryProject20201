@@ -1,11 +1,11 @@
 {
-   "DocManager": {
+   "docmanager0": {
         "Database": {
             "Args": "charset=utf8&collation=utf8_general_ci&parseTime=true&loc=Asia%2FHo_Chi_Minh",
             "CaCert": "",
             "ClientCert": "",
             "ClientKey": "",
-            "DB": "clients",
+            "DB": "docmanager0",
             "Masters": [
                 "127.0.0.1:3306"
             ],
@@ -21,13 +21,13 @@
             "TLS": ""
         }
     },
-    "docmanager": {
+    "docmanager1": {
         "Database": {
             "Args": "charset=utf8&collation=utf8_general_ci&parseTime=true&loc=Asia%2FHo_Chi_Minh",
             "CaCert": "",
             "ClientCert": "",
             "ClientKey": "",
-            "DB": "docmanager",
+            "DB": "docmanager1",
             "Masters": [
                 "127.0.0.1:3306"
             ],
@@ -42,5 +42,49 @@
             "IsWsrep": false,
             "TLS": ""
         }
+    },
+   "portal": {
+        "Database": {
+            "Args": "charset=utf8&collation=utf8_general_ci&parseTime=true&loc=Asia%2FHo_Chi_Minh",
+            "CaCert": "",
+            "ClientCert": "",
+            "ClientKey": "",
+            "DB": "docmanager0",
+            "Masters": [
+                "127.0.0.1:3306"
+            ],
+            "MaxIdleConn": 2,
+            "MaxOpenConn": 4,
+            "Password": "123",
+            "Slaves": [
+                "127.0.0.1:3306"
+            ],
+            "Type": "mysql",
+            "Username": "root",
+            "IsWsrep": false,
+            "TLS": ""
+        },
+	"WebServer": {
+	    "BodyLimit": "1M",
+	    "Secure": {
+		"SecureCookie": {
+			"CookieName":     "auth",
+			"ContextKey":     "lg_uid",
+			"MaxAge":         0,
+			"ExpireInMinute": 1440,
+			"HashKey":        "Wpdhgkwkpwngapoge93nx9sj2lsigwnx9529xn#px02naigm2-1$93*7nwlwsddf",
+			"BlockKey":       "DSgjo23058nxg84ns592*383nboiwkg+"
+		},
+		"JWT": {
+			"ContextKey":     "lg_ctx_key",
+			"SecretKey":      "Wsjfi^sgjlkajskgwmsmvlk!utwEpc03q<qoP6[%4",
+			"ExpireInMinute": 1440
+	
+		},
+		"SipHashSum0": 947295729583939162,
+		"SipHashSum1": 323869573058327753
+	    }
+	}
     }
+ 
 }
