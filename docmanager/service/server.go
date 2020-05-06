@@ -26,7 +26,7 @@ func GRPCServer(ctx context.Context) (daemon model.Daemon, err error) {
 	}
 
 	return booting.GRPCService(ctx,
-		"docmanager",
+		core.ServiceName,
 		core.GetEtcdClient(),
 		*conf,
 		func(s *grpc.Server) {

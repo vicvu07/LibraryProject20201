@@ -66,11 +66,49 @@ func (d *docmanagerServer) UpdateDoc(ctx context.Context, req *docmanagerModel.U
 func (d *docmanagerServer) DeleteDoc(ctx context.Context, req *docmanagerModel.DeleteDocReq) (resp *docmanagerModel.DeleteDocResp, err error) {
 	logger.LogInfo(d.lg, "rpc Delete Doc Req")
 
-	err = dao.GetDocDAO().DelDoc(ctx, core.GetDB(), req.Id)
+	err = dao.GetDocDAO().DelDoc(ctx, core.GetDB(), req.DocID)
 	if err != nil {
 		logger.LogErr(d.lg, err)
 		return &docmanagerModel.DeleteDocResp{Code: 1, Message: err.Error()}, nil
 	}
 	logger.LogInfo(d.lg, "rpc Select Doc By ID Success")
 	return &docmanagerModel.DeleteDocResp{Code: 0}, nil
+}
+
+// -------------------------------------------- Borrow Form ------------------------------------------------------
+func (d *docmanagerServer) SaveBorrowForm(ctx context.Context, req *docmanagerModel.SaveBorrowFormReq) (resp *docmanagerModel.SaveBorrowFormResp, err error) {
+	logger.LogInfo(d.lg, "rpc Save Borrow Form Req")
+
+	err = dao.GetDocDAO().SaveBorrowForm(ctx, core.GetDB(), req.Borrowform)
+	if err != nil {
+		logger.LogErr(d.lg, err)
+		return &docmanagerModel.SaveBorrowFormResp{Code: 1, Message: err.Error()}, nil
+	}
+	logger.LogInfo(d.lg, "rpc Save Borrow Form Success")
+	return &docmanagerModel.SaveBorrowFormResp{Code: 0}, nil
+}
+
+func (d *docmanagerServer) UpdateBorrowFormStatus(ctx context.Context, req *docmanagerModel.UpdateBorrowFormStatusReq) (resp *docmanagerModel.UpdateBorrowFormStatusResp, err error) {
+	logger.LogInfo(d.lg, "rpc Update Borrow Form Req")
+
+	err = dao.GetDocDAO().UpdateBorrowFormStatus(ctx, core.GetDB(), req.FormID, int(req.Status))
+	if err != nil {
+		logger.LogErr(d.lg, err)
+		return &docmanagerModel.UpdateBorrowFormStatusResp{Code: 1, Message: err.Error()}, nil
+	}
+	logger.LogInfo(d.lg, "rpc Update Borrow Form Success")
+	return &docmanagerModel.UpdateBorrowFormStatusResp{Code: 0}, nil
+
+}
+
+func (d *docmanagerServer) SelectBorrowFormByID(ctx context.Context, req *docmanagerModel.SelectBorrowFormByIDReq) (resp *docmanagerModel.SelectBorrowFormByIDResp, err error) {
+	logger.LogInfo(d.lg, "rpc Select Borrow Form Req")
+
+	res, err := dao.GetDocDAO().SelectBorrowFormByID(ctx, core.GetDB(), req.FormID)
+	if err != nil {
+		logger.LogErr(d.lg, err)
+		return &docmanagerModel.SelectBorrowFormByIDResp{Code: 1, Message: err.Error()}, nil
+	}
+	logger.LogInfo(d.lg, "rpc Select Borrow Form Success")
+	return &docmanagerModel.SelectBorrowFormByIDResp{Code: 0, Borrowform: res}, nil
 }

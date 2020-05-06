@@ -3,6 +3,7 @@ package core
 import (
 	"context"
 	"fmt"
+	"strconv"
 	"sync"
 	"sync/atomic"
 
@@ -19,11 +20,11 @@ import (
 )
 
 const (
-	testDSN     = "root:123@/test?charset=utf8&collation=utf8_general_ci&parseTime=true&loc=Asia%2FHo_Chi_Minh"
-	ServiceName = "docmanager"
+	testDSN = "root:123@/test?charset=utf8&collation=utf8_general_ci&parseTime=true&loc=Asia%2FHo_Chi_Minh"
 )
 
 var (
+	ServiceName   = "docmanager"
 	ErrBadRequest = fmt.Errorf("Bad request")
 
 	ErrExtTermChanCapInvalid = fmt.Errorf("Term chan capacity is invalid")
@@ -57,7 +58,9 @@ var (
 	loggerLock     = &sync.Mutex{}
 )
 
-func init() {
+func InitCore(shardID int) {
+	ServiceName = ServiceName + strconv.Itoa(shardID)
+
 	lg = logger.MustGet(ServiceName)
 	config.Store(&Config{
 		Database: configs.MysqlConnConfig{
