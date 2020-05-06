@@ -22,6 +22,11 @@ service Docmanager {
 	rpc SaveDoc (SaveDocReq) returns (SaveDocResp) {}
 	rpc UpdateDoc (UpdateDocReq) returns (UpdateDocResp) {}
 	rpc DeleteDoc (DeleteDocReq) returns (DeleteDocResp) {}
+
+	//------------------------------ Borrow Form ------------------------------
+	rpc SaveBorrowForm (SaveBorrowFormReq) returns (SaveBorrowFormResp) {}
+	rpc UpdateBorrowFormStatus (UpdateBorrowFormStatusReq) returns (UpdateBorrowFormStatusResp) {}
+	rpc SelectBorrowFormByID (SelectBorrowFormByIDReq) returns (SelectBorrowFormByIDResp) {}	
 }
 
 message Doc {
@@ -31,11 +36,21 @@ message Doc {
 	string Type = 4 [(gogoproto.jsontag) = "doc_type", (gogoproto.moretags) = "db:\"doc_type\""];
 	string Description = 5 [(gogoproto.jsontag) = "doc_description", (gogoproto.moretags) = "db:\"doc_description\""];
  	uint32 Status = 6 [(gogoproto.jsontag) = "status", (gogoproto.moretags) = "db:\"status\""];
-	uint32 Fee = 7 [(gogoproto.jsontag) = "fee", (gogoproto.moretags) = "db:\"fee\""];
-	string created_at = 8 [(gogoproto.jsontag) = "created_at", (gogoproto.moretags) = "db:\"created_at\""];
-	string updated_at = 9 [(gogoproto.jsontag) = "updated_at", (gogoproto.moretags) = "db:\"updated_at\""];
+	uint64 BorrowFormID = 7 [(gogoproto.jsontag) = "id_borrow", (gogoproto.moretags) = "db:\"id_borrow\""];
+	uint32 Fee = 8 [(gogoproto.jsontag) = "fee", (gogoproto.moretags) = "db:\"fee\""];
+	string Created_at = 9 [(gogoproto.jsontag) = "created_at", (gogoproto.moretags) = "db:\"created_at\""];
+	string Updated_at = 10 [(gogoproto.jsontag) = "updated_at", (gogoproto.moretags) = "db:\"updated_at\""];
 }
 
+message BorrowForm {
+	uint64 ID = 1 [(gogoproto.jsontag) = "id_borrow", (gogoproto.moretags) = "db:\"id_borrow\""];
+	uint64 DocID = 2 [(gogoproto.jsontag) = "id_doc", (gogoproto.moretags) = "db:\"id_doc\""];	
+	uint64 CusID = 3 [(gogoproto.jsontag) = "id_cus", (gogoproto.moretags) = "db:\"id_cus\""];	
+	uint64 LibID = 4 [(gogoproto.jsontag) = "id_lib", (gogoproto.moretags) = "db:\"id_lib\""];	
+	int32  Status = 5 [(gogoproto.jsontag) = "status", (gogoproto.moretags) = "db:\"status\""];
+	string Created_at = 6 [(gogoproto.jsontag) = "created_at", (gogoproto.moretags) = "db:\"created_at\""];
+	string Updated_at = 7 [(gogoproto.jsontag) = "updated_at", (gogoproto.moretags) = "db:\"updated_at\""];
+}
 
 message SelectAllDocReq {
 }
@@ -47,7 +62,7 @@ message SelectAllDocResp {
 }
 
 message SelectDocByIDReq {
-	uint64 DocID = 1;
+	uint64 docID = 1;
 }
 
 message SelectDocByIDResp {
@@ -75,10 +90,42 @@ message UpdateDocResp {
 }
 
 message DeleteDocReq {
-	uint64 id = 1;
+	uint64 docID = 1;
 }
 
 message DeleteDocResp {
 	int32 code = 1;
 	string message = 2;
 }
+
+//---------------------------------------------------- Borrow Form--------------------------------
+
+message SaveBorrowFormReq {
+	BorrowForm borrowform = 1;
+}
+
+message SaveBorrowFormResp {
+	int32 code = 1;
+	string message = 2;
+}
+
+message UpdateBorrowFormStatusReq {
+	uint64 formID = 1;
+	int32 status = 2;
+}
+
+message UpdateBorrowFormStatusResp {
+	int32 code = 1;
+	string message = 2;
+}
+
+message SelectBorrowFormByIDReq {
+	uint64 formID = 1;
+}
+
+message SelectBorrowFormByIDResp {
+	BorrowForm borrowform = 1;
+        int32 code = 2;
+	string message = 3;
+}
+

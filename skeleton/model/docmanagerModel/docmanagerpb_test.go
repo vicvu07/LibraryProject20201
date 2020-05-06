@@ -83,6 +83,68 @@ func TestDocMarshalTo(t *testing.T) {
 	}
 }
 
+func TestBorrowFormProto(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedBorrowForm(popr, false)
+	dAtA, err := github_com_gogo_protobuf_proto.Marshal(p)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	msg := &BorrowForm{}
+	if err := github_com_gogo_protobuf_proto.Unmarshal(dAtA, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	littlefuzz := make([]byte, len(dAtA))
+	copy(littlefuzz, dAtA)
+	for i := range dAtA {
+		dAtA[i] = byte(popr.Intn(256))
+	}
+	if err := p.VerboseEqual(msg); err != nil {
+		t.Fatalf("seed = %d, %#v !VerboseProto %#v, since %v", seed, msg, p, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+	if len(littlefuzz) > 0 {
+		fuzzamount := 100
+		for i := 0; i < fuzzamount; i++ {
+			littlefuzz[popr.Intn(len(littlefuzz))] = byte(popr.Intn(256))
+			littlefuzz = append(littlefuzz, byte(popr.Intn(256)))
+		}
+		// shouldn't panic
+		_ = github_com_gogo_protobuf_proto.Unmarshal(littlefuzz, msg)
+	}
+}
+
+func TestBorrowFormMarshalTo(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedBorrowForm(popr, false)
+	size := p.Size()
+	dAtA := make([]byte, size)
+	for i := range dAtA {
+		dAtA[i] = byte(popr.Intn(256))
+	}
+	_, err := p.MarshalTo(dAtA)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	msg := &BorrowForm{}
+	if err := github_com_gogo_protobuf_proto.Unmarshal(dAtA, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	for i := range dAtA {
+		dAtA[i] = byte(popr.Intn(256))
+	}
+	if err := p.VerboseEqual(msg); err != nil {
+		t.Fatalf("seed = %d, %#v !VerboseProto %#v, since %v", seed, msg, p, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+}
+
 func TestSelectAllDocReqProto(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -703,6 +765,378 @@ func TestDeleteDocRespMarshalTo(t *testing.T) {
 	}
 }
 
+func TestSaveBorrowFormReqProto(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedSaveBorrowFormReq(popr, false)
+	dAtA, err := github_com_gogo_protobuf_proto.Marshal(p)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	msg := &SaveBorrowFormReq{}
+	if err := github_com_gogo_protobuf_proto.Unmarshal(dAtA, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	littlefuzz := make([]byte, len(dAtA))
+	copy(littlefuzz, dAtA)
+	for i := range dAtA {
+		dAtA[i] = byte(popr.Intn(256))
+	}
+	if err := p.VerboseEqual(msg); err != nil {
+		t.Fatalf("seed = %d, %#v !VerboseProto %#v, since %v", seed, msg, p, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+	if len(littlefuzz) > 0 {
+		fuzzamount := 100
+		for i := 0; i < fuzzamount; i++ {
+			littlefuzz[popr.Intn(len(littlefuzz))] = byte(popr.Intn(256))
+			littlefuzz = append(littlefuzz, byte(popr.Intn(256)))
+		}
+		// shouldn't panic
+		_ = github_com_gogo_protobuf_proto.Unmarshal(littlefuzz, msg)
+	}
+}
+
+func TestSaveBorrowFormReqMarshalTo(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedSaveBorrowFormReq(popr, false)
+	size := p.Size()
+	dAtA := make([]byte, size)
+	for i := range dAtA {
+		dAtA[i] = byte(popr.Intn(256))
+	}
+	_, err := p.MarshalTo(dAtA)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	msg := &SaveBorrowFormReq{}
+	if err := github_com_gogo_protobuf_proto.Unmarshal(dAtA, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	for i := range dAtA {
+		dAtA[i] = byte(popr.Intn(256))
+	}
+	if err := p.VerboseEqual(msg); err != nil {
+		t.Fatalf("seed = %d, %#v !VerboseProto %#v, since %v", seed, msg, p, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+}
+
+func TestSaveBorrowFormRespProto(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedSaveBorrowFormResp(popr, false)
+	dAtA, err := github_com_gogo_protobuf_proto.Marshal(p)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	msg := &SaveBorrowFormResp{}
+	if err := github_com_gogo_protobuf_proto.Unmarshal(dAtA, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	littlefuzz := make([]byte, len(dAtA))
+	copy(littlefuzz, dAtA)
+	for i := range dAtA {
+		dAtA[i] = byte(popr.Intn(256))
+	}
+	if err := p.VerboseEqual(msg); err != nil {
+		t.Fatalf("seed = %d, %#v !VerboseProto %#v, since %v", seed, msg, p, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+	if len(littlefuzz) > 0 {
+		fuzzamount := 100
+		for i := 0; i < fuzzamount; i++ {
+			littlefuzz[popr.Intn(len(littlefuzz))] = byte(popr.Intn(256))
+			littlefuzz = append(littlefuzz, byte(popr.Intn(256)))
+		}
+		// shouldn't panic
+		_ = github_com_gogo_protobuf_proto.Unmarshal(littlefuzz, msg)
+	}
+}
+
+func TestSaveBorrowFormRespMarshalTo(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedSaveBorrowFormResp(popr, false)
+	size := p.Size()
+	dAtA := make([]byte, size)
+	for i := range dAtA {
+		dAtA[i] = byte(popr.Intn(256))
+	}
+	_, err := p.MarshalTo(dAtA)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	msg := &SaveBorrowFormResp{}
+	if err := github_com_gogo_protobuf_proto.Unmarshal(dAtA, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	for i := range dAtA {
+		dAtA[i] = byte(popr.Intn(256))
+	}
+	if err := p.VerboseEqual(msg); err != nil {
+		t.Fatalf("seed = %d, %#v !VerboseProto %#v, since %v", seed, msg, p, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+}
+
+func TestUpdateBorrowFormStatusReqProto(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedUpdateBorrowFormStatusReq(popr, false)
+	dAtA, err := github_com_gogo_protobuf_proto.Marshal(p)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	msg := &UpdateBorrowFormStatusReq{}
+	if err := github_com_gogo_protobuf_proto.Unmarshal(dAtA, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	littlefuzz := make([]byte, len(dAtA))
+	copy(littlefuzz, dAtA)
+	for i := range dAtA {
+		dAtA[i] = byte(popr.Intn(256))
+	}
+	if err := p.VerboseEqual(msg); err != nil {
+		t.Fatalf("seed = %d, %#v !VerboseProto %#v, since %v", seed, msg, p, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+	if len(littlefuzz) > 0 {
+		fuzzamount := 100
+		for i := 0; i < fuzzamount; i++ {
+			littlefuzz[popr.Intn(len(littlefuzz))] = byte(popr.Intn(256))
+			littlefuzz = append(littlefuzz, byte(popr.Intn(256)))
+		}
+		// shouldn't panic
+		_ = github_com_gogo_protobuf_proto.Unmarshal(littlefuzz, msg)
+	}
+}
+
+func TestUpdateBorrowFormStatusReqMarshalTo(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedUpdateBorrowFormStatusReq(popr, false)
+	size := p.Size()
+	dAtA := make([]byte, size)
+	for i := range dAtA {
+		dAtA[i] = byte(popr.Intn(256))
+	}
+	_, err := p.MarshalTo(dAtA)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	msg := &UpdateBorrowFormStatusReq{}
+	if err := github_com_gogo_protobuf_proto.Unmarshal(dAtA, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	for i := range dAtA {
+		dAtA[i] = byte(popr.Intn(256))
+	}
+	if err := p.VerboseEqual(msg); err != nil {
+		t.Fatalf("seed = %d, %#v !VerboseProto %#v, since %v", seed, msg, p, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+}
+
+func TestUpdateBorrowFormStatusRespProto(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedUpdateBorrowFormStatusResp(popr, false)
+	dAtA, err := github_com_gogo_protobuf_proto.Marshal(p)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	msg := &UpdateBorrowFormStatusResp{}
+	if err := github_com_gogo_protobuf_proto.Unmarshal(dAtA, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	littlefuzz := make([]byte, len(dAtA))
+	copy(littlefuzz, dAtA)
+	for i := range dAtA {
+		dAtA[i] = byte(popr.Intn(256))
+	}
+	if err := p.VerboseEqual(msg); err != nil {
+		t.Fatalf("seed = %d, %#v !VerboseProto %#v, since %v", seed, msg, p, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+	if len(littlefuzz) > 0 {
+		fuzzamount := 100
+		for i := 0; i < fuzzamount; i++ {
+			littlefuzz[popr.Intn(len(littlefuzz))] = byte(popr.Intn(256))
+			littlefuzz = append(littlefuzz, byte(popr.Intn(256)))
+		}
+		// shouldn't panic
+		_ = github_com_gogo_protobuf_proto.Unmarshal(littlefuzz, msg)
+	}
+}
+
+func TestUpdateBorrowFormStatusRespMarshalTo(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedUpdateBorrowFormStatusResp(popr, false)
+	size := p.Size()
+	dAtA := make([]byte, size)
+	for i := range dAtA {
+		dAtA[i] = byte(popr.Intn(256))
+	}
+	_, err := p.MarshalTo(dAtA)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	msg := &UpdateBorrowFormStatusResp{}
+	if err := github_com_gogo_protobuf_proto.Unmarshal(dAtA, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	for i := range dAtA {
+		dAtA[i] = byte(popr.Intn(256))
+	}
+	if err := p.VerboseEqual(msg); err != nil {
+		t.Fatalf("seed = %d, %#v !VerboseProto %#v, since %v", seed, msg, p, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+}
+
+func TestSelectBorrowFormByIDReqProto(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedSelectBorrowFormByIDReq(popr, false)
+	dAtA, err := github_com_gogo_protobuf_proto.Marshal(p)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	msg := &SelectBorrowFormByIDReq{}
+	if err := github_com_gogo_protobuf_proto.Unmarshal(dAtA, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	littlefuzz := make([]byte, len(dAtA))
+	copy(littlefuzz, dAtA)
+	for i := range dAtA {
+		dAtA[i] = byte(popr.Intn(256))
+	}
+	if err := p.VerboseEqual(msg); err != nil {
+		t.Fatalf("seed = %d, %#v !VerboseProto %#v, since %v", seed, msg, p, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+	if len(littlefuzz) > 0 {
+		fuzzamount := 100
+		for i := 0; i < fuzzamount; i++ {
+			littlefuzz[popr.Intn(len(littlefuzz))] = byte(popr.Intn(256))
+			littlefuzz = append(littlefuzz, byte(popr.Intn(256)))
+		}
+		// shouldn't panic
+		_ = github_com_gogo_protobuf_proto.Unmarshal(littlefuzz, msg)
+	}
+}
+
+func TestSelectBorrowFormByIDReqMarshalTo(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedSelectBorrowFormByIDReq(popr, false)
+	size := p.Size()
+	dAtA := make([]byte, size)
+	for i := range dAtA {
+		dAtA[i] = byte(popr.Intn(256))
+	}
+	_, err := p.MarshalTo(dAtA)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	msg := &SelectBorrowFormByIDReq{}
+	if err := github_com_gogo_protobuf_proto.Unmarshal(dAtA, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	for i := range dAtA {
+		dAtA[i] = byte(popr.Intn(256))
+	}
+	if err := p.VerboseEqual(msg); err != nil {
+		t.Fatalf("seed = %d, %#v !VerboseProto %#v, since %v", seed, msg, p, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+}
+
+func TestSelectBorrowFormByIDRespProto(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedSelectBorrowFormByIDResp(popr, false)
+	dAtA, err := github_com_gogo_protobuf_proto.Marshal(p)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	msg := &SelectBorrowFormByIDResp{}
+	if err := github_com_gogo_protobuf_proto.Unmarshal(dAtA, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	littlefuzz := make([]byte, len(dAtA))
+	copy(littlefuzz, dAtA)
+	for i := range dAtA {
+		dAtA[i] = byte(popr.Intn(256))
+	}
+	if err := p.VerboseEqual(msg); err != nil {
+		t.Fatalf("seed = %d, %#v !VerboseProto %#v, since %v", seed, msg, p, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+	if len(littlefuzz) > 0 {
+		fuzzamount := 100
+		for i := 0; i < fuzzamount; i++ {
+			littlefuzz[popr.Intn(len(littlefuzz))] = byte(popr.Intn(256))
+			littlefuzz = append(littlefuzz, byte(popr.Intn(256)))
+		}
+		// shouldn't panic
+		_ = github_com_gogo_protobuf_proto.Unmarshal(littlefuzz, msg)
+	}
+}
+
+func TestSelectBorrowFormByIDRespMarshalTo(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedSelectBorrowFormByIDResp(popr, false)
+	size := p.Size()
+	dAtA := make([]byte, size)
+	for i := range dAtA {
+		dAtA[i] = byte(popr.Intn(256))
+	}
+	_, err := p.MarshalTo(dAtA)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	msg := &SelectBorrowFormByIDResp{}
+	if err := github_com_gogo_protobuf_proto.Unmarshal(dAtA, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	for i := range dAtA {
+		dAtA[i] = byte(popr.Intn(256))
+	}
+	if err := p.VerboseEqual(msg); err != nil {
+		t.Fatalf("seed = %d, %#v !VerboseProto %#v, since %v", seed, msg, p, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+}
+
 func TestDocJSON(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -713,6 +1147,27 @@ func TestDocJSON(t *testing.T) {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
 	msg := &Doc{}
+	err = github_com_gogo_protobuf_jsonpb.UnmarshalString(jsondata, msg)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	if err := p.VerboseEqual(msg); err != nil {
+		t.Fatalf("seed = %d, %#v !VerboseProto %#v, since %v", seed, msg, p, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
+	}
+}
+func TestBorrowFormJSON(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedBorrowForm(popr, true)
+	marshaler := github_com_gogo_protobuf_jsonpb.Marshaler{}
+	jsondata, err := marshaler.MarshalToString(p)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	msg := &BorrowForm{}
 	err = github_com_gogo_protobuf_jsonpb.UnmarshalString(jsondata, msg)
 	if err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
@@ -934,6 +1389,132 @@ func TestDeleteDocRespJSON(t *testing.T) {
 		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
 	}
 }
+func TestSaveBorrowFormReqJSON(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedSaveBorrowFormReq(popr, true)
+	marshaler := github_com_gogo_protobuf_jsonpb.Marshaler{}
+	jsondata, err := marshaler.MarshalToString(p)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	msg := &SaveBorrowFormReq{}
+	err = github_com_gogo_protobuf_jsonpb.UnmarshalString(jsondata, msg)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	if err := p.VerboseEqual(msg); err != nil {
+		t.Fatalf("seed = %d, %#v !VerboseProto %#v, since %v", seed, msg, p, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
+	}
+}
+func TestSaveBorrowFormRespJSON(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedSaveBorrowFormResp(popr, true)
+	marshaler := github_com_gogo_protobuf_jsonpb.Marshaler{}
+	jsondata, err := marshaler.MarshalToString(p)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	msg := &SaveBorrowFormResp{}
+	err = github_com_gogo_protobuf_jsonpb.UnmarshalString(jsondata, msg)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	if err := p.VerboseEqual(msg); err != nil {
+		t.Fatalf("seed = %d, %#v !VerboseProto %#v, since %v", seed, msg, p, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
+	}
+}
+func TestUpdateBorrowFormStatusReqJSON(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedUpdateBorrowFormStatusReq(popr, true)
+	marshaler := github_com_gogo_protobuf_jsonpb.Marshaler{}
+	jsondata, err := marshaler.MarshalToString(p)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	msg := &UpdateBorrowFormStatusReq{}
+	err = github_com_gogo_protobuf_jsonpb.UnmarshalString(jsondata, msg)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	if err := p.VerboseEqual(msg); err != nil {
+		t.Fatalf("seed = %d, %#v !VerboseProto %#v, since %v", seed, msg, p, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
+	}
+}
+func TestUpdateBorrowFormStatusRespJSON(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedUpdateBorrowFormStatusResp(popr, true)
+	marshaler := github_com_gogo_protobuf_jsonpb.Marshaler{}
+	jsondata, err := marshaler.MarshalToString(p)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	msg := &UpdateBorrowFormStatusResp{}
+	err = github_com_gogo_protobuf_jsonpb.UnmarshalString(jsondata, msg)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	if err := p.VerboseEqual(msg); err != nil {
+		t.Fatalf("seed = %d, %#v !VerboseProto %#v, since %v", seed, msg, p, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
+	}
+}
+func TestSelectBorrowFormByIDReqJSON(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedSelectBorrowFormByIDReq(popr, true)
+	marshaler := github_com_gogo_protobuf_jsonpb.Marshaler{}
+	jsondata, err := marshaler.MarshalToString(p)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	msg := &SelectBorrowFormByIDReq{}
+	err = github_com_gogo_protobuf_jsonpb.UnmarshalString(jsondata, msg)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	if err := p.VerboseEqual(msg); err != nil {
+		t.Fatalf("seed = %d, %#v !VerboseProto %#v, since %v", seed, msg, p, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
+	}
+}
+func TestSelectBorrowFormByIDRespJSON(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedSelectBorrowFormByIDResp(popr, true)
+	marshaler := github_com_gogo_protobuf_jsonpb.Marshaler{}
+	jsondata, err := marshaler.MarshalToString(p)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	msg := &SelectBorrowFormByIDResp{}
+	err = github_com_gogo_protobuf_jsonpb.UnmarshalString(jsondata, msg)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	if err := p.VerboseEqual(msg); err != nil {
+		t.Fatalf("seed = %d, %#v !VerboseProto %#v, since %v", seed, msg, p, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Json Equal %#v", seed, msg, p)
+	}
+}
 func TestDocProtoText(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
@@ -957,6 +1538,40 @@ func TestDocProtoCompactText(t *testing.T) {
 	p := NewPopulatedDoc(popr, true)
 	dAtA := github_com_gogo_protobuf_proto.CompactTextString(p)
 	msg := &Doc{}
+	if err := github_com_gogo_protobuf_proto.UnmarshalText(dAtA, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	if err := p.VerboseEqual(msg); err != nil {
+		t.Fatalf("seed = %d, %#v !VerboseProto %#v, since %v", seed, msg, p, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+}
+
+func TestBorrowFormProtoText(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedBorrowForm(popr, true)
+	dAtA := github_com_gogo_protobuf_proto.MarshalTextString(p)
+	msg := &BorrowForm{}
+	if err := github_com_gogo_protobuf_proto.UnmarshalText(dAtA, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	if err := p.VerboseEqual(msg); err != nil {
+		t.Fatalf("seed = %d, %#v !VerboseProto %#v, since %v", seed, msg, p, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+}
+
+func TestBorrowFormProtoCompactText(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedBorrowForm(popr, true)
+	dAtA := github_com_gogo_protobuf_proto.CompactTextString(p)
+	msg := &BorrowForm{}
 	if err := github_com_gogo_protobuf_proto.UnmarshalText(dAtA, msg); err != nil {
 		t.Fatalf("seed = %d, err = %v", seed, err)
 	}
@@ -1308,6 +1923,210 @@ func TestDeleteDocRespProtoCompactText(t *testing.T) {
 	}
 }
 
+func TestSaveBorrowFormReqProtoText(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedSaveBorrowFormReq(popr, true)
+	dAtA := github_com_gogo_protobuf_proto.MarshalTextString(p)
+	msg := &SaveBorrowFormReq{}
+	if err := github_com_gogo_protobuf_proto.UnmarshalText(dAtA, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	if err := p.VerboseEqual(msg); err != nil {
+		t.Fatalf("seed = %d, %#v !VerboseProto %#v, since %v", seed, msg, p, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+}
+
+func TestSaveBorrowFormReqProtoCompactText(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedSaveBorrowFormReq(popr, true)
+	dAtA := github_com_gogo_protobuf_proto.CompactTextString(p)
+	msg := &SaveBorrowFormReq{}
+	if err := github_com_gogo_protobuf_proto.UnmarshalText(dAtA, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	if err := p.VerboseEqual(msg); err != nil {
+		t.Fatalf("seed = %d, %#v !VerboseProto %#v, since %v", seed, msg, p, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+}
+
+func TestSaveBorrowFormRespProtoText(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedSaveBorrowFormResp(popr, true)
+	dAtA := github_com_gogo_protobuf_proto.MarshalTextString(p)
+	msg := &SaveBorrowFormResp{}
+	if err := github_com_gogo_protobuf_proto.UnmarshalText(dAtA, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	if err := p.VerboseEqual(msg); err != nil {
+		t.Fatalf("seed = %d, %#v !VerboseProto %#v, since %v", seed, msg, p, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+}
+
+func TestSaveBorrowFormRespProtoCompactText(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedSaveBorrowFormResp(popr, true)
+	dAtA := github_com_gogo_protobuf_proto.CompactTextString(p)
+	msg := &SaveBorrowFormResp{}
+	if err := github_com_gogo_protobuf_proto.UnmarshalText(dAtA, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	if err := p.VerboseEqual(msg); err != nil {
+		t.Fatalf("seed = %d, %#v !VerboseProto %#v, since %v", seed, msg, p, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+}
+
+func TestUpdateBorrowFormStatusReqProtoText(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedUpdateBorrowFormStatusReq(popr, true)
+	dAtA := github_com_gogo_protobuf_proto.MarshalTextString(p)
+	msg := &UpdateBorrowFormStatusReq{}
+	if err := github_com_gogo_protobuf_proto.UnmarshalText(dAtA, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	if err := p.VerboseEqual(msg); err != nil {
+		t.Fatalf("seed = %d, %#v !VerboseProto %#v, since %v", seed, msg, p, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+}
+
+func TestUpdateBorrowFormStatusReqProtoCompactText(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedUpdateBorrowFormStatusReq(popr, true)
+	dAtA := github_com_gogo_protobuf_proto.CompactTextString(p)
+	msg := &UpdateBorrowFormStatusReq{}
+	if err := github_com_gogo_protobuf_proto.UnmarshalText(dAtA, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	if err := p.VerboseEqual(msg); err != nil {
+		t.Fatalf("seed = %d, %#v !VerboseProto %#v, since %v", seed, msg, p, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+}
+
+func TestUpdateBorrowFormStatusRespProtoText(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedUpdateBorrowFormStatusResp(popr, true)
+	dAtA := github_com_gogo_protobuf_proto.MarshalTextString(p)
+	msg := &UpdateBorrowFormStatusResp{}
+	if err := github_com_gogo_protobuf_proto.UnmarshalText(dAtA, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	if err := p.VerboseEqual(msg); err != nil {
+		t.Fatalf("seed = %d, %#v !VerboseProto %#v, since %v", seed, msg, p, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+}
+
+func TestUpdateBorrowFormStatusRespProtoCompactText(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedUpdateBorrowFormStatusResp(popr, true)
+	dAtA := github_com_gogo_protobuf_proto.CompactTextString(p)
+	msg := &UpdateBorrowFormStatusResp{}
+	if err := github_com_gogo_protobuf_proto.UnmarshalText(dAtA, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	if err := p.VerboseEqual(msg); err != nil {
+		t.Fatalf("seed = %d, %#v !VerboseProto %#v, since %v", seed, msg, p, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+}
+
+func TestSelectBorrowFormByIDReqProtoText(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedSelectBorrowFormByIDReq(popr, true)
+	dAtA := github_com_gogo_protobuf_proto.MarshalTextString(p)
+	msg := &SelectBorrowFormByIDReq{}
+	if err := github_com_gogo_protobuf_proto.UnmarshalText(dAtA, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	if err := p.VerboseEqual(msg); err != nil {
+		t.Fatalf("seed = %d, %#v !VerboseProto %#v, since %v", seed, msg, p, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+}
+
+func TestSelectBorrowFormByIDReqProtoCompactText(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedSelectBorrowFormByIDReq(popr, true)
+	dAtA := github_com_gogo_protobuf_proto.CompactTextString(p)
+	msg := &SelectBorrowFormByIDReq{}
+	if err := github_com_gogo_protobuf_proto.UnmarshalText(dAtA, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	if err := p.VerboseEqual(msg); err != nil {
+		t.Fatalf("seed = %d, %#v !VerboseProto %#v, since %v", seed, msg, p, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+}
+
+func TestSelectBorrowFormByIDRespProtoText(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedSelectBorrowFormByIDResp(popr, true)
+	dAtA := github_com_gogo_protobuf_proto.MarshalTextString(p)
+	msg := &SelectBorrowFormByIDResp{}
+	if err := github_com_gogo_protobuf_proto.UnmarshalText(dAtA, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	if err := p.VerboseEqual(msg); err != nil {
+		t.Fatalf("seed = %d, %#v !VerboseProto %#v, since %v", seed, msg, p, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+}
+
+func TestSelectBorrowFormByIDRespProtoCompactText(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedSelectBorrowFormByIDResp(popr, true)
+	dAtA := github_com_gogo_protobuf_proto.CompactTextString(p)
+	msg := &SelectBorrowFormByIDResp{}
+	if err := github_com_gogo_protobuf_proto.UnmarshalText(dAtA, msg); err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	if err := p.VerboseEqual(msg); err != nil {
+		t.Fatalf("seed = %d, %#v !VerboseProto %#v, since %v", seed, msg, p, err)
+	}
+	if !p.Equal(msg) {
+		t.Fatalf("seed = %d, %#v !Proto %#v", seed, msg, p)
+	}
+}
+
 func TestDocVerboseEqual(t *testing.T) {
 	popr := math_rand.New(math_rand.NewSource(time.Now().UnixNano()))
 	p := NewPopulatedDoc(popr, false)
@@ -1316,6 +2135,21 @@ func TestDocVerboseEqual(t *testing.T) {
 		panic(err)
 	}
 	msg := &Doc{}
+	if err := github_com_gogo_protobuf_proto.Unmarshal(dAtA, msg); err != nil {
+		panic(err)
+	}
+	if err := p.VerboseEqual(msg); err != nil {
+		t.Fatalf("%#v !VerboseEqual %#v, since %v", msg, p, err)
+	}
+}
+func TestBorrowFormVerboseEqual(t *testing.T) {
+	popr := math_rand.New(math_rand.NewSource(time.Now().UnixNano()))
+	p := NewPopulatedBorrowForm(popr, false)
+	dAtA, err := github_com_gogo_protobuf_proto.Marshal(p)
+	if err != nil {
+		panic(err)
+	}
+	msg := &BorrowForm{}
 	if err := github_com_gogo_protobuf_proto.Unmarshal(dAtA, msg); err != nil {
 		panic(err)
 	}
@@ -1473,9 +2307,112 @@ func TestDeleteDocRespVerboseEqual(t *testing.T) {
 		t.Fatalf("%#v !VerboseEqual %#v, since %v", msg, p, err)
 	}
 }
+func TestSaveBorrowFormReqVerboseEqual(t *testing.T) {
+	popr := math_rand.New(math_rand.NewSource(time.Now().UnixNano()))
+	p := NewPopulatedSaveBorrowFormReq(popr, false)
+	dAtA, err := github_com_gogo_protobuf_proto.Marshal(p)
+	if err != nil {
+		panic(err)
+	}
+	msg := &SaveBorrowFormReq{}
+	if err := github_com_gogo_protobuf_proto.Unmarshal(dAtA, msg); err != nil {
+		panic(err)
+	}
+	if err := p.VerboseEqual(msg); err != nil {
+		t.Fatalf("%#v !VerboseEqual %#v, since %v", msg, p, err)
+	}
+}
+func TestSaveBorrowFormRespVerboseEqual(t *testing.T) {
+	popr := math_rand.New(math_rand.NewSource(time.Now().UnixNano()))
+	p := NewPopulatedSaveBorrowFormResp(popr, false)
+	dAtA, err := github_com_gogo_protobuf_proto.Marshal(p)
+	if err != nil {
+		panic(err)
+	}
+	msg := &SaveBorrowFormResp{}
+	if err := github_com_gogo_protobuf_proto.Unmarshal(dAtA, msg); err != nil {
+		panic(err)
+	}
+	if err := p.VerboseEqual(msg); err != nil {
+		t.Fatalf("%#v !VerboseEqual %#v, since %v", msg, p, err)
+	}
+}
+func TestUpdateBorrowFormStatusReqVerboseEqual(t *testing.T) {
+	popr := math_rand.New(math_rand.NewSource(time.Now().UnixNano()))
+	p := NewPopulatedUpdateBorrowFormStatusReq(popr, false)
+	dAtA, err := github_com_gogo_protobuf_proto.Marshal(p)
+	if err != nil {
+		panic(err)
+	}
+	msg := &UpdateBorrowFormStatusReq{}
+	if err := github_com_gogo_protobuf_proto.Unmarshal(dAtA, msg); err != nil {
+		panic(err)
+	}
+	if err := p.VerboseEqual(msg); err != nil {
+		t.Fatalf("%#v !VerboseEqual %#v, since %v", msg, p, err)
+	}
+}
+func TestUpdateBorrowFormStatusRespVerboseEqual(t *testing.T) {
+	popr := math_rand.New(math_rand.NewSource(time.Now().UnixNano()))
+	p := NewPopulatedUpdateBorrowFormStatusResp(popr, false)
+	dAtA, err := github_com_gogo_protobuf_proto.Marshal(p)
+	if err != nil {
+		panic(err)
+	}
+	msg := &UpdateBorrowFormStatusResp{}
+	if err := github_com_gogo_protobuf_proto.Unmarshal(dAtA, msg); err != nil {
+		panic(err)
+	}
+	if err := p.VerboseEqual(msg); err != nil {
+		t.Fatalf("%#v !VerboseEqual %#v, since %v", msg, p, err)
+	}
+}
+func TestSelectBorrowFormByIDReqVerboseEqual(t *testing.T) {
+	popr := math_rand.New(math_rand.NewSource(time.Now().UnixNano()))
+	p := NewPopulatedSelectBorrowFormByIDReq(popr, false)
+	dAtA, err := github_com_gogo_protobuf_proto.Marshal(p)
+	if err != nil {
+		panic(err)
+	}
+	msg := &SelectBorrowFormByIDReq{}
+	if err := github_com_gogo_protobuf_proto.Unmarshal(dAtA, msg); err != nil {
+		panic(err)
+	}
+	if err := p.VerboseEqual(msg); err != nil {
+		t.Fatalf("%#v !VerboseEqual %#v, since %v", msg, p, err)
+	}
+}
+func TestSelectBorrowFormByIDRespVerboseEqual(t *testing.T) {
+	popr := math_rand.New(math_rand.NewSource(time.Now().UnixNano()))
+	p := NewPopulatedSelectBorrowFormByIDResp(popr, false)
+	dAtA, err := github_com_gogo_protobuf_proto.Marshal(p)
+	if err != nil {
+		panic(err)
+	}
+	msg := &SelectBorrowFormByIDResp{}
+	if err := github_com_gogo_protobuf_proto.Unmarshal(dAtA, msg); err != nil {
+		panic(err)
+	}
+	if err := p.VerboseEqual(msg); err != nil {
+		t.Fatalf("%#v !VerboseEqual %#v, since %v", msg, p, err)
+	}
+}
 func TestDocGoString(t *testing.T) {
 	popr := math_rand.New(math_rand.NewSource(time.Now().UnixNano()))
 	p := NewPopulatedDoc(popr, false)
+	s1 := p.GoString()
+	s2 := fmt.Sprintf("%#v", p)
+	if s1 != s2 {
+		t.Fatalf("GoString want %v got %v", s1, s2)
+	}
+	_, err := go_parser.ParseExpr(s1)
+	if err != nil {
+		t.Fatal(err)
+	}
+}
+func TestBorrowFormGoString(t *testing.T) {
+	popr := math_rand.New(math_rand.NewSource(time.Now().UnixNano()))
+	p := NewPopulatedBorrowForm(popr, false)
 	s1 := p.GoString()
 	s2 := fmt.Sprintf("%#v", p)
 	if s1 != s2 {
@@ -1616,10 +2553,110 @@ func TestDeleteDocRespGoString(t *testing.T) {
 		t.Fatal(err)
 	}
 }
+func TestSaveBorrowFormReqGoString(t *testing.T) {
+	popr := math_rand.New(math_rand.NewSource(time.Now().UnixNano()))
+	p := NewPopulatedSaveBorrowFormReq(popr, false)
+	s1 := p.GoString()
+	s2 := fmt.Sprintf("%#v", p)
+	if s1 != s2 {
+		t.Fatalf("GoString want %v got %v", s1, s2)
+	}
+	_, err := go_parser.ParseExpr(s1)
+	if err != nil {
+		t.Fatal(err)
+	}
+}
+func TestSaveBorrowFormRespGoString(t *testing.T) {
+	popr := math_rand.New(math_rand.NewSource(time.Now().UnixNano()))
+	p := NewPopulatedSaveBorrowFormResp(popr, false)
+	s1 := p.GoString()
+	s2 := fmt.Sprintf("%#v", p)
+	if s1 != s2 {
+		t.Fatalf("GoString want %v got %v", s1, s2)
+	}
+	_, err := go_parser.ParseExpr(s1)
+	if err != nil {
+		t.Fatal(err)
+	}
+}
+func TestUpdateBorrowFormStatusReqGoString(t *testing.T) {
+	popr := math_rand.New(math_rand.NewSource(time.Now().UnixNano()))
+	p := NewPopulatedUpdateBorrowFormStatusReq(popr, false)
+	s1 := p.GoString()
+	s2 := fmt.Sprintf("%#v", p)
+	if s1 != s2 {
+		t.Fatalf("GoString want %v got %v", s1, s2)
+	}
+	_, err := go_parser.ParseExpr(s1)
+	if err != nil {
+		t.Fatal(err)
+	}
+}
+func TestUpdateBorrowFormStatusRespGoString(t *testing.T) {
+	popr := math_rand.New(math_rand.NewSource(time.Now().UnixNano()))
+	p := NewPopulatedUpdateBorrowFormStatusResp(popr, false)
+	s1 := p.GoString()
+	s2 := fmt.Sprintf("%#v", p)
+	if s1 != s2 {
+		t.Fatalf("GoString want %v got %v", s1, s2)
+	}
+	_, err := go_parser.ParseExpr(s1)
+	if err != nil {
+		t.Fatal(err)
+	}
+}
+func TestSelectBorrowFormByIDReqGoString(t *testing.T) {
+	popr := math_rand.New(math_rand.NewSource(time.Now().UnixNano()))
+	p := NewPopulatedSelectBorrowFormByIDReq(popr, false)
+	s1 := p.GoString()
+	s2 := fmt.Sprintf("%#v", p)
+	if s1 != s2 {
+		t.Fatalf("GoString want %v got %v", s1, s2)
+	}
+	_, err := go_parser.ParseExpr(s1)
+	if err != nil {
+		t.Fatal(err)
+	}
+}
+func TestSelectBorrowFormByIDRespGoString(t *testing.T) {
+	popr := math_rand.New(math_rand.NewSource(time.Now().UnixNano()))
+	p := NewPopulatedSelectBorrowFormByIDResp(popr, false)
+	s1 := p.GoString()
+	s2 := fmt.Sprintf("%#v", p)
+	if s1 != s2 {
+		t.Fatalf("GoString want %v got %v", s1, s2)
+	}
+	_, err := go_parser.ParseExpr(s1)
+	if err != nil {
+		t.Fatal(err)
+	}
+}
 func TestDocSize(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
 	p := NewPopulatedDoc(popr, true)
+	size2 := github_com_gogo_protobuf_proto.Size(p)
+	dAtA, err := github_com_gogo_protobuf_proto.Marshal(p)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	size := p.Size()
+	if len(dAtA) != size {
+		t.Errorf("seed = %d, size %v != marshalled size %v", seed, size, len(dAtA))
+	}
+	if size2 != size {
+		t.Errorf("seed = %d, size %v != before marshal proto.Size %v", seed, size, size2)
+	}
+	size3 := github_com_gogo_protobuf_proto.Size(p)
+	if size3 != size {
+		t.Errorf("seed = %d, size %v != after marshal proto.Size %v", seed, size, size3)
+	}
+}
+
+func TestBorrowFormSize(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedBorrowForm(popr, true)
 	size2 := github_com_gogo_protobuf_proto.Size(p)
 	dAtA, err := github_com_gogo_protobuf_proto.Marshal(p)
 	if err != nil {
@@ -1840,6 +2877,138 @@ func TestDeleteDocRespSize(t *testing.T) {
 	seed := time.Now().UnixNano()
 	popr := math_rand.New(math_rand.NewSource(seed))
 	p := NewPopulatedDeleteDocResp(popr, true)
+	size2 := github_com_gogo_protobuf_proto.Size(p)
+	dAtA, err := github_com_gogo_protobuf_proto.Marshal(p)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	size := p.Size()
+	if len(dAtA) != size {
+		t.Errorf("seed = %d, size %v != marshalled size %v", seed, size, len(dAtA))
+	}
+	if size2 != size {
+		t.Errorf("seed = %d, size %v != before marshal proto.Size %v", seed, size, size2)
+	}
+	size3 := github_com_gogo_protobuf_proto.Size(p)
+	if size3 != size {
+		t.Errorf("seed = %d, size %v != after marshal proto.Size %v", seed, size, size3)
+	}
+}
+
+func TestSaveBorrowFormReqSize(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedSaveBorrowFormReq(popr, true)
+	size2 := github_com_gogo_protobuf_proto.Size(p)
+	dAtA, err := github_com_gogo_protobuf_proto.Marshal(p)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	size := p.Size()
+	if len(dAtA) != size {
+		t.Errorf("seed = %d, size %v != marshalled size %v", seed, size, len(dAtA))
+	}
+	if size2 != size {
+		t.Errorf("seed = %d, size %v != before marshal proto.Size %v", seed, size, size2)
+	}
+	size3 := github_com_gogo_protobuf_proto.Size(p)
+	if size3 != size {
+		t.Errorf("seed = %d, size %v != after marshal proto.Size %v", seed, size, size3)
+	}
+}
+
+func TestSaveBorrowFormRespSize(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedSaveBorrowFormResp(popr, true)
+	size2 := github_com_gogo_protobuf_proto.Size(p)
+	dAtA, err := github_com_gogo_protobuf_proto.Marshal(p)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	size := p.Size()
+	if len(dAtA) != size {
+		t.Errorf("seed = %d, size %v != marshalled size %v", seed, size, len(dAtA))
+	}
+	if size2 != size {
+		t.Errorf("seed = %d, size %v != before marshal proto.Size %v", seed, size, size2)
+	}
+	size3 := github_com_gogo_protobuf_proto.Size(p)
+	if size3 != size {
+		t.Errorf("seed = %d, size %v != after marshal proto.Size %v", seed, size, size3)
+	}
+}
+
+func TestUpdateBorrowFormStatusReqSize(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedUpdateBorrowFormStatusReq(popr, true)
+	size2 := github_com_gogo_protobuf_proto.Size(p)
+	dAtA, err := github_com_gogo_protobuf_proto.Marshal(p)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	size := p.Size()
+	if len(dAtA) != size {
+		t.Errorf("seed = %d, size %v != marshalled size %v", seed, size, len(dAtA))
+	}
+	if size2 != size {
+		t.Errorf("seed = %d, size %v != before marshal proto.Size %v", seed, size, size2)
+	}
+	size3 := github_com_gogo_protobuf_proto.Size(p)
+	if size3 != size {
+		t.Errorf("seed = %d, size %v != after marshal proto.Size %v", seed, size, size3)
+	}
+}
+
+func TestUpdateBorrowFormStatusRespSize(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedUpdateBorrowFormStatusResp(popr, true)
+	size2 := github_com_gogo_protobuf_proto.Size(p)
+	dAtA, err := github_com_gogo_protobuf_proto.Marshal(p)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	size := p.Size()
+	if len(dAtA) != size {
+		t.Errorf("seed = %d, size %v != marshalled size %v", seed, size, len(dAtA))
+	}
+	if size2 != size {
+		t.Errorf("seed = %d, size %v != before marshal proto.Size %v", seed, size, size2)
+	}
+	size3 := github_com_gogo_protobuf_proto.Size(p)
+	if size3 != size {
+		t.Errorf("seed = %d, size %v != after marshal proto.Size %v", seed, size, size3)
+	}
+}
+
+func TestSelectBorrowFormByIDReqSize(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedSelectBorrowFormByIDReq(popr, true)
+	size2 := github_com_gogo_protobuf_proto.Size(p)
+	dAtA, err := github_com_gogo_protobuf_proto.Marshal(p)
+	if err != nil {
+		t.Fatalf("seed = %d, err = %v", seed, err)
+	}
+	size := p.Size()
+	if len(dAtA) != size {
+		t.Errorf("seed = %d, size %v != marshalled size %v", seed, size, len(dAtA))
+	}
+	if size2 != size {
+		t.Errorf("seed = %d, size %v != before marshal proto.Size %v", seed, size, size2)
+	}
+	size3 := github_com_gogo_protobuf_proto.Size(p)
+	if size3 != size {
+		t.Errorf("seed = %d, size %v != after marshal proto.Size %v", seed, size, size3)
+	}
+}
+
+func TestSelectBorrowFormByIDRespSize(t *testing.T) {
+	seed := time.Now().UnixNano()
+	popr := math_rand.New(math_rand.NewSource(seed))
+	p := NewPopulatedSelectBorrowFormByIDResp(popr, true)
 	size2 := github_com_gogo_protobuf_proto.Size(p)
 	dAtA, err := github_com_gogo_protobuf_proto.Marshal(p)
 	if err != nil {

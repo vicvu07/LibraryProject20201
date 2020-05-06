@@ -30,15 +30,16 @@ var _ = math.Inf
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 type Doc struct {
-	ID          uint64 `protobuf:"varint,1,opt,name=ID,proto3" json:"id_doc" db:"id_doc"`
-	Name        string `protobuf:"bytes,2,opt,name=Name,proto3" json:"doc_name" db:"doc_name"`
-	Author      string `protobuf:"bytes,3,opt,name=Author,proto3" json:"doc_author" db:"doc_author"`
-	Type        string `protobuf:"bytes,4,opt,name=Type,proto3" json:"doc_type" db:"doc_type"`
-	Description string `protobuf:"bytes,5,opt,name=Description,proto3" json:"doc_description" db:"doc_description"`
-	Status      uint32 `protobuf:"varint,6,opt,name=Status,proto3" json:"status" db:"status"`
-	Fee         uint32 `protobuf:"varint,7,opt,name=Fee,proto3" json:"fee" db:"fee"`
-	CreatedAt   string `protobuf:"bytes,8,opt,name=created_at,json=createdAt,proto3" json:"created_at" db:"created_at"`
-	UpdatedAt   string `protobuf:"bytes,9,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at" db:"updated_at"`
+	ID           uint64 `protobuf:"varint,1,opt,name=ID,proto3" json:"id_doc" db:"id_doc"`
+	Name         string `protobuf:"bytes,2,opt,name=Name,proto3" json:"doc_name" db:"doc_name"`
+	Author       string `protobuf:"bytes,3,opt,name=Author,proto3" json:"doc_author" db:"doc_author"`
+	Type         string `protobuf:"bytes,4,opt,name=Type,proto3" json:"doc_type" db:"doc_type"`
+	Description  string `protobuf:"bytes,5,opt,name=Description,proto3" json:"doc_description" db:"doc_description"`
+	Status       uint32 `protobuf:"varint,6,opt,name=Status,proto3" json:"status" db:"status"`
+	BorrowFormID uint64 `protobuf:"varint,7,opt,name=BorrowFormID,proto3" json:"id_borrow" db:"id_borrow"`
+	Fee          uint32 `protobuf:"varint,8,opt,name=Fee,proto3" json:"fee" db:"fee"`
+	CreatedAt    string `protobuf:"bytes,9,opt,name=Created_at,json=CreatedAt,proto3" json:"created_at" db:"created_at"`
+	UpdatedAt    string `protobuf:"bytes,10,opt,name=Updated_at,json=UpdatedAt,proto3" json:"updated_at" db:"updated_at"`
 }
 
 func (m *Doc) Reset()         { *m = Doc{} }
@@ -116,6 +117,13 @@ func (m *Doc) GetStatus() uint32 {
 	return 0
 }
 
+func (m *Doc) GetBorrowFormID() uint64 {
+	if m != nil {
+		return m.BorrowFormID
+	}
+	return 0
+}
+
 func (m *Doc) GetFee() uint32 {
 	if m != nil {
 		return m.Fee
@@ -137,6 +145,98 @@ func (m *Doc) GetUpdatedAt() string {
 	return ""
 }
 
+type BorrowForm struct {
+	ID        uint64 `protobuf:"varint,1,opt,name=ID,proto3" json:"id_borrow" db:"id_borrow"`
+	DocID     uint64 `protobuf:"varint,2,opt,name=DocID,proto3" json:"id_doc" db:"id_doc"`
+	CusID     uint64 `protobuf:"varint,3,opt,name=CusID,proto3" json:"id_cus" db:"id_cus"`
+	LibID     uint64 `protobuf:"varint,4,opt,name=LibID,proto3" json:"id_lib" db:"id_lib"`
+	Status    int32  `protobuf:"varint,5,opt,name=Status,proto3" json:"status" db:"status"`
+	CreatedAt string `protobuf:"bytes,6,opt,name=Created_at,json=CreatedAt,proto3" json:"created_at" db:"created_at"`
+	UpdatedAt string `protobuf:"bytes,7,opt,name=Updated_at,json=UpdatedAt,proto3" json:"updated_at" db:"updated_at"`
+}
+
+func (m *BorrowForm) Reset()         { *m = BorrowForm{} }
+func (m *BorrowForm) String() string { return proto.CompactTextString(m) }
+func (*BorrowForm) ProtoMessage()    {}
+func (*BorrowForm) Descriptor() ([]byte, []int) {
+	return fileDescriptor_3bc93e03df457931, []int{1}
+}
+func (m *BorrowForm) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *BorrowForm) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_BorrowForm.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *BorrowForm) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_BorrowForm.Merge(m, src)
+}
+func (m *BorrowForm) XXX_Size() int {
+	return m.Size()
+}
+func (m *BorrowForm) XXX_DiscardUnknown() {
+	xxx_messageInfo_BorrowForm.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_BorrowForm proto.InternalMessageInfo
+
+func (m *BorrowForm) GetID() uint64 {
+	if m != nil {
+		return m.ID
+	}
+	return 0
+}
+
+func (m *BorrowForm) GetDocID() uint64 {
+	if m != nil {
+		return m.DocID
+	}
+	return 0
+}
+
+func (m *BorrowForm) GetCusID() uint64 {
+	if m != nil {
+		return m.CusID
+	}
+	return 0
+}
+
+func (m *BorrowForm) GetLibID() uint64 {
+	if m != nil {
+		return m.LibID
+	}
+	return 0
+}
+
+func (m *BorrowForm) GetStatus() int32 {
+	if m != nil {
+		return m.Status
+	}
+	return 0
+}
+
+func (m *BorrowForm) GetCreatedAt() string {
+	if m != nil {
+		return m.CreatedAt
+	}
+	return ""
+}
+
+func (m *BorrowForm) GetUpdatedAt() string {
+	if m != nil {
+		return m.UpdatedAt
+	}
+	return ""
+}
+
 type SelectAllDocReq struct {
 }
 
@@ -144,7 +244,7 @@ func (m *SelectAllDocReq) Reset()         { *m = SelectAllDocReq{} }
 func (m *SelectAllDocReq) String() string { return proto.CompactTextString(m) }
 func (*SelectAllDocReq) ProtoMessage()    {}
 func (*SelectAllDocReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{1}
+	return fileDescriptor_3bc93e03df457931, []int{2}
 }
 func (m *SelectAllDocReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -183,7 +283,7 @@ func (m *SelectAllDocResp) Reset()         { *m = SelectAllDocResp{} }
 func (m *SelectAllDocResp) String() string { return proto.CompactTextString(m) }
 func (*SelectAllDocResp) ProtoMessage()    {}
 func (*SelectAllDocResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{2}
+	return fileDescriptor_3bc93e03df457931, []int{3}
 }
 func (m *SelectAllDocResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -234,14 +334,14 @@ func (m *SelectAllDocResp) GetDocuments() []*Doc {
 }
 
 type SelectDocByIDReq struct {
-	DocID uint64 `protobuf:"varint,1,opt,name=DocID,proto3" json:"DocID,omitempty"`
+	DocID uint64 `protobuf:"varint,1,opt,name=docID,proto3" json:"docID,omitempty"`
 }
 
 func (m *SelectDocByIDReq) Reset()         { *m = SelectDocByIDReq{} }
 func (m *SelectDocByIDReq) String() string { return proto.CompactTextString(m) }
 func (*SelectDocByIDReq) ProtoMessage()    {}
 func (*SelectDocByIDReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{3}
+	return fileDescriptor_3bc93e03df457931, []int{4}
 }
 func (m *SelectDocByIDReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -287,7 +387,7 @@ func (m *SelectDocByIDResp) Reset()         { *m = SelectDocByIDResp{} }
 func (m *SelectDocByIDResp) String() string { return proto.CompactTextString(m) }
 func (*SelectDocByIDResp) ProtoMessage()    {}
 func (*SelectDocByIDResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{4}
+	return fileDescriptor_3bc93e03df457931, []int{5}
 }
 func (m *SelectDocByIDResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -345,7 +445,7 @@ func (m *SaveDocReq) Reset()         { *m = SaveDocReq{} }
 func (m *SaveDocReq) String() string { return proto.CompactTextString(m) }
 func (*SaveDocReq) ProtoMessage()    {}
 func (*SaveDocReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{5}
+	return fileDescriptor_3bc93e03df457931, []int{6}
 }
 func (m *SaveDocReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -390,7 +490,7 @@ func (m *SaveDocResp) Reset()         { *m = SaveDocResp{} }
 func (m *SaveDocResp) String() string { return proto.CompactTextString(m) }
 func (*SaveDocResp) ProtoMessage()    {}
 func (*SaveDocResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{6}
+	return fileDescriptor_3bc93e03df457931, []int{7}
 }
 func (m *SaveDocResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -441,7 +541,7 @@ func (m *UpdateDocReq) Reset()         { *m = UpdateDocReq{} }
 func (m *UpdateDocReq) String() string { return proto.CompactTextString(m) }
 func (*UpdateDocReq) ProtoMessage()    {}
 func (*UpdateDocReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{7}
+	return fileDescriptor_3bc93e03df457931, []int{8}
 }
 func (m *UpdateDocReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -486,7 +586,7 @@ func (m *UpdateDocResp) Reset()         { *m = UpdateDocResp{} }
 func (m *UpdateDocResp) String() string { return proto.CompactTextString(m) }
 func (*UpdateDocResp) ProtoMessage()    {}
 func (*UpdateDocResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{8}
+	return fileDescriptor_3bc93e03df457931, []int{9}
 }
 func (m *UpdateDocResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -530,14 +630,14 @@ func (m *UpdateDocResp) GetMessage() string {
 }
 
 type DeleteDocReq struct {
-	Id uint64 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	DocID uint64 `protobuf:"varint,1,opt,name=docID,proto3" json:"docID,omitempty"`
 }
 
 func (m *DeleteDocReq) Reset()         { *m = DeleteDocReq{} }
 func (m *DeleteDocReq) String() string { return proto.CompactTextString(m) }
 func (*DeleteDocReq) ProtoMessage()    {}
 func (*DeleteDocReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{9}
+	return fileDescriptor_3bc93e03df457931, []int{10}
 }
 func (m *DeleteDocReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -566,9 +666,9 @@ func (m *DeleteDocReq) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_DeleteDocReq proto.InternalMessageInfo
 
-func (m *DeleteDocReq) GetId() uint64 {
+func (m *DeleteDocReq) GetDocID() uint64 {
 	if m != nil {
-		return m.Id
+		return m.DocID
 	}
 	return 0
 }
@@ -582,7 +682,7 @@ func (m *DeleteDocResp) Reset()         { *m = DeleteDocResp{} }
 func (m *DeleteDocResp) String() string { return proto.CompactTextString(m) }
 func (*DeleteDocResp) ProtoMessage()    {}
 func (*DeleteDocResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3bc93e03df457931, []int{10}
+	return fileDescriptor_3bc93e03df457931, []int{11}
 }
 func (m *DeleteDocResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -625,8 +725,313 @@ func (m *DeleteDocResp) GetMessage() string {
 	return ""
 }
 
+type SaveBorrowFormReq struct {
+	Borrowform *BorrowForm `protobuf:"bytes,1,opt,name=borrowform,proto3" json:"borrowform,omitempty"`
+}
+
+func (m *SaveBorrowFormReq) Reset()         { *m = SaveBorrowFormReq{} }
+func (m *SaveBorrowFormReq) String() string { return proto.CompactTextString(m) }
+func (*SaveBorrowFormReq) ProtoMessage()    {}
+func (*SaveBorrowFormReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_3bc93e03df457931, []int{12}
+}
+func (m *SaveBorrowFormReq) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *SaveBorrowFormReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_SaveBorrowFormReq.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *SaveBorrowFormReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SaveBorrowFormReq.Merge(m, src)
+}
+func (m *SaveBorrowFormReq) XXX_Size() int {
+	return m.Size()
+}
+func (m *SaveBorrowFormReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_SaveBorrowFormReq.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SaveBorrowFormReq proto.InternalMessageInfo
+
+func (m *SaveBorrowFormReq) GetBorrowform() *BorrowForm {
+	if m != nil {
+		return m.Borrowform
+	}
+	return nil
+}
+
+type SaveBorrowFormResp struct {
+	Code    int32  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message string `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+}
+
+func (m *SaveBorrowFormResp) Reset()         { *m = SaveBorrowFormResp{} }
+func (m *SaveBorrowFormResp) String() string { return proto.CompactTextString(m) }
+func (*SaveBorrowFormResp) ProtoMessage()    {}
+func (*SaveBorrowFormResp) Descriptor() ([]byte, []int) {
+	return fileDescriptor_3bc93e03df457931, []int{13}
+}
+func (m *SaveBorrowFormResp) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *SaveBorrowFormResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_SaveBorrowFormResp.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *SaveBorrowFormResp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SaveBorrowFormResp.Merge(m, src)
+}
+func (m *SaveBorrowFormResp) XXX_Size() int {
+	return m.Size()
+}
+func (m *SaveBorrowFormResp) XXX_DiscardUnknown() {
+	xxx_messageInfo_SaveBorrowFormResp.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SaveBorrowFormResp proto.InternalMessageInfo
+
+func (m *SaveBorrowFormResp) GetCode() int32 {
+	if m != nil {
+		return m.Code
+	}
+	return 0
+}
+
+func (m *SaveBorrowFormResp) GetMessage() string {
+	if m != nil {
+		return m.Message
+	}
+	return ""
+}
+
+type UpdateBorrowFormStatusReq struct {
+	FormID uint64 `protobuf:"varint,1,opt,name=formID,proto3" json:"formID,omitempty"`
+	Status int32  `protobuf:"varint,2,opt,name=status,proto3" json:"status,omitempty"`
+}
+
+func (m *UpdateBorrowFormStatusReq) Reset()         { *m = UpdateBorrowFormStatusReq{} }
+func (m *UpdateBorrowFormStatusReq) String() string { return proto.CompactTextString(m) }
+func (*UpdateBorrowFormStatusReq) ProtoMessage()    {}
+func (*UpdateBorrowFormStatusReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_3bc93e03df457931, []int{14}
+}
+func (m *UpdateBorrowFormStatusReq) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *UpdateBorrowFormStatusReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_UpdateBorrowFormStatusReq.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *UpdateBorrowFormStatusReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UpdateBorrowFormStatusReq.Merge(m, src)
+}
+func (m *UpdateBorrowFormStatusReq) XXX_Size() int {
+	return m.Size()
+}
+func (m *UpdateBorrowFormStatusReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_UpdateBorrowFormStatusReq.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_UpdateBorrowFormStatusReq proto.InternalMessageInfo
+
+func (m *UpdateBorrowFormStatusReq) GetFormID() uint64 {
+	if m != nil {
+		return m.FormID
+	}
+	return 0
+}
+
+func (m *UpdateBorrowFormStatusReq) GetStatus() int32 {
+	if m != nil {
+		return m.Status
+	}
+	return 0
+}
+
+type UpdateBorrowFormStatusResp struct {
+	Code    int32  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Message string `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+}
+
+func (m *UpdateBorrowFormStatusResp) Reset()         { *m = UpdateBorrowFormStatusResp{} }
+func (m *UpdateBorrowFormStatusResp) String() string { return proto.CompactTextString(m) }
+func (*UpdateBorrowFormStatusResp) ProtoMessage()    {}
+func (*UpdateBorrowFormStatusResp) Descriptor() ([]byte, []int) {
+	return fileDescriptor_3bc93e03df457931, []int{15}
+}
+func (m *UpdateBorrowFormStatusResp) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *UpdateBorrowFormStatusResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_UpdateBorrowFormStatusResp.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *UpdateBorrowFormStatusResp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UpdateBorrowFormStatusResp.Merge(m, src)
+}
+func (m *UpdateBorrowFormStatusResp) XXX_Size() int {
+	return m.Size()
+}
+func (m *UpdateBorrowFormStatusResp) XXX_DiscardUnknown() {
+	xxx_messageInfo_UpdateBorrowFormStatusResp.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_UpdateBorrowFormStatusResp proto.InternalMessageInfo
+
+func (m *UpdateBorrowFormStatusResp) GetCode() int32 {
+	if m != nil {
+		return m.Code
+	}
+	return 0
+}
+
+func (m *UpdateBorrowFormStatusResp) GetMessage() string {
+	if m != nil {
+		return m.Message
+	}
+	return ""
+}
+
+type SelectBorrowFormByIDReq struct {
+	FormID uint64 `protobuf:"varint,1,opt,name=formID,proto3" json:"formID,omitempty"`
+}
+
+func (m *SelectBorrowFormByIDReq) Reset()         { *m = SelectBorrowFormByIDReq{} }
+func (m *SelectBorrowFormByIDReq) String() string { return proto.CompactTextString(m) }
+func (*SelectBorrowFormByIDReq) ProtoMessage()    {}
+func (*SelectBorrowFormByIDReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_3bc93e03df457931, []int{16}
+}
+func (m *SelectBorrowFormByIDReq) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *SelectBorrowFormByIDReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_SelectBorrowFormByIDReq.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *SelectBorrowFormByIDReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SelectBorrowFormByIDReq.Merge(m, src)
+}
+func (m *SelectBorrowFormByIDReq) XXX_Size() int {
+	return m.Size()
+}
+func (m *SelectBorrowFormByIDReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_SelectBorrowFormByIDReq.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SelectBorrowFormByIDReq proto.InternalMessageInfo
+
+func (m *SelectBorrowFormByIDReq) GetFormID() uint64 {
+	if m != nil {
+		return m.FormID
+	}
+	return 0
+}
+
+type SelectBorrowFormByIDResp struct {
+	Borrowform *BorrowForm `protobuf:"bytes,1,opt,name=borrowform,proto3" json:"borrowform,omitempty"`
+	Code       int32       `protobuf:"varint,2,opt,name=code,proto3" json:"code,omitempty"`
+	Message    string      `protobuf:"bytes,3,opt,name=message,proto3" json:"message,omitempty"`
+}
+
+func (m *SelectBorrowFormByIDResp) Reset()         { *m = SelectBorrowFormByIDResp{} }
+func (m *SelectBorrowFormByIDResp) String() string { return proto.CompactTextString(m) }
+func (*SelectBorrowFormByIDResp) ProtoMessage()    {}
+func (*SelectBorrowFormByIDResp) Descriptor() ([]byte, []int) {
+	return fileDescriptor_3bc93e03df457931, []int{17}
+}
+func (m *SelectBorrowFormByIDResp) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *SelectBorrowFormByIDResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_SelectBorrowFormByIDResp.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *SelectBorrowFormByIDResp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SelectBorrowFormByIDResp.Merge(m, src)
+}
+func (m *SelectBorrowFormByIDResp) XXX_Size() int {
+	return m.Size()
+}
+func (m *SelectBorrowFormByIDResp) XXX_DiscardUnknown() {
+	xxx_messageInfo_SelectBorrowFormByIDResp.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SelectBorrowFormByIDResp proto.InternalMessageInfo
+
+func (m *SelectBorrowFormByIDResp) GetBorrowform() *BorrowForm {
+	if m != nil {
+		return m.Borrowform
+	}
+	return nil
+}
+
+func (m *SelectBorrowFormByIDResp) GetCode() int32 {
+	if m != nil {
+		return m.Code
+	}
+	return 0
+}
+
+func (m *SelectBorrowFormByIDResp) GetMessage() string {
+	if m != nil {
+		return m.Message
+	}
+	return ""
+}
+
 func init() {
 	proto.RegisterType((*Doc)(nil), "model.Doc")
+	proto.RegisterType((*BorrowForm)(nil), "model.BorrowForm")
 	proto.RegisterType((*SelectAllDocReq)(nil), "model.SelectAllDocReq")
 	proto.RegisterType((*SelectAllDocResp)(nil), "model.SelectAllDocResp")
 	proto.RegisterType((*SelectDocByIDReq)(nil), "model.SelectDocByIDReq")
@@ -637,6 +1042,12 @@ func init() {
 	proto.RegisterType((*UpdateDocResp)(nil), "model.UpdateDocResp")
 	proto.RegisterType((*DeleteDocReq)(nil), "model.DeleteDocReq")
 	proto.RegisterType((*DeleteDocResp)(nil), "model.DeleteDocResp")
+	proto.RegisterType((*SaveBorrowFormReq)(nil), "model.SaveBorrowFormReq")
+	proto.RegisterType((*SaveBorrowFormResp)(nil), "model.SaveBorrowFormResp")
+	proto.RegisterType((*UpdateBorrowFormStatusReq)(nil), "model.UpdateBorrowFormStatusReq")
+	proto.RegisterType((*UpdateBorrowFormStatusResp)(nil), "model.UpdateBorrowFormStatusResp")
+	proto.RegisterType((*SelectBorrowFormByIDReq)(nil), "model.SelectBorrowFormByIDReq")
+	proto.RegisterType((*SelectBorrowFormByIDResp)(nil), "model.SelectBorrowFormByIDResp")
 }
 
 func init() {
@@ -644,54 +1055,71 @@ func init() {
 }
 
 var fileDescriptor_3bc93e03df457931 = []byte{
-	// 738 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x55, 0xcd, 0x6e, 0xd3, 0x4c,
-	0x14, 0x8d, 0xe3, 0x24, 0x6d, 0x6e, 0x9a, 0xaf, 0x5f, 0xa7, 0x15, 0x98, 0x08, 0xec, 0x30, 0x12,
-	0x52, 0xf8, 0x4b, 0xda, 0xb0, 0xe1, 0x47, 0x48, 0x24, 0xb2, 0x10, 0x91, 0x28, 0x42, 0x53, 0xd8,
-	0xb0, 0x89, 0x9c, 0xf1, 0x34, 0x35, 0x24, 0x19, 0xd7, 0x76, 0x90, 0xd2, 0xa7, 0xe0, 0x31, 0x78,
-	0x04, 0x36, 0x48, 0x2c, 0xbb, 0xec, 0x92, 0x95, 0xd5, 0xa6, 0xbb, 0xac, 0x50, 0x56, 0xac, 0x10,
-	0xf2, 0xc4, 0x8e, 0x9d, 0x52, 0x09, 0x2a, 0xd8, 0xf9, 0x9c, 0x7b, 0xce, 0xbd, 0xe3, 0x33, 0x57,
-	0x36, 0xb4, 0xba, 0x96, 0xb7, 0x37, 0xec, 0x54, 0x29, 0xef, 0xd7, 0x6c, 0x6b, 0xc0, 0x0e, 0x0c,
-	0xdb, 0xee, 0xb1, 0xda, 0x73, 0xab, 0xe3, 0x18, 0xce, 0xe8, 0xa5, 0xc3, 0xdf, 0x32, 0xea, 0xd5,
-	0x37, 0xeb, 0x9b, 0x5b, 0x35, 0xf7, 0x1d, 0xeb, 0x31, 0x8f, 0x0f, 0x6a, 0x7d, 0x6e, 0xb2, 0x5e,
-	0xcd, 0xe4, 0xb4, 0x6f, 0x0c, 0x8c, 0x2e, 0x73, 0xaa, 0xb6, 0xc3, 0x3d, 0x8e, 0xb2, 0x82, 0x2f,
-	0xdd, 0x4d, 0x74, 0xec, 0xf2, 0x2e, 0xaf, 0x89, 0x6a, 0x67, 0xb8, 0x2b, 0x90, 0x00, 0xe2, 0x69,
-	0xe6, 0xc2, 0x3f, 0x64, 0x90, 0x75, 0x4e, 0xd1, 0x4d, 0x48, 0xb7, 0x74, 0x45, 0x2a, 0x4b, 0x95,
-	0x4c, 0xf3, 0xca, 0xc4, 0xd7, 0x72, 0x96, 0xd9, 0x36, 0x39, 0x9d, 0xfa, 0x5a, 0xc1, 0xec, 0x3c,
-	0xc4, 0x33, 0x84, 0x49, 0xba, 0xa5, 0xa3, 0x2d, 0xc8, 0xbc, 0x30, 0xfa, 0x4c, 0x49, 0x97, 0xa5,
-	0x4a, 0xbe, 0x79, 0x6d, 0xe2, 0x6b, 0xcb, 0x26, 0xa7, 0xed, 0x81, 0xd1, 0x67, 0x53, 0x5f, 0x2b,
-	0x06, 0xf2, 0x08, 0x63, 0x22, 0xa4, 0xe8, 0x01, 0xe4, 0x1a, 0x43, 0x6f, 0x8f, 0x3b, 0x8a, 0x2c,
-	0x4c, 0xd7, 0x27, 0xbe, 0x06, 0x81, 0xc8, 0x10, 0xec, 0xd4, 0xd7, 0x56, 0x23, 0xdb, 0x8c, 0xc1,
-	0x24, 0x34, 0x04, 0xd3, 0x5e, 0x8d, 0x6c, 0xa6, 0x64, 0x16, 0xa7, 0x79, 0x23, 0x7b, 0x61, 0x5a,
-	0x80, 0x31, 0x11, 0x52, 0xb4, 0x0d, 0x05, 0x9d, 0xb9, 0xd4, 0xb1, 0x6c, 0xcf, 0xe2, 0x03, 0x25,
-	0x2b, 0x9c, 0xb7, 0x27, 0xc1, 0x10, 0x4e, 0xdb, 0x66, 0x5c, 0x9a, 0xfa, 0xda, 0x46, 0xd4, 0x20,
-	0x41, 0x63, 0x92, 0xf4, 0xa3, 0x2d, 0xc8, 0xed, 0x78, 0x86, 0x37, 0x74, 0x95, 0x5c, 0x59, 0xaa,
-	0x14, 0x67, 0xf1, 0xb8, 0x82, 0x89, 0xe2, 0x99, 0x21, 0x4c, 0x42, 0x21, 0xba, 0x01, 0xf2, 0x53,
-	0xc6, 0x94, 0x25, 0xa1, 0x5f, 0x9f, 0xf8, 0x9a, 0xbc, 0xcb, 0x82, 0xe3, 0x2e, 0x07, 0xe2, 0x5d,
-	0xc6, 0x30, 0x09, 0xea, 0xe8, 0x09, 0x00, 0x75, 0x98, 0xe1, 0x31, 0xb3, 0x6d, 0x78, 0xca, 0x72,
-	0x1c, 0x4d, 0xcc, 0x46, 0xd1, 0xc4, 0x0c, 0x26, 0xf9, 0x10, 0x34, 0xbc, 0xa0, 0xc3, 0xd0, 0x36,
-	0xa3, 0x0e, 0xf9, 0xb8, 0x43, 0xcc, 0x46, 0x1d, 0x62, 0x06, 0x93, 0x7c, 0x08, 0x1a, 0x1e, 0x5e,
-	0x83, 0xd5, 0x1d, 0xd6, 0x63, 0xd4, 0x6b, 0xf4, 0x7a, 0x3a, 0xa7, 0x84, 0xed, 0x63, 0x1b, 0xfe,
-	0x5f, 0xa4, 0x5c, 0x1b, 0x21, 0xc8, 0x50, 0x6e, 0x32, 0xb1, 0x21, 0x59, 0x22, 0x9e, 0x91, 0x02,
-	0x4b, 0x7d, 0xe6, 0xba, 0x46, 0x37, 0xdc, 0x05, 0x12, 0x41, 0x54, 0x85, 0xbc, 0xc9, 0xe9, 0xb0,
-	0xcf, 0x06, 0x9e, 0xab, 0xc8, 0x65, 0xb9, 0x52, 0xa8, 0x43, 0x55, 0xec, 0x67, 0x55, 0xe7, 0xb4,
-	0x99, 0x39, 0xf4, 0x35, 0x89, 0xc4, 0x12, 0x5c, 0x89, 0x26, 0x06, 0xd5, 0x51, 0x4b, 0x27, 0x6c,
-	0x1f, 0x6d, 0x40, 0x56, 0xe7, 0x34, 0x5a, 0x4a, 0x32, 0x03, 0x78, 0x1f, 0xd6, 0xce, 0x28, 0xff,
-	0xf6, 0x70, 0xd2, 0xef, 0x0e, 0x77, 0x0b, 0x60, 0xc7, 0x78, 0xcf, 0x66, 0xe1, 0xa0, 0xab, 0x20,
-	0x9b, 0x9c, 0x8a, 0x51, 0x0b, 0x3e, 0x12, 0xd0, 0xf8, 0x11, 0x14, 0xe6, 0xda, 0x8b, 0x1e, 0x0c,
-	0xdf, 0x81, 0x95, 0xd7, 0xe2, 0x5e, 0xfe, 0x68, 0xd4, 0x63, 0x28, 0x26, 0xd4, 0x17, 0x1e, 0xa6,
-	0xc2, 0x8a, 0x1e, 0x7c, 0x50, 0xa2, 0x61, 0xff, 0x41, 0xda, 0x32, 0xc3, 0xac, 0xd3, 0x96, 0x19,
-	0xb4, 0x4f, 0xd4, 0x2f, 0xda, 0xbe, 0xfe, 0x39, 0x0d, 0xa0, 0xcf, 0x3f, 0x51, 0xa8, 0x01, 0x2b,
-	0xc9, 0x95, 0x42, 0x97, 0xc2, 0xb7, 0x39, 0xb3, 0x7a, 0xa5, 0xcb, 0xe7, 0xf2, 0xae, 0x8d, 0x53,
-	0x48, 0x87, 0xe2, 0xc2, 0xcd, 0xa3, 0x45, 0x6d, 0xbc, 0x39, 0x25, 0xe5, 0xfc, 0x82, 0xe8, 0x52,
-	0x87, 0xa5, 0xf0, 0x82, 0xd0, 0x5a, 0x24, 0x9b, 0x5f, 0x6e, 0x09, 0x9d, 0xa5, 0x84, 0xe7, 0x3e,
-	0xe4, 0xe7, 0x49, 0xa3, 0xf5, 0x50, 0x92, 0xbc, 0xa9, 0xd2, 0xc6, 0xaf, 0x64, 0xe4, 0x9c, 0x87,
-	0x38, 0x77, 0x26, 0x63, 0x9f, 0x3b, 0x17, 0xb2, 0xc6, 0xa9, 0xe6, 0xc1, 0xf1, 0x89, 0x2a, 0x7d,
-	0x3b, 0x51, 0xa5, 0xef, 0x27, 0xaa, 0xf4, 0x71, 0xac, 0x4a, 0x9f, 0xc6, 0xaa, 0xf4, 0x65, 0xac,
-	0xa6, 0x0e, 0xc7, 0xaa, 0x74, 0x34, 0x56, 0xa5, 0xe3, 0xb1, 0x2a, 0x7d, 0x38, 0x55, 0x53, 0x47,
-	0xa7, 0x6a, 0xea, 0xeb, 0xa9, 0x9a, 0x7a, 0xf3, 0xec, 0x1f, 0xfc, 0x4a, 0xb6, 0x03, 0xdc, 0xc9,
-	0x89, 0x5f, 0xc3, 0xbd, 0x9f, 0x01, 0x00, 0x00, 0xff, 0xff, 0xbc, 0x87, 0x9a, 0x77, 0x9d, 0x06,
-	0x00, 0x00,
+	// 1015 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x56, 0xcb, 0x6e, 0xdb, 0x46,
+	0x17, 0x16, 0xad, 0x8b, 0xad, 0x63, 0x3b, 0xf9, 0x3d, 0x31, 0x1c, 0x5a, 0xf8, 0x4b, 0x2a, 0x83,
+	0x16, 0x50, 0x6f, 0x52, 0xa4, 0x6e, 0x7a, 0x41, 0x80, 0x4a, 0x26, 0xdc, 0xaa, 0x4d, 0x8a, 0x62,
+	0xdc, 0x2e, 0xda, 0x8d, 0x40, 0x91, 0x23, 0x85, 0xad, 0xa4, 0xa1, 0x49, 0xaa, 0x85, 0xd3, 0x07,
+	0xe8, 0xb6, 0x8f, 0xd1, 0x47, 0xe8, 0xb2, 0x68, 0x37, 0x59, 0x66, 0xd9, 0x15, 0x11, 0xcb, 0x3b,
+	0xad, 0x0a, 0xad, 0xba, 0x2c, 0x66, 0x86, 0x14, 0x49, 0x47, 0x8e, 0xa3, 0xa4, 0x3b, 0x9d, 0x6f,
+	0xbe, 0xef, 0x9c, 0x33, 0xe7, 0x32, 0x22, 0x74, 0x87, 0x4e, 0xf0, 0x70, 0xda, 0xaf, 0x5b, 0x6c,
+	0xdc, 0x70, 0x9d, 0x09, 0x7d, 0x64, 0xba, 0xee, 0x88, 0x36, 0xee, 0x3b, 0x7d, 0xcf, 0xf4, 0xce,
+	0xbe, 0xf4, 0xd8, 0x77, 0xd4, 0x0a, 0x5a, 0x77, 0x5b, 0x77, 0x9b, 0x0d, 0xff, 0x7b, 0x3a, 0xa2,
+	0x01, 0x9b, 0x34, 0xc6, 0xcc, 0xa6, 0xa3, 0x86, 0xcd, 0xac, 0xb1, 0x39, 0x31, 0x87, 0xd4, 0xab,
+	0xbb, 0x1e, 0x0b, 0x18, 0x2a, 0x0a, 0xbc, 0xf2, 0x6e, 0xca, 0xe3, 0x90, 0x0d, 0x59, 0x43, 0x9c,
+	0xf6, 0xa7, 0x03, 0x61, 0x09, 0x43, 0xfc, 0x92, 0x2a, 0xfc, 0x67, 0x01, 0xf2, 0x06, 0xb3, 0xd0,
+	0x9b, 0xb0, 0xd1, 0x35, 0x54, 0xa5, 0xaa, 0xd4, 0x0a, 0x9d, 0xc3, 0x79, 0xa8, 0x97, 0x1c, 0xbb,
+	0x67, 0x33, 0x6b, 0x11, 0xea, 0xdb, 0x76, 0xff, 0x43, 0x2c, 0x2d, 0x4c, 0x36, 0xba, 0x06, 0x6a,
+	0x42, 0xe1, 0x0b, 0x73, 0x4c, 0xd5, 0x8d, 0xaa, 0x52, 0x2b, 0x77, 0x5e, 0x9b, 0x87, 0xfa, 0x96,
+	0xcd, 0xac, 0xde, 0xc4, 0x1c, 0xd3, 0x45, 0xa8, 0xef, 0x72, 0x7a, 0x6c, 0x63, 0x22, 0xa8, 0xe8,
+	0x03, 0x28, 0xb5, 0xa7, 0xc1, 0x43, 0xe6, 0xa9, 0x79, 0x21, 0xba, 0x33, 0x0f, 0x75, 0xe0, 0x24,
+	0x53, 0xa0, 0x8b, 0x50, 0xbf, 0x19, 0xcb, 0x24, 0x82, 0x49, 0x24, 0xe0, 0xd1, 0xbe, 0x3a, 0x73,
+	0xa9, 0x5a, 0xc8, 0x46, 0x0b, 0xce, 0xdc, 0x4c, 0x34, 0x6e, 0x63, 0x22, 0xa8, 0xe8, 0x01, 0x6c,
+	0x1b, 0xd4, 0xb7, 0x3c, 0xc7, 0x0d, 0x1c, 0x36, 0x51, 0x8b, 0x42, 0xf9, 0xf6, 0x9c, 0x07, 0x61,
+	0x56, 0xcf, 0x4e, 0x8e, 0x16, 0xa1, 0xbe, 0x1f, 0x3b, 0x48, 0xc1, 0x98, 0xa4, 0xf5, 0xa8, 0x09,
+	0xa5, 0x93, 0xc0, 0x0c, 0xa6, 0xbe, 0x5a, 0xaa, 0x2a, 0xb5, 0x5d, 0x59, 0x1e, 0x5f, 0x20, 0x71,
+	0x79, 0xa4, 0x85, 0x49, 0x44, 0x44, 0x47, 0xb0, 0xd3, 0x61, 0x9e, 0xc7, 0x7e, 0x3c, 0x66, 0xde,
+	0xb8, 0x6b, 0xa8, 0x9b, 0xa2, 0xae, 0xfa, 0x3c, 0xd4, 0xcb, 0x8e, 0xdd, 0xeb, 0x8b, 0xa3, 0x45,
+	0xa8, 0xdf, 0x88, 0x4a, 0x2b, 0x01, 0x4c, 0x32, 0x22, 0xf4, 0x06, 0xe4, 0x8f, 0x29, 0x55, 0xb7,
+	0x44, 0xd0, 0x5b, 0xf3, 0x50, 0xcf, 0x0f, 0x28, 0xbf, 0xf3, 0x16, 0x57, 0x0d, 0x28, 0xc5, 0x84,
+	0x9f, 0xa3, 0x8f, 0x01, 0x8e, 0x3c, 0x6a, 0x06, 0xd4, 0xee, 0x99, 0x81, 0x5a, 0x4e, 0xea, 0x6b,
+	0x2d, 0xd1, 0xb8, 0xbe, 0x09, 0x82, 0x49, 0x39, 0x12, 0xb5, 0x03, 0xee, 0xe1, 0x6b, 0xd7, 0x8e,
+	0x3d, 0x40, 0xe2, 0x61, 0xba, 0x44, 0x63, 0x0f, 0x09, 0x82, 0x49, 0x39, 0x12, 0xb5, 0x03, 0xfc,
+	0x73, 0x1e, 0x20, 0xc9, 0x1d, 0x35, 0x52, 0xc3, 0x74, 0xed, 0xa5, 0xf9, 0x48, 0x35, 0xa0, 0x68,
+	0x30, 0xab, 0x6b, 0x88, 0x99, 0x7a, 0xee, 0x00, 0x4a, 0x1e, 0x17, 0x1c, 0x4d, 0xfd, 0xae, 0x21,
+	0xe6, 0x29, 0x11, 0x58, 0x49, 0x4b, 0xa4, 0x85, 0x89, 0xe4, 0x71, 0xc1, 0x7d, 0xa7, 0xdf, 0x35,
+	0xc4, 0x1c, 0x25, 0x82, 0x91, 0xd3, 0x4f, 0x09, 0x46, 0x4e, 0x1f, 0x13, 0xc9, 0x4b, 0x75, 0x9d,
+	0xcf, 0x4f, 0xf1, 0x45, 0xba, 0x9e, 0xed, 0x44, 0xe9, 0x95, 0x3b, 0xb1, 0xf9, 0x12, 0x9d, 0xd8,
+	0x83, 0x9b, 0x27, 0x74, 0x44, 0xad, 0xa0, 0x3d, 0x1a, 0x19, 0xcc, 0x22, 0xf4, 0x14, 0xbb, 0xf0,
+	0xbf, 0x2c, 0xe4, 0xbb, 0x08, 0x41, 0xc1, 0x62, 0x36, 0x15, 0x3d, 0x2a, 0x12, 0xf1, 0x1b, 0xa9,
+	0xb0, 0x39, 0xa6, 0xbe, 0x6f, 0x0e, 0xa3, 0xd5, 0x26, 0xb1, 0x89, 0xea, 0x50, 0xb6, 0x99, 0x35,
+	0x1d, 0xd3, 0x49, 0xe0, 0xab, 0xf9, 0x6a, 0xbe, 0xb6, 0xdd, 0x82, 0xba, 0x78, 0x6e, 0xea, 0x06,
+	0xb3, 0x3a, 0x85, 0xc7, 0xa1, 0xae, 0x90, 0x84, 0x82, 0x6b, 0x71, 0x44, 0x7e, 0x7a, 0xd6, 0x35,
+	0x08, 0x3d, 0x45, 0xfb, 0x50, 0xb4, 0x45, 0x8b, 0xc5, 0x58, 0x10, 0x69, 0xe0, 0x53, 0xd8, 0xbb,
+	0xc4, 0x7c, 0xd5, 0xe4, 0x94, 0xeb, 0x92, 0x7b, 0x0b, 0xe0, 0xc4, 0xfc, 0x81, 0xca, 0xe2, 0xa0,
+	0xff, 0x43, 0xde, 0x66, 0x96, 0x08, 0x95, 0xd1, 0x11, 0x0e, 0xe3, 0x8f, 0x60, 0x7b, 0xc9, 0x5d,
+	0x37, 0x31, 0xfc, 0x0e, 0xec, 0xc8, 0xbe, 0xbc, 0x50, 0xa8, 0x7b, 0xb0, 0x9b, 0x62, 0xaf, 0x1d,
+	0xec, 0x75, 0xd8, 0x31, 0xf8, 0xff, 0x43, 0x1c, 0x6c, 0x75, 0xb9, 0xef, 0xc1, 0x6e, 0x8a, 0xb5,
+	0x76, 0x90, 0x63, 0xd8, 0xe3, 0xe5, 0x48, 0x36, 0x9d, 0x47, 0x6a, 0x02, 0xc8, 0x55, 0x1e, 0x30,
+	0x6f, 0x1c, 0xdd, 0x6e, 0x2f, 0xba, 0x5d, 0x8a, 0x99, 0x22, 0xe1, 0x0e, 0xa0, 0xcb, 0x7e, 0xd6,
+	0xce, 0xe5, 0x73, 0x38, 0x94, 0xf5, 0x4a, 0xbc, 0xc8, 0x35, 0xe4, 0x39, 0x1d, 0x40, 0x69, 0x20,
+	0x5f, 0x5e, 0x79, 0xfd, 0xc8, 0xe2, 0xb8, 0x5c, 0x5a, 0xe1, 0xad, 0x48, 0x22, 0x0b, 0x7f, 0x06,
+	0x95, 0xab, 0x9c, 0xad, 0x9d, 0x58, 0x13, 0x6e, 0xcb, 0x91, 0x4e, 0x7c, 0xc5, 0x3b, 0x70, 0x45,
+	0x5a, 0xf8, 0x27, 0x50, 0x57, 0x4b, 0x7c, 0xf7, 0x25, 0xca, 0xbb, 0xcc, 0x77, 0x63, 0x75, 0xbe,
+	0xf9, 0x4c, 0xbe, 0xad, 0x3f, 0x0a, 0x00, 0xc6, 0xf2, 0x63, 0x02, 0xb5, 0x61, 0x27, 0xfd, 0x5a,
+	0xa0, 0x83, 0x28, 0xd6, 0xa5, 0x57, 0xa5, 0x72, 0x7b, 0x25, 0xee, 0xbb, 0x38, 0x87, 0x0c, 0xd8,
+	0xcd, 0x2c, 0x35, 0xca, 0x72, 0x93, 0x47, 0xa1, 0xa2, 0xae, 0x3e, 0x10, 0x5e, 0x5a, 0xb0, 0x19,
+	0xed, 0x1e, 0x8a, 0xef, 0x9b, 0xec, 0x6d, 0x05, 0x5d, 0x86, 0x84, 0xe6, 0x7d, 0x28, 0x2f, 0x97,
+	0x08, 0xdd, 0x8a, 0x28, 0xe9, 0x25, 0xac, 0xec, 0x3f, 0x0b, 0xc6, 0xca, 0xe5, 0x66, 0x2c, 0x95,
+	0xe9, 0x8d, 0x5a, 0x2a, 0x33, 0x0b, 0x84, 0x73, 0xe8, 0x13, 0xb8, 0x91, 0x1d, 0x66, 0xa4, 0xa6,
+	0x72, 0xcb, 0xec, 0x4a, 0xe5, 0xf0, 0x8a, 0x13, 0xe1, 0xa8, 0x07, 0x07, 0xab, 0x87, 0x10, 0x55,
+	0x33, 0x49, 0xaf, 0x18, 0xf8, 0xca, 0x9d, 0x6b, 0x18, 0x22, 0xc0, 0x37, 0xb0, 0xbf, 0x6a, 0xcc,
+	0x90, 0x96, 0xe9, 0xc2, 0x33, 0x63, 0x5b, 0xd1, 0x9f, 0x7b, 0xce, 0x5d, 0x77, 0x1e, 0x3d, 0x3d,
+	0xd7, 0x94, 0xbf, 0xcf, 0x35, 0xe5, 0x9f, 0x73, 0x4d, 0xf9, 0x75, 0xa6, 0x29, 0xbf, 0xcd, 0x34,
+	0xe5, 0xf7, 0x99, 0x96, 0x7b, 0x3c, 0xd3, 0x94, 0x27, 0x33, 0x4d, 0x79, 0x3a, 0xd3, 0x94, 0x5f,
+	0x2e, 0xb4, 0xdc, 0x93, 0x0b, 0x2d, 0xf7, 0xd7, 0x85, 0x96, 0xfb, 0xf6, 0xd3, 0xff, 0xe0, 0xcb,
+	0xf7, 0x01, 0xb7, 0xfb, 0x25, 0xf1, 0x25, 0xfb, 0xde, 0xbf, 0x01, 0x00, 0x00, 0xff, 0xff, 0x49,
+	0x75, 0x9c, 0xfd, 0x4c, 0x0b, 0x00, 0x00,
 }
 
 func (this *Doc) VerboseEqual(that interface{}) error {
@@ -736,6 +1164,9 @@ func (this *Doc) VerboseEqual(that interface{}) error {
 	}
 	if this.Status != that1.Status {
 		return fmt.Errorf("Status this(%v) Not Equal that(%v)", this.Status, that1.Status)
+	}
+	if this.BorrowFormID != that1.BorrowFormID {
+		return fmt.Errorf("BorrowFormID this(%v) Not Equal that(%v)", this.BorrowFormID, that1.BorrowFormID)
 	}
 	if this.Fee != that1.Fee {
 		return fmt.Errorf("Fee this(%v) Not Equal that(%v)", this.Fee, that1.Fee)
@@ -785,7 +1216,100 @@ func (this *Doc) Equal(that interface{}) bool {
 	if this.Status != that1.Status {
 		return false
 	}
+	if this.BorrowFormID != that1.BorrowFormID {
+		return false
+	}
 	if this.Fee != that1.Fee {
+		return false
+	}
+	if this.CreatedAt != that1.CreatedAt {
+		return false
+	}
+	if this.UpdatedAt != that1.UpdatedAt {
+		return false
+	}
+	return true
+}
+func (this *BorrowForm) VerboseEqual(that interface{}) error {
+	if that == nil {
+		if this == nil {
+			return nil
+		}
+		return fmt.Errorf("that == nil && this != nil")
+	}
+
+	that1, ok := that.(*BorrowForm)
+	if !ok {
+		that2, ok := that.(BorrowForm)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *BorrowForm")
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return nil
+		}
+		return fmt.Errorf("that is type *BorrowForm but is nil && this != nil")
+	} else if this == nil {
+		return fmt.Errorf("that is type *BorrowForm but is not nil && this == nil")
+	}
+	if this.ID != that1.ID {
+		return fmt.Errorf("ID this(%v) Not Equal that(%v)", this.ID, that1.ID)
+	}
+	if this.DocID != that1.DocID {
+		return fmt.Errorf("DocID this(%v) Not Equal that(%v)", this.DocID, that1.DocID)
+	}
+	if this.CusID != that1.CusID {
+		return fmt.Errorf("CusID this(%v) Not Equal that(%v)", this.CusID, that1.CusID)
+	}
+	if this.LibID != that1.LibID {
+		return fmt.Errorf("LibID this(%v) Not Equal that(%v)", this.LibID, that1.LibID)
+	}
+	if this.Status != that1.Status {
+		return fmt.Errorf("Status this(%v) Not Equal that(%v)", this.Status, that1.Status)
+	}
+	if this.CreatedAt != that1.CreatedAt {
+		return fmt.Errorf("CreatedAt this(%v) Not Equal that(%v)", this.CreatedAt, that1.CreatedAt)
+	}
+	if this.UpdatedAt != that1.UpdatedAt {
+		return fmt.Errorf("UpdatedAt this(%v) Not Equal that(%v)", this.UpdatedAt, that1.UpdatedAt)
+	}
+	return nil
+}
+func (this *BorrowForm) Equal(that interface{}) bool {
+	if that == nil {
+		return this == nil
+	}
+
+	that1, ok := that.(*BorrowForm)
+	if !ok {
+		that2, ok := that.(BorrowForm)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		return this == nil
+	} else if this == nil {
+		return false
+	}
+	if this.ID != that1.ID {
+		return false
+	}
+	if this.DocID != that1.DocID {
+		return false
+	}
+	if this.CusID != that1.CusID {
+		return false
+	}
+	if this.LibID != that1.LibID {
+		return false
+	}
+	if this.Status != that1.Status {
 		return false
 	}
 	if this.CreatedAt != that1.CreatedAt {
@@ -1293,8 +1817,8 @@ func (this *DeleteDocReq) VerboseEqual(that interface{}) error {
 	} else if this == nil {
 		return fmt.Errorf("that is type *DeleteDocReq but is not nil && this == nil")
 	}
-	if this.Id != that1.Id {
-		return fmt.Errorf("Id this(%v) Not Equal that(%v)", this.Id, that1.Id)
+	if this.DocID != that1.DocID {
+		return fmt.Errorf("DocID this(%v) Not Equal that(%v)", this.DocID, that1.DocID)
 	}
 	return nil
 }
@@ -1317,7 +1841,7 @@ func (this *DeleteDocReq) Equal(that interface{}) bool {
 	} else if this == nil {
 		return false
 	}
-	if this.Id != that1.Id {
+	if this.DocID != that1.DocID {
 		return false
 	}
 	return true
@@ -1382,11 +1906,365 @@ func (this *DeleteDocResp) Equal(that interface{}) bool {
 	}
 	return true
 }
+func (this *SaveBorrowFormReq) VerboseEqual(that interface{}) error {
+	if that == nil {
+		if this == nil {
+			return nil
+		}
+		return fmt.Errorf("that == nil && this != nil")
+	}
+
+	that1, ok := that.(*SaveBorrowFormReq)
+	if !ok {
+		that2, ok := that.(SaveBorrowFormReq)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *SaveBorrowFormReq")
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return nil
+		}
+		return fmt.Errorf("that is type *SaveBorrowFormReq but is nil && this != nil")
+	} else if this == nil {
+		return fmt.Errorf("that is type *SaveBorrowFormReq but is not nil && this == nil")
+	}
+	if !this.Borrowform.Equal(that1.Borrowform) {
+		return fmt.Errorf("Borrowform this(%v) Not Equal that(%v)", this.Borrowform, that1.Borrowform)
+	}
+	return nil
+}
+func (this *SaveBorrowFormReq) Equal(that interface{}) bool {
+	if that == nil {
+		return this == nil
+	}
+
+	that1, ok := that.(*SaveBorrowFormReq)
+	if !ok {
+		that2, ok := that.(SaveBorrowFormReq)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		return this == nil
+	} else if this == nil {
+		return false
+	}
+	if !this.Borrowform.Equal(that1.Borrowform) {
+		return false
+	}
+	return true
+}
+func (this *SaveBorrowFormResp) VerboseEqual(that interface{}) error {
+	if that == nil {
+		if this == nil {
+			return nil
+		}
+		return fmt.Errorf("that == nil && this != nil")
+	}
+
+	that1, ok := that.(*SaveBorrowFormResp)
+	if !ok {
+		that2, ok := that.(SaveBorrowFormResp)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *SaveBorrowFormResp")
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return nil
+		}
+		return fmt.Errorf("that is type *SaveBorrowFormResp but is nil && this != nil")
+	} else if this == nil {
+		return fmt.Errorf("that is type *SaveBorrowFormResp but is not nil && this == nil")
+	}
+	if this.Code != that1.Code {
+		return fmt.Errorf("Code this(%v) Not Equal that(%v)", this.Code, that1.Code)
+	}
+	if this.Message != that1.Message {
+		return fmt.Errorf("Message this(%v) Not Equal that(%v)", this.Message, that1.Message)
+	}
+	return nil
+}
+func (this *SaveBorrowFormResp) Equal(that interface{}) bool {
+	if that == nil {
+		return this == nil
+	}
+
+	that1, ok := that.(*SaveBorrowFormResp)
+	if !ok {
+		that2, ok := that.(SaveBorrowFormResp)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		return this == nil
+	} else if this == nil {
+		return false
+	}
+	if this.Code != that1.Code {
+		return false
+	}
+	if this.Message != that1.Message {
+		return false
+	}
+	return true
+}
+func (this *UpdateBorrowFormStatusReq) VerboseEqual(that interface{}) error {
+	if that == nil {
+		if this == nil {
+			return nil
+		}
+		return fmt.Errorf("that == nil && this != nil")
+	}
+
+	that1, ok := that.(*UpdateBorrowFormStatusReq)
+	if !ok {
+		that2, ok := that.(UpdateBorrowFormStatusReq)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *UpdateBorrowFormStatusReq")
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return nil
+		}
+		return fmt.Errorf("that is type *UpdateBorrowFormStatusReq but is nil && this != nil")
+	} else if this == nil {
+		return fmt.Errorf("that is type *UpdateBorrowFormStatusReq but is not nil && this == nil")
+	}
+	if this.FormID != that1.FormID {
+		return fmt.Errorf("FormID this(%v) Not Equal that(%v)", this.FormID, that1.FormID)
+	}
+	if this.Status != that1.Status {
+		return fmt.Errorf("Status this(%v) Not Equal that(%v)", this.Status, that1.Status)
+	}
+	return nil
+}
+func (this *UpdateBorrowFormStatusReq) Equal(that interface{}) bool {
+	if that == nil {
+		return this == nil
+	}
+
+	that1, ok := that.(*UpdateBorrowFormStatusReq)
+	if !ok {
+		that2, ok := that.(UpdateBorrowFormStatusReq)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		return this == nil
+	} else if this == nil {
+		return false
+	}
+	if this.FormID != that1.FormID {
+		return false
+	}
+	if this.Status != that1.Status {
+		return false
+	}
+	return true
+}
+func (this *UpdateBorrowFormStatusResp) VerboseEqual(that interface{}) error {
+	if that == nil {
+		if this == nil {
+			return nil
+		}
+		return fmt.Errorf("that == nil && this != nil")
+	}
+
+	that1, ok := that.(*UpdateBorrowFormStatusResp)
+	if !ok {
+		that2, ok := that.(UpdateBorrowFormStatusResp)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *UpdateBorrowFormStatusResp")
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return nil
+		}
+		return fmt.Errorf("that is type *UpdateBorrowFormStatusResp but is nil && this != nil")
+	} else if this == nil {
+		return fmt.Errorf("that is type *UpdateBorrowFormStatusResp but is not nil && this == nil")
+	}
+	if this.Code != that1.Code {
+		return fmt.Errorf("Code this(%v) Not Equal that(%v)", this.Code, that1.Code)
+	}
+	if this.Message != that1.Message {
+		return fmt.Errorf("Message this(%v) Not Equal that(%v)", this.Message, that1.Message)
+	}
+	return nil
+}
+func (this *UpdateBorrowFormStatusResp) Equal(that interface{}) bool {
+	if that == nil {
+		return this == nil
+	}
+
+	that1, ok := that.(*UpdateBorrowFormStatusResp)
+	if !ok {
+		that2, ok := that.(UpdateBorrowFormStatusResp)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		return this == nil
+	} else if this == nil {
+		return false
+	}
+	if this.Code != that1.Code {
+		return false
+	}
+	if this.Message != that1.Message {
+		return false
+	}
+	return true
+}
+func (this *SelectBorrowFormByIDReq) VerboseEqual(that interface{}) error {
+	if that == nil {
+		if this == nil {
+			return nil
+		}
+		return fmt.Errorf("that == nil && this != nil")
+	}
+
+	that1, ok := that.(*SelectBorrowFormByIDReq)
+	if !ok {
+		that2, ok := that.(SelectBorrowFormByIDReq)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *SelectBorrowFormByIDReq")
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return nil
+		}
+		return fmt.Errorf("that is type *SelectBorrowFormByIDReq but is nil && this != nil")
+	} else if this == nil {
+		return fmt.Errorf("that is type *SelectBorrowFormByIDReq but is not nil && this == nil")
+	}
+	if this.FormID != that1.FormID {
+		return fmt.Errorf("FormID this(%v) Not Equal that(%v)", this.FormID, that1.FormID)
+	}
+	return nil
+}
+func (this *SelectBorrowFormByIDReq) Equal(that interface{}) bool {
+	if that == nil {
+		return this == nil
+	}
+
+	that1, ok := that.(*SelectBorrowFormByIDReq)
+	if !ok {
+		that2, ok := that.(SelectBorrowFormByIDReq)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		return this == nil
+	} else if this == nil {
+		return false
+	}
+	if this.FormID != that1.FormID {
+		return false
+	}
+	return true
+}
+func (this *SelectBorrowFormByIDResp) VerboseEqual(that interface{}) error {
+	if that == nil {
+		if this == nil {
+			return nil
+		}
+		return fmt.Errorf("that == nil && this != nil")
+	}
+
+	that1, ok := that.(*SelectBorrowFormByIDResp)
+	if !ok {
+		that2, ok := that.(SelectBorrowFormByIDResp)
+		if ok {
+			that1 = &that2
+		} else {
+			return fmt.Errorf("that is not of type *SelectBorrowFormByIDResp")
+		}
+	}
+	if that1 == nil {
+		if this == nil {
+			return nil
+		}
+		return fmt.Errorf("that is type *SelectBorrowFormByIDResp but is nil && this != nil")
+	} else if this == nil {
+		return fmt.Errorf("that is type *SelectBorrowFormByIDResp but is not nil && this == nil")
+	}
+	if !this.Borrowform.Equal(that1.Borrowform) {
+		return fmt.Errorf("Borrowform this(%v) Not Equal that(%v)", this.Borrowform, that1.Borrowform)
+	}
+	if this.Code != that1.Code {
+		return fmt.Errorf("Code this(%v) Not Equal that(%v)", this.Code, that1.Code)
+	}
+	if this.Message != that1.Message {
+		return fmt.Errorf("Message this(%v) Not Equal that(%v)", this.Message, that1.Message)
+	}
+	return nil
+}
+func (this *SelectBorrowFormByIDResp) Equal(that interface{}) bool {
+	if that == nil {
+		return this == nil
+	}
+
+	that1, ok := that.(*SelectBorrowFormByIDResp)
+	if !ok {
+		that2, ok := that.(SelectBorrowFormByIDResp)
+		if ok {
+			that1 = &that2
+		} else {
+			return false
+		}
+	}
+	if that1 == nil {
+		return this == nil
+	} else if this == nil {
+		return false
+	}
+	if !this.Borrowform.Equal(that1.Borrowform) {
+		return false
+	}
+	if this.Code != that1.Code {
+		return false
+	}
+	if this.Message != that1.Message {
+		return false
+	}
+	return true
+}
 func (this *Doc) GoString() string {
 	if this == nil {
 		return "nil"
 	}
-	s := make([]string, 0, 13)
+	s := make([]string, 0, 14)
 	s = append(s, "&docmanagerModel.Doc{")
 	s = append(s, "ID: "+fmt.Sprintf("%#v", this.ID)+",\n")
 	s = append(s, "Name: "+fmt.Sprintf("%#v", this.Name)+",\n")
@@ -1394,7 +2272,24 @@ func (this *Doc) GoString() string {
 	s = append(s, "Type: "+fmt.Sprintf("%#v", this.Type)+",\n")
 	s = append(s, "Description: "+fmt.Sprintf("%#v", this.Description)+",\n")
 	s = append(s, "Status: "+fmt.Sprintf("%#v", this.Status)+",\n")
+	s = append(s, "BorrowFormID: "+fmt.Sprintf("%#v", this.BorrowFormID)+",\n")
 	s = append(s, "Fee: "+fmt.Sprintf("%#v", this.Fee)+",\n")
+	s = append(s, "CreatedAt: "+fmt.Sprintf("%#v", this.CreatedAt)+",\n")
+	s = append(s, "UpdatedAt: "+fmt.Sprintf("%#v", this.UpdatedAt)+",\n")
+	s = append(s, "}")
+	return strings.Join(s, "")
+}
+func (this *BorrowForm) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := make([]string, 0, 11)
+	s = append(s, "&docmanagerModel.BorrowForm{")
+	s = append(s, "ID: "+fmt.Sprintf("%#v", this.ID)+",\n")
+	s = append(s, "DocID: "+fmt.Sprintf("%#v", this.DocID)+",\n")
+	s = append(s, "CusID: "+fmt.Sprintf("%#v", this.CusID)+",\n")
+	s = append(s, "LibID: "+fmt.Sprintf("%#v", this.LibID)+",\n")
+	s = append(s, "Status: "+fmt.Sprintf("%#v", this.Status)+",\n")
 	s = append(s, "CreatedAt: "+fmt.Sprintf("%#v", this.CreatedAt)+",\n")
 	s = append(s, "UpdatedAt: "+fmt.Sprintf("%#v", this.UpdatedAt)+",\n")
 	s = append(s, "}")
@@ -1499,7 +2394,7 @@ func (this *DeleteDocReq) GoString() string {
 	}
 	s := make([]string, 0, 5)
 	s = append(s, "&docmanagerModel.DeleteDocReq{")
-	s = append(s, "Id: "+fmt.Sprintf("%#v", this.Id)+",\n")
+	s = append(s, "DocID: "+fmt.Sprintf("%#v", this.DocID)+",\n")
 	s = append(s, "}")
 	return strings.Join(s, "")
 }
@@ -1509,6 +2404,75 @@ func (this *DeleteDocResp) GoString() string {
 	}
 	s := make([]string, 0, 6)
 	s = append(s, "&docmanagerModel.DeleteDocResp{")
+	s = append(s, "Code: "+fmt.Sprintf("%#v", this.Code)+",\n")
+	s = append(s, "Message: "+fmt.Sprintf("%#v", this.Message)+",\n")
+	s = append(s, "}")
+	return strings.Join(s, "")
+}
+func (this *SaveBorrowFormReq) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := make([]string, 0, 5)
+	s = append(s, "&docmanagerModel.SaveBorrowFormReq{")
+	if this.Borrowform != nil {
+		s = append(s, "Borrowform: "+fmt.Sprintf("%#v", this.Borrowform)+",\n")
+	}
+	s = append(s, "}")
+	return strings.Join(s, "")
+}
+func (this *SaveBorrowFormResp) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := make([]string, 0, 6)
+	s = append(s, "&docmanagerModel.SaveBorrowFormResp{")
+	s = append(s, "Code: "+fmt.Sprintf("%#v", this.Code)+",\n")
+	s = append(s, "Message: "+fmt.Sprintf("%#v", this.Message)+",\n")
+	s = append(s, "}")
+	return strings.Join(s, "")
+}
+func (this *UpdateBorrowFormStatusReq) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := make([]string, 0, 6)
+	s = append(s, "&docmanagerModel.UpdateBorrowFormStatusReq{")
+	s = append(s, "FormID: "+fmt.Sprintf("%#v", this.FormID)+",\n")
+	s = append(s, "Status: "+fmt.Sprintf("%#v", this.Status)+",\n")
+	s = append(s, "}")
+	return strings.Join(s, "")
+}
+func (this *UpdateBorrowFormStatusResp) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := make([]string, 0, 6)
+	s = append(s, "&docmanagerModel.UpdateBorrowFormStatusResp{")
+	s = append(s, "Code: "+fmt.Sprintf("%#v", this.Code)+",\n")
+	s = append(s, "Message: "+fmt.Sprintf("%#v", this.Message)+",\n")
+	s = append(s, "}")
+	return strings.Join(s, "")
+}
+func (this *SelectBorrowFormByIDReq) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := make([]string, 0, 5)
+	s = append(s, "&docmanagerModel.SelectBorrowFormByIDReq{")
+	s = append(s, "FormID: "+fmt.Sprintf("%#v", this.FormID)+",\n")
+	s = append(s, "}")
+	return strings.Join(s, "")
+}
+func (this *SelectBorrowFormByIDResp) GoString() string {
+	if this == nil {
+		return "nil"
+	}
+	s := make([]string, 0, 7)
+	s = append(s, "&docmanagerModel.SelectBorrowFormByIDResp{")
+	if this.Borrowform != nil {
+		s = append(s, "Borrowform: "+fmt.Sprintf("%#v", this.Borrowform)+",\n")
+	}
 	s = append(s, "Code: "+fmt.Sprintf("%#v", this.Code)+",\n")
 	s = append(s, "Message: "+fmt.Sprintf("%#v", this.Message)+",\n")
 	s = append(s, "}")
@@ -1540,6 +2504,10 @@ type DocmanagerClient interface {
 	SaveDoc(ctx context.Context, in *SaveDocReq, opts ...grpc.CallOption) (*SaveDocResp, error)
 	UpdateDoc(ctx context.Context, in *UpdateDocReq, opts ...grpc.CallOption) (*UpdateDocResp, error)
 	DeleteDoc(ctx context.Context, in *DeleteDocReq, opts ...grpc.CallOption) (*DeleteDocResp, error)
+	//------------------------------ Borrow Form ------------------------------
+	SaveBorrowForm(ctx context.Context, in *SaveBorrowFormReq, opts ...grpc.CallOption) (*SaveBorrowFormResp, error)
+	UpdateBorrowFormStatus(ctx context.Context, in *UpdateBorrowFormStatusReq, opts ...grpc.CallOption) (*UpdateBorrowFormStatusResp, error)
+	SelectBorrowFormByID(ctx context.Context, in *SelectBorrowFormByIDReq, opts ...grpc.CallOption) (*SelectBorrowFormByIDResp, error)
 }
 
 type docmanagerClient struct {
@@ -1595,6 +2563,33 @@ func (c *docmanagerClient) DeleteDoc(ctx context.Context, in *DeleteDocReq, opts
 	return out, nil
 }
 
+func (c *docmanagerClient) SaveBorrowForm(ctx context.Context, in *SaveBorrowFormReq, opts ...grpc.CallOption) (*SaveBorrowFormResp, error) {
+	out := new(SaveBorrowFormResp)
+	err := c.cc.Invoke(ctx, "/model.Docmanager/SaveBorrowForm", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *docmanagerClient) UpdateBorrowFormStatus(ctx context.Context, in *UpdateBorrowFormStatusReq, opts ...grpc.CallOption) (*UpdateBorrowFormStatusResp, error) {
+	out := new(UpdateBorrowFormStatusResp)
+	err := c.cc.Invoke(ctx, "/model.Docmanager/UpdateBorrowFormStatus", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *docmanagerClient) SelectBorrowFormByID(ctx context.Context, in *SelectBorrowFormByIDReq, opts ...grpc.CallOption) (*SelectBorrowFormByIDResp, error) {
+	out := new(SelectBorrowFormByIDResp)
+	err := c.cc.Invoke(ctx, "/model.Docmanager/SelectBorrowFormByID", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DocmanagerServer is the server API for Docmanager service.
 type DocmanagerServer interface {
 	SelectAllDoc(context.Context, *SelectAllDocReq) (*SelectAllDocResp, error)
@@ -1602,6 +2597,10 @@ type DocmanagerServer interface {
 	SaveDoc(context.Context, *SaveDocReq) (*SaveDocResp, error)
 	UpdateDoc(context.Context, *UpdateDocReq) (*UpdateDocResp, error)
 	DeleteDoc(context.Context, *DeleteDocReq) (*DeleteDocResp, error)
+	//------------------------------ Borrow Form ------------------------------
+	SaveBorrowForm(context.Context, *SaveBorrowFormReq) (*SaveBorrowFormResp, error)
+	UpdateBorrowFormStatus(context.Context, *UpdateBorrowFormStatusReq) (*UpdateBorrowFormStatusResp, error)
+	SelectBorrowFormByID(context.Context, *SelectBorrowFormByIDReq) (*SelectBorrowFormByIDResp, error)
 }
 
 // UnimplementedDocmanagerServer can be embedded to have forward compatible implementations.
@@ -1622,6 +2621,15 @@ func (*UnimplementedDocmanagerServer) UpdateDoc(ctx context.Context, req *Update
 }
 func (*UnimplementedDocmanagerServer) DeleteDoc(ctx context.Context, req *DeleteDocReq) (*DeleteDocResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteDoc not implemented")
+}
+func (*UnimplementedDocmanagerServer) SaveBorrowForm(ctx context.Context, req *SaveBorrowFormReq) (*SaveBorrowFormResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SaveBorrowForm not implemented")
+}
+func (*UnimplementedDocmanagerServer) UpdateBorrowFormStatus(ctx context.Context, req *UpdateBorrowFormStatusReq) (*UpdateBorrowFormStatusResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateBorrowFormStatus not implemented")
+}
+func (*UnimplementedDocmanagerServer) SelectBorrowFormByID(ctx context.Context, req *SelectBorrowFormByIDReq) (*SelectBorrowFormByIDResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SelectBorrowFormByID not implemented")
 }
 
 func RegisterDocmanagerServer(s *grpc.Server, srv DocmanagerServer) {
@@ -1718,6 +2726,60 @@ func _Docmanager_DeleteDoc_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Docmanager_SaveBorrowForm_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SaveBorrowFormReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DocmanagerServer).SaveBorrowForm(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/model.Docmanager/SaveBorrowForm",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DocmanagerServer).SaveBorrowForm(ctx, req.(*SaveBorrowFormReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Docmanager_UpdateBorrowFormStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateBorrowFormStatusReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DocmanagerServer).UpdateBorrowFormStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/model.Docmanager/UpdateBorrowFormStatus",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DocmanagerServer).UpdateBorrowFormStatus(ctx, req.(*UpdateBorrowFormStatusReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Docmanager_SelectBorrowFormByID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SelectBorrowFormByIDReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DocmanagerServer).SelectBorrowFormByID(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/model.Docmanager/SelectBorrowFormByID",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DocmanagerServer).SelectBorrowFormByID(ctx, req.(*SelectBorrowFormByIDReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Docmanager_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "model.Docmanager",
 	HandlerType: (*DocmanagerServer)(nil),
@@ -1741,6 +2803,18 @@ var _Docmanager_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteDoc",
 			Handler:    _Docmanager_DeleteDoc_Handler,
+		},
+		{
+			MethodName: "SaveBorrowForm",
+			Handler:    _Docmanager_SaveBorrowForm_Handler,
+		},
+		{
+			MethodName: "UpdateBorrowFormStatus",
+			Handler:    _Docmanager_UpdateBorrowFormStatus_Handler,
+		},
+		{
+			MethodName: "SelectBorrowFormByID",
+			Handler:    _Docmanager_SelectBorrowFormByID_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -1772,17 +2846,22 @@ func (m *Doc) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		copy(dAtA[i:], m.UpdatedAt)
 		i = encodeVarintDocmanager(dAtA, i, uint64(len(m.UpdatedAt)))
 		i--
-		dAtA[i] = 0x4a
+		dAtA[i] = 0x52
 	}
 	if len(m.CreatedAt) > 0 {
 		i -= len(m.CreatedAt)
 		copy(dAtA[i:], m.CreatedAt)
 		i = encodeVarintDocmanager(dAtA, i, uint64(len(m.CreatedAt)))
 		i--
-		dAtA[i] = 0x42
+		dAtA[i] = 0x4a
 	}
 	if m.Fee != 0 {
 		i = encodeVarintDocmanager(dAtA, i, uint64(m.Fee))
+		i--
+		dAtA[i] = 0x40
+	}
+	if m.BorrowFormID != 0 {
+		i = encodeVarintDocmanager(dAtA, i, uint64(m.BorrowFormID))
 		i--
 		dAtA[i] = 0x38
 	}
@@ -1818,6 +2897,68 @@ func (m *Doc) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i = encodeVarintDocmanager(dAtA, i, uint64(len(m.Name)))
 		i--
 		dAtA[i] = 0x12
+	}
+	if m.ID != 0 {
+		i = encodeVarintDocmanager(dAtA, i, uint64(m.ID))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *BorrowForm) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *BorrowForm) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *BorrowForm) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.UpdatedAt) > 0 {
+		i -= len(m.UpdatedAt)
+		copy(dAtA[i:], m.UpdatedAt)
+		i = encodeVarintDocmanager(dAtA, i, uint64(len(m.UpdatedAt)))
+		i--
+		dAtA[i] = 0x3a
+	}
+	if len(m.CreatedAt) > 0 {
+		i -= len(m.CreatedAt)
+		copy(dAtA[i:], m.CreatedAt)
+		i = encodeVarintDocmanager(dAtA, i, uint64(len(m.CreatedAt)))
+		i--
+		dAtA[i] = 0x32
+	}
+	if m.Status != 0 {
+		i = encodeVarintDocmanager(dAtA, i, uint64(m.Status))
+		i--
+		dAtA[i] = 0x28
+	}
+	if m.LibID != 0 {
+		i = encodeVarintDocmanager(dAtA, i, uint64(m.LibID))
+		i--
+		dAtA[i] = 0x20
+	}
+	if m.CusID != 0 {
+		i = encodeVarintDocmanager(dAtA, i, uint64(m.CusID))
+		i--
+		dAtA[i] = 0x18
+	}
+	if m.DocID != 0 {
+		i = encodeVarintDocmanager(dAtA, i, uint64(m.DocID))
+		i--
+		dAtA[i] = 0x10
 	}
 	if m.ID != 0 {
 		i = encodeVarintDocmanager(dAtA, i, uint64(m.ID))
@@ -2134,8 +3275,8 @@ func (m *DeleteDocReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.Id != 0 {
-		i = encodeVarintDocmanager(dAtA, i, uint64(m.Id))
+	if m.DocID != 0 {
+		i = encodeVarintDocmanager(dAtA, i, uint64(m.DocID))
 		i--
 		dAtA[i] = 0x8
 	}
@@ -2177,6 +3318,219 @@ func (m *DeleteDocResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *SaveBorrowFormReq) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *SaveBorrowFormReq) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SaveBorrowFormReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Borrowform != nil {
+		{
+			size, err := m.Borrowform.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintDocmanager(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *SaveBorrowFormResp) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *SaveBorrowFormResp) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SaveBorrowFormResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Message) > 0 {
+		i -= len(m.Message)
+		copy(dAtA[i:], m.Message)
+		i = encodeVarintDocmanager(dAtA, i, uint64(len(m.Message)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Code != 0 {
+		i = encodeVarintDocmanager(dAtA, i, uint64(m.Code))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *UpdateBorrowFormStatusReq) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *UpdateBorrowFormStatusReq) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *UpdateBorrowFormStatusReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Status != 0 {
+		i = encodeVarintDocmanager(dAtA, i, uint64(m.Status))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.FormID != 0 {
+		i = encodeVarintDocmanager(dAtA, i, uint64(m.FormID))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *UpdateBorrowFormStatusResp) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *UpdateBorrowFormStatusResp) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *UpdateBorrowFormStatusResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Message) > 0 {
+		i -= len(m.Message)
+		copy(dAtA[i:], m.Message)
+		i = encodeVarintDocmanager(dAtA, i, uint64(len(m.Message)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Code != 0 {
+		i = encodeVarintDocmanager(dAtA, i, uint64(m.Code))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *SelectBorrowFormByIDReq) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *SelectBorrowFormByIDReq) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SelectBorrowFormByIDReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.FormID != 0 {
+		i = encodeVarintDocmanager(dAtA, i, uint64(m.FormID))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *SelectBorrowFormByIDResp) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *SelectBorrowFormByIDResp) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SelectBorrowFormByIDResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Message) > 0 {
+		i -= len(m.Message)
+		copy(dAtA[i:], m.Message)
+		i = encodeVarintDocmanager(dAtA, i, uint64(len(m.Message)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if m.Code != 0 {
+		i = encodeVarintDocmanager(dAtA, i, uint64(m.Code))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.Borrowform != nil {
+		{
+			size, err := m.Borrowform.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintDocmanager(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintDocmanager(dAtA []byte, offset int, v uint64) int {
 	offset -= sovDocmanager(v)
 	base := offset
@@ -2196,7 +3550,25 @@ func NewPopulatedDoc(r randyDocmanager, easy bool) *Doc {
 	this.Type = string(randStringDocmanager(r))
 	this.Description = string(randStringDocmanager(r))
 	this.Status = uint32(r.Uint32())
+	this.BorrowFormID = uint64(uint64(r.Uint32()))
 	this.Fee = uint32(r.Uint32())
+	this.CreatedAt = string(randStringDocmanager(r))
+	this.UpdatedAt = string(randStringDocmanager(r))
+	if !easy && r.Intn(10) != 0 {
+	}
+	return this
+}
+
+func NewPopulatedBorrowForm(r randyDocmanager, easy bool) *BorrowForm {
+	this := &BorrowForm{}
+	this.ID = uint64(uint64(r.Uint32()))
+	this.DocID = uint64(uint64(r.Uint32()))
+	this.CusID = uint64(uint64(r.Uint32()))
+	this.LibID = uint64(uint64(r.Uint32()))
+	this.Status = int32(r.Int31())
+	if r.Intn(2) == 0 {
+		this.Status *= -1
+	}
 	this.CreatedAt = string(randStringDocmanager(r))
 	this.UpdatedAt = string(randStringDocmanager(r))
 	if !easy && r.Intn(10) != 0 {
@@ -2299,7 +3671,7 @@ func NewPopulatedUpdateDocResp(r randyDocmanager, easy bool) *UpdateDocResp {
 
 func NewPopulatedDeleteDocReq(r randyDocmanager, easy bool) *DeleteDocReq {
 	this := &DeleteDocReq{}
-	this.Id = uint64(uint64(r.Uint32()))
+	this.DocID = uint64(uint64(r.Uint32()))
 	if !easy && r.Intn(10) != 0 {
 	}
 	return this
@@ -2307,6 +3679,75 @@ func NewPopulatedDeleteDocReq(r randyDocmanager, easy bool) *DeleteDocReq {
 
 func NewPopulatedDeleteDocResp(r randyDocmanager, easy bool) *DeleteDocResp {
 	this := &DeleteDocResp{}
+	this.Code = int32(r.Int31())
+	if r.Intn(2) == 0 {
+		this.Code *= -1
+	}
+	this.Message = string(randStringDocmanager(r))
+	if !easy && r.Intn(10) != 0 {
+	}
+	return this
+}
+
+func NewPopulatedSaveBorrowFormReq(r randyDocmanager, easy bool) *SaveBorrowFormReq {
+	this := &SaveBorrowFormReq{}
+	if r.Intn(5) != 0 {
+		this.Borrowform = NewPopulatedBorrowForm(r, easy)
+	}
+	if !easy && r.Intn(10) != 0 {
+	}
+	return this
+}
+
+func NewPopulatedSaveBorrowFormResp(r randyDocmanager, easy bool) *SaveBorrowFormResp {
+	this := &SaveBorrowFormResp{}
+	this.Code = int32(r.Int31())
+	if r.Intn(2) == 0 {
+		this.Code *= -1
+	}
+	this.Message = string(randStringDocmanager(r))
+	if !easy && r.Intn(10) != 0 {
+	}
+	return this
+}
+
+func NewPopulatedUpdateBorrowFormStatusReq(r randyDocmanager, easy bool) *UpdateBorrowFormStatusReq {
+	this := &UpdateBorrowFormStatusReq{}
+	this.FormID = uint64(uint64(r.Uint32()))
+	this.Status = int32(r.Int31())
+	if r.Intn(2) == 0 {
+		this.Status *= -1
+	}
+	if !easy && r.Intn(10) != 0 {
+	}
+	return this
+}
+
+func NewPopulatedUpdateBorrowFormStatusResp(r randyDocmanager, easy bool) *UpdateBorrowFormStatusResp {
+	this := &UpdateBorrowFormStatusResp{}
+	this.Code = int32(r.Int31())
+	if r.Intn(2) == 0 {
+		this.Code *= -1
+	}
+	this.Message = string(randStringDocmanager(r))
+	if !easy && r.Intn(10) != 0 {
+	}
+	return this
+}
+
+func NewPopulatedSelectBorrowFormByIDReq(r randyDocmanager, easy bool) *SelectBorrowFormByIDReq {
+	this := &SelectBorrowFormByIDReq{}
+	this.FormID = uint64(uint64(r.Uint32()))
+	if !easy && r.Intn(10) != 0 {
+	}
+	return this
+}
+
+func NewPopulatedSelectBorrowFormByIDResp(r randyDocmanager, easy bool) *SelectBorrowFormByIDResp {
+	this := &SelectBorrowFormByIDResp{}
+	if r.Intn(5) != 0 {
+		this.Borrowform = NewPopulatedBorrowForm(r, easy)
+	}
 	this.Code = int32(r.Int31())
 	if r.Intn(2) == 0 {
 		this.Code *= -1
@@ -2417,8 +3858,43 @@ func (m *Doc) Size() (n int) {
 	if m.Status != 0 {
 		n += 1 + sovDocmanager(uint64(m.Status))
 	}
+	if m.BorrowFormID != 0 {
+		n += 1 + sovDocmanager(uint64(m.BorrowFormID))
+	}
 	if m.Fee != 0 {
 		n += 1 + sovDocmanager(uint64(m.Fee))
+	}
+	l = len(m.CreatedAt)
+	if l > 0 {
+		n += 1 + l + sovDocmanager(uint64(l))
+	}
+	l = len(m.UpdatedAt)
+	if l > 0 {
+		n += 1 + l + sovDocmanager(uint64(l))
+	}
+	return n
+}
+
+func (m *BorrowForm) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.ID != 0 {
+		n += 1 + sovDocmanager(uint64(m.ID))
+	}
+	if m.DocID != 0 {
+		n += 1 + sovDocmanager(uint64(m.DocID))
+	}
+	if m.CusID != 0 {
+		n += 1 + sovDocmanager(uint64(m.CusID))
+	}
+	if m.LibID != 0 {
+		n += 1 + sovDocmanager(uint64(m.LibID))
+	}
+	if m.Status != 0 {
+		n += 1 + sovDocmanager(uint64(m.Status))
 	}
 	l = len(m.CreatedAt)
 	if l > 0 {
@@ -2558,8 +4034,8 @@ func (m *DeleteDocReq) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.Id != 0 {
-		n += 1 + sovDocmanager(uint64(m.Id))
+	if m.DocID != 0 {
+		n += 1 + sovDocmanager(uint64(m.DocID))
 	}
 	return n
 }
@@ -2570,6 +4046,98 @@ func (m *DeleteDocResp) Size() (n int) {
 	}
 	var l int
 	_ = l
+	if m.Code != 0 {
+		n += 1 + sovDocmanager(uint64(m.Code))
+	}
+	l = len(m.Message)
+	if l > 0 {
+		n += 1 + l + sovDocmanager(uint64(l))
+	}
+	return n
+}
+
+func (m *SaveBorrowFormReq) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Borrowform != nil {
+		l = m.Borrowform.Size()
+		n += 1 + l + sovDocmanager(uint64(l))
+	}
+	return n
+}
+
+func (m *SaveBorrowFormResp) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Code != 0 {
+		n += 1 + sovDocmanager(uint64(m.Code))
+	}
+	l = len(m.Message)
+	if l > 0 {
+		n += 1 + l + sovDocmanager(uint64(l))
+	}
+	return n
+}
+
+func (m *UpdateBorrowFormStatusReq) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.FormID != 0 {
+		n += 1 + sovDocmanager(uint64(m.FormID))
+	}
+	if m.Status != 0 {
+		n += 1 + sovDocmanager(uint64(m.Status))
+	}
+	return n
+}
+
+func (m *UpdateBorrowFormStatusResp) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Code != 0 {
+		n += 1 + sovDocmanager(uint64(m.Code))
+	}
+	l = len(m.Message)
+	if l > 0 {
+		n += 1 + l + sovDocmanager(uint64(l))
+	}
+	return n
+}
+
+func (m *SelectBorrowFormByIDReq) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.FormID != 0 {
+		n += 1 + sovDocmanager(uint64(m.FormID))
+	}
+	return n
+}
+
+func (m *SelectBorrowFormByIDResp) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Borrowform != nil {
+		l = m.Borrowform.Size()
+		n += 1 + l + sovDocmanager(uint64(l))
+	}
 	if m.Code != 0 {
 		n += 1 + sovDocmanager(uint64(m.Code))
 	}
@@ -2783,6 +4351,25 @@ func (m *Doc) Unmarshal(dAtA []byte) error {
 			}
 		case 7:
 			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field BorrowFormID", wireType)
+			}
+			m.BorrowFormID = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDocmanager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.BorrowFormID |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 8:
+			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Fee", wireType)
 			}
 			m.Fee = 0
@@ -2800,7 +4387,7 @@ func (m *Doc) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
-		case 8:
+		case 9:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field CreatedAt", wireType)
 			}
@@ -2832,7 +4419,219 @@ func (m *Doc) Unmarshal(dAtA []byte) error {
 			}
 			m.CreatedAt = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 9:
+		case 10:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field UpdatedAt", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDocmanager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.UpdatedAt = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDocmanager(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *BorrowForm) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDocmanager
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: BorrowForm: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: BorrowForm: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ID", wireType)
+			}
+			m.ID = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDocmanager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.ID |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DocID", wireType)
+			}
+			m.DocID = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDocmanager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.DocID |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CusID", wireType)
+			}
+			m.CusID = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDocmanager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.CusID |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field LibID", wireType)
+			}
+			m.LibID = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDocmanager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.LibID |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 5:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
+			}
+			m.Status = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDocmanager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Status |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CreatedAt", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDocmanager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.CreatedAt = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 7:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field UpdatedAt", wireType)
 			}
@@ -3708,9 +5507,9 @@ func (m *DeleteDocReq) Unmarshal(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field DocID", wireType)
 			}
-			m.Id = 0
+			m.DocID = 0
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowDocmanager
@@ -3720,7 +5519,7 @@ func (m *DeleteDocReq) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Id |= uint64(b&0x7F) << shift
+				m.DocID |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -3798,6 +5597,606 @@ func (m *DeleteDocResp) Unmarshal(dAtA []byte) error {
 				}
 			}
 		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Message", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDocmanager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Message = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDocmanager(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *SaveBorrowFormReq) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDocmanager
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SaveBorrowFormReq: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SaveBorrowFormReq: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Borrowform", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDocmanager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Borrowform == nil {
+				m.Borrowform = &BorrowForm{}
+			}
+			if err := m.Borrowform.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDocmanager(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *SaveBorrowFormResp) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDocmanager
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SaveBorrowFormResp: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SaveBorrowFormResp: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Code", wireType)
+			}
+			m.Code = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDocmanager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Code |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Message", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDocmanager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Message = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDocmanager(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *UpdateBorrowFormStatusReq) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDocmanager
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: UpdateBorrowFormStatusReq: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: UpdateBorrowFormStatusReq: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field FormID", wireType)
+			}
+			m.FormID = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDocmanager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.FormID |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
+			}
+			m.Status = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDocmanager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Status |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDocmanager(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *UpdateBorrowFormStatusResp) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDocmanager
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: UpdateBorrowFormStatusResp: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: UpdateBorrowFormStatusResp: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Code", wireType)
+			}
+			m.Code = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDocmanager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Code |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Message", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDocmanager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Message = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDocmanager(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *SelectBorrowFormByIDReq) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDocmanager
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SelectBorrowFormByIDReq: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SelectBorrowFormByIDReq: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field FormID", wireType)
+			}
+			m.FormID = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDocmanager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.FormID |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipDocmanager(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *SelectBorrowFormByIDResp) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowDocmanager
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SelectBorrowFormByIDResp: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SelectBorrowFormByIDResp: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Borrowform", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDocmanager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthDocmanager
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Borrowform == nil {
+				m.Borrowform = &BorrowForm{}
+			}
+			if err := m.Borrowform.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Code", wireType)
+			}
+			m.Code = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDocmanager
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Code |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 3:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Message", wireType)
 			}
