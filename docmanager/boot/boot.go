@@ -24,10 +24,12 @@ var (
 	grpcCertFile     = flag.String("grpc_cert", "", "A PEM eoncoded certificate file.")
 	grpcKeyFile      = flag.String("grpc_key", "", "A PEM encoded private key file.")
 	grpcClientCaFile = flag.String("grpc_client_ca", "", "A PEM eoncoded client CA's file.")
+	shardID          = flag.Int("shard", 0, "Shard's number'")
 )
 
 func Boot() {
 	flag.Parse()
+	core.InitCore(*shardID)
 
 	lg := core.GetLogger()
 	logger.LogInfo(lg, "Booting")
