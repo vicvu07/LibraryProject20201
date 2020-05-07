@@ -49,7 +49,7 @@
             "CaCert": "",
             "ClientCert": "",
             "ClientKey": "",
-            "DB": "docmanager0",
+            "DB": "portal",
             "Masters": [
                 "127.0.0.1:3306"
             ],
@@ -84,6 +84,10 @@
 		"SipHashSum0": 947295729583939162,
 		"SipHashSum1": 323869573058327753
 	    }
+	},
+	"Cache": {
+		"Cluster": "127.0.0.1",
+		"Keyspace": "portal"
 	}
     }
  

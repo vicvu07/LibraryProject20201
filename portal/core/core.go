@@ -9,6 +9,7 @@ import (
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/go-sql-driver/mysql"
+	"github.com/gocql/gocql"
 	"github.com/hashicorp/go-multierror"
 	"github.com/linxGnu/mssqlx"
 
@@ -54,12 +55,18 @@ func SetEtcdClient(e *etcdClient.Client) {
 var (
 	config         atomic.Value
 	db             atomic.Value
+	cache          atomic.Value
 	grpcServerConf atomic.Value
 	httpServerConf atomic.Value // *configs.HTTPClientConf
 	loggerLock     = &sync.Mutex{}
 	lg             *model.LogFormat
 	numShard       uint64
 )
+
+type CassandraCache struct {
+	Cluster  string `json:"Cluster"`
+	Keyspace string `json:"Keyspace"`
+}
 
 // SetNumShards set number of shards.
 func SetNumShards(v int) {
@@ -80,6 +87,10 @@ func InitCore(shardNumber int) {
 			Type:    "mysql",
 			Masters: []string{testDSN},
 			Slaves:  []string{testDSN},
+		},
+		Cache: CassandraCache{
+			Cluster:  "127.0.0.1",
+			Keyspace: "portal",
 		},
 		WebServer: WebServer{
 			BodyLimit: "1M",
@@ -113,6 +124,27 @@ func InitCore(shardNumber int) {
 	})
 
 	mysqlLibs.RegisterDial()
+	constructCassandraSession()
+}
+
+func constructCassandraSession() {
+	cf := GetConfig()
+
+	cluster := gocql.NewCluster(cf.Cache.Cluster)
+	cluster.Keyspace = cf.Cache.Keyspace
+	session, err := cluster.CreateSession()
+	if err != nil {
+		panic(err)
+	}
+	cache.Store(session)
+}
+
+// GetDB get global database conn
+func GetCacheSession() *gocql.Session {
+	if _cache, stored := cache.Load().(*gocql.Session); stored {
+		return _cache
+	}
+	return nil
 }
 
 func GetLogger() (_lg *model.LogFormat) {
@@ -127,7 +159,8 @@ type Config struct {
 	// Database configuration
 	Database configs.MysqlConnConfig `json:"Database"`
 	// WebServer configuration
-	WebServer WebServer `json:"WebServer"` // WebServer configuration
+	WebServer WebServer      `json:"WebServer"` // WebServer configuration
+	Cache     CassandraCache `json:"Cache"`
 }
 
 // ------------------------------------------------------------- Web Server -------------------------------
@@ -273,7 +306,6 @@ func GetConfigFromEtcd() (err error) {
 		panic("etcd client fault")
 	}
 
-	fmt.Println(cl)
 	return etcd.Get(cl, ServiceName, &Config{}, func(expect interface{}) (err error) {
 		if expect == nil {
 			return
