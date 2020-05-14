@@ -1,0 +1,845 @@
+<div class='container'>
+    <div class="row">
+        <div class="typography-line">
+            <h5>User Management</h5>
+        </div>
+    </div>
+</div>
+<div class='container-fluid' id='tblUSER'>
+    <div class='row'>
+        <table class='table'>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Username</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for='user in users'>
+                    <td>
+                        {{ user.ID }}
+                    </td>
+                    <td> 
+                        {{ user.Name }}
+                    </td>
+                    <td> 
+                        {{ user.Username }}
+                    </td>
+                    <td>
+                        <a href='' v-on:click.stop.prevent='loadRoleModal(user.Username)'>Roles</a>
+                        |
+                        <a href='' v-on:click.stop.prevent='loadPermissionModal(user.Username)'>Permissions</a>
+                        |
+                        <a href='' v-on:click.stop.prevent='remove(user.Username, user.ID)'>Delete</a>
+                        |
+                        <a href='' v-on:click.stop.prevent='loadChangePasswordModel(user.Username)'>Change Password</a>
+                        |
+                        <a href='' v-on:click.stop.prevent='loadUserDetailModal(user.ID)'>See Detail</a>
+                        |
+                        <a href='' v-on:click.stop.prevent='loadChangeDepartmentModal(user.ID)'> Change Department</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class='row justify-content-center'>
+        <ul v-bind:class="[isLoad ? 'pagination' : 'hide']">
+            <li v-bind:class="[page > 1 ? 'page-item' : 'hide']">
+                <a class='page-link' aria-label='Trước' v-on:click='pageChange(-1)'>
+                    <span aria-hidden='true'>
+                        <i class='fa fa-angle-double-left' aria-hidden='true'></i>
+                    </span>
+                </a>
+            </li>
+            <li class='page-item active'>
+                <a class='page-link' href='#'>{{ page }}</a>
+            </li>
+            <li class='page-item'>
+                <a class='page-link' aria-label='Sau' v-on:click='pageChange(1)'>
+                    <span aria-hidden='true '>
+                        <i class='fa fa-angle-double-right' aria-hidden='true'></i>
+                    </span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class='row justify-content-center'>
+        <button type='button' class='btn btn-primary' data-toggle='modal' id='btnCreate'>
+            Create New User
+        </button>
+    </div>
+</div>
+
+<div class='modal fade' id='saveUserModal'>
+    <div class='modal-dialog modal-lg' role='document'>
+        <div class='modal-content' id='formSaveUser'>
+            <div class='modal-header'>
+                <h5 class='modal-title'>Save User</h5>
+                <button type='button' class='close' data-dismiss='modal' aria-label='Close' v-on:click='reload'>
+                    <span aria-hidden='true'>&times;</span>
+                </button>
+            </div>
+            <div class='modal-body'>
+                <form class='form-horizontal col-sm-12'>
+                    <div class='form-group'>
+                        <label>Name</label>
+                        <input class='form-control' name='Username' type='text' v-model='user.Name' />
+                    </div>
+                    <div class='form-group'>
+                        <label>Day Of Birth</label>
+                        <input class='form-control' name='Username' type='text' v-model='user.DOB' />
+                    </div>
+                    <div class='form-group'>
+                        <label>Sex</label>
+                        <input class='form-control' name='Username' type='text' v-model='user.Sex' />
+                    </div>
+                    <div class='form-group'>
+                        <label>Position</label>
+                        <input class='form-control' name='Username' type='text' v-model='user.Position' />
+                    </div>
+                    <div class='form-group'>
+                        <label>Phone number</label>
+                        <input class='form-control' name='Username' type='text' v-model='user.PhoneNum' />
+                    </div>
+                    <div class='form-group'>
+                        <label>National ID</label>
+                        <input class='form-control' name='Username' type='text' v-model='user.NationalID' />
+                    </div>
+                    <div class='form-group'>
+                        <label>Salary</label>
+                        <input class='form-control' name='Username' type='text' v-model='user.Salary' />
+                    </div>
+                    <label>Department</label>
+                    <select v-model="user.DepartmentID" class="custom-select">
+                        <option v-for="option in departmentOtps" v-bind:value="option.ID">
+                            {{ option }}
+                        </option>
+                    </select>
+                    <div class='form-group'>
+                        <label>Username</label>
+                        <input class='form-control' name='Username' type='text' v-model='user.Username' />
+                    </div>
+                    <div class='form-group'>
+                        <label>Password</label>
+                        <input class='form-control' name='Username' type='text' v-model='user.Password' />
+                    </div>
+                </form>
+            </div>
+            <div class='modal-footer'>
+                <button type='button' class='btn btn-primary' v-on:click.stop.prevent='save(user)'>Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class='modal fade' id='updateUserDetailModal'>
+        <div class='modal-dialog modal-lg' role='document'>
+            <div class='modal-content' id='formUpdateUserDetail'>
+                <div class='modal-header'>
+                    <h5 class='modal-title'>Update User Detail</h5>
+                    <button type='button' class='close' data-dismiss='modal' aria-label='Close' v-on:click='reload'>
+                        <span aria-hidden='true'>&times;</span>
+                    </button>
+                </div>
+                <div class='modal-body'>
+                    <form class='form-horizontal col-sm-12'>
+                    <div class='form-group'>
+                        <label>Name</label>
+                        <input class='form-control' name='Username' type='text' v-model='user.Name' />
+                    </div>
+                    <div class='form-group'>
+                        <label>Day Of Birth</label>
+                        <input class='form-control' name='Username' type='text' v-model='user.DOB' />
+                    </div>
+                    <div class='form-group'>
+                        <label>Sex</label>
+                        <input class='form-control' name='Username' type='text' v-model='user.Sex' />
+                    </div>
+                    <div class='form-group'>
+                        <label>Position</label>
+                        <input class='form-control' name='Username' type='text' v-model='user.Position' />
+                    </div>
+                    <div class='form-group'>
+                        <label>Phone number</label>
+                        <input class='form-control' name='Username' type='text' v-model='user.PhoneNum' />
+                    </div>
+                    <div class='form-group'>
+                        <label>National ID</label>
+                        <input class='form-control' name='Username' type='text' v-model='user.NationalID' />
+                    </div>
+                    <div class='form-group'>
+                        <label>Salary</label>
+                        <input class='form-control' name='Username' type='text' v-model='user.Salary' />
+                    </div>
+                </form>
+                <h6> Done Plans </h6>
+                <table class='table'>
+                    <thead>
+                        <tr>
+                            <th>Plan ID</th>
+                            <th>Plan Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for='data in dataset.DonePlan'>
+                            <td> {{ data.ID }}</td>
+                            <td> {{ data.Name }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h6> On Going Plans </h6>
+                <table class='table'>
+                    <thead>
+                        <tr>
+                            <th>Plan ID</th>
+                            <th>Plan Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for='data in dataset.OnGoingPlan'>
+                            <td> {{ data.ID }}</td>
+                            <td> {{ data.Name }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+       
+            </div>
+            <div class='modal-footer'>
+                <button type='button' class='btn btn-primary' v-on:click.stop.prevent='save(user)'>Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class='modal fade' id='changePasswordModal'>
+    <div class='modal-dialog modal-lg' role='document'>
+        <div class='modal-content' id='formChangePassword'>
+            <div class='modal-header'>
+                <h5 class='modal-title'>Change Password</h5>
+                <button type='button' class='close' data-dismiss='modal' aria-label='Close' v-on:click='reload'>
+                    <span aria-hidden='true'>&times;</span>
+                </button>
+            </div>
+            <div class='modal-body'>
+                <form class='form-horizontal col-sm-12'>
+                    <div class='form-group'>
+                        <label>Username</label>
+                        <input class='form-control' name='Username' type='text' v-model='req.Username' />
+                    </div>
+                    <div class='form-group'>
+                        <label>Old Password</label>
+                        <input class='form-control' name='Old Password' type='text' v-model='req.OldPassword' />
+                    </div>
+                    <div class='form-group'>
+                        <label>New Password</label>
+                        <input class='form-control' name='New Password' type='text' v-model='req.NewPassword' />
+                    </div>
+                </form>
+            </div>
+            <div class='modal-footer'>
+                <button type='button' class='btn btn-primary' v-on:click.stop.prevent='changePassword(req)'>Change</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class='modal fade' id='changeDepartmentModal'>
+        <div class='modal-dialog modal-lg' role='document'>
+            <div class='modal-content' id='formChangeDepartment'>
+                <div class='modal-header'>
+                    <h5 class='modal-title'>Change Department </h5>
+                    <button type='button' class='close' data-dismiss='modal' aria-label='Close' v-on:click='reload'>
+                        <span aria-hidden='true'>&times;</span>
+                    </button>
+                </div>
+                <div class='modal-body'>
+                    <form class='form-horizontal col-sm-12'>
+                        <div class='form-group'>
+                            <label>Old Department ID</label>
+                            <input class='form-control' name='Old Department ID' type='text' v-model='req.OldDepartmentID' />
+                        </div>
+                        
+                        <label>Department</label>
+                        <label></label>
+                        <select v-model="req.NewDepartmentID" class="custom-select">
+                                <option v-for="option in departmentOtps" v-bind:value="option.ID">
+                                    {{ option }}
+                                </option>
+                        </select>
+                    </form>
+                </div>
+                <div class='modal-footer'>
+                    <button type='button' class='btn btn-primary' v-on:click.stop.prevent='changeDepartment(req)'>Change</button>
+                </div>
+            </div>
+        </div>
+</div>
+
+<div class='modal fade' id="updateRoleModal">
+    <div class='modal-dialog modal-lg' role='document'>
+        <div class='modal-content' id='formUpdateRole'>
+            <div class='modal-header'>
+                <h5 class='modal-title'>Role</h5>
+                <button type='button' class='close' data-dismiss='modal' aria-label='Close' v-on:click='reload'>
+                    <span aria-hidden='true'>&times;</span>
+                </button>
+            </div>
+            <div class='modal-body'>
+                <form class='form-horizontal col-sm-12' id="roleUpdate">
+                    <div v-for="role in roles.Role">
+                        <input type="checkbox" :value="role" v-model="resp.Role">{{role}}
+                    </div>
+                    {{ resp.Role }}
+                </form>
+            </div>
+            <div class='modal-footer'>
+                <button type='button' class='btn btn-primary' v-on:click.stop.prevent='update(resp)'>Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class='modal fade' id="updatePermissionModal">
+    <div class='modal-dialog modal-lg' role='document'>
+        <div class='modal-content' id='formUpdatePermission'>
+            <div class='modal-header'>
+                <h5 class='modal-title'>Permission</h5>
+                <button type='button' class='close' data-dismiss='modal' aria-label='Close' v-on:click='reload'>
+                    <span aria-hidden='true'>&times;</span>
+                </button>
+            </div>
+            <div class='modal-body'>
+                <form class='form-horizontal col-sm-12' id="permissionUpdate">
+                    <div v-for="per in perm">
+                        <input type="checkbox" :value="per" v-model="resp.Permission" />{{per}}
+                    </div>
+                    {{resp.Permission}}
+                </form>
+            </div>
+            <div class='modal-footer'>
+                <button type='button' class='btn btn-primary' v-on:click.stop.prevent='update(resp)'>Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var dropDownDepartments = [];
+    loadDepartments = () => {
+        post('/r/department/all', {}).then(res => {
+            if (!res.Data)
+                dropDownDepartments = [];
+            else
+                dropDownDepartments = res.Data;
+        }).catch(err => {
+            if (isAuthenTokenOK())
+                $.notify({ message: 'Fail to load from server', type: 'danger', placement: { from: 'top', align: 'center' } });
+        });
+    }
+
+    var users = new Vue({
+        el: '#tblUSER',
+        data: {
+            users: [],
+            page: 1,
+            isLoad: false,
+            departmentOtps: [],
+        },
+        methods: {
+            displayTime: (t) => {
+                if (!t.seconds)
+                    return '';
+                return new Date(t.seconds * 1000).format('d/m/Y');
+            },
+            loadChangePasswordModel: (Username) => {
+                formChangePassword.req.Username = Username;
+                formChangePassword.req.OldPassword = '';
+                formChangePassword.req.NewPassword = '';
+                $('#changePasswordModal').modal('show');
+            },
+
+            loadUserDetailModal: (ID) => {
+                post('/r/user/viewUserPlan', {ID: ID}).then(res => {
+                    if (res.Data) {
+                        tmp = res.Data;
+                        formUpdateUserDetail.dataset.DonePlan = tmp.DonePlan;
+                        formUpdateUserDetail.dataset.OnGoingPlan = tmp.OnGoingPlan;
+                    } else {
+                        formUpdateUserDetail.dataset.DonePlan = [];
+                        formUpdateUserDetail.dataset.OnGoingPlan = [];
+                    }
+                }).catch(err => {
+                    if (isAuthenTokenOK())
+                        $.notify({
+                            message: err.data,
+                            type: 'danger',
+                            placement: {
+                                from: 'top',
+                                align: 'center'
+                            }
+                        });
+                });
+
+                post('/r/user/loadUserDetail', {ID: ID}).then(res => {
+                    if (res.Data) {
+                        tmp = res.Data;
+                        formUpdateUserDetail.user = tmp;
+                        formUpdateUserDetail.departmentOtps = dropDownDepartments;
+                        $('#updateUserDetailModal').modal('show');
+                    }
+                }).catch(err => {
+                    if (isAuthenTokenOK())
+                        $.notify({
+                            message: err.data,
+                            type: 'danger',
+                            placement: {
+                                from: 'top',
+                                align: 'center'
+                            }
+                        });
+                });
+            },
+
+            loadChangeDepartmentModal: (ID) => {
+                post('r/user/loadUserDepartment',{ID: ID}).then(res => {
+                    if (res.Data) {
+                        tmp = res.Data 
+                        formChangeDepartment.olddepartment = tmp
+                        formChangeDepartment.req.ID = ID;
+                        formChangeDepartment.req.OldDepartmentID = tmp.ID;
+                        formChangeDepartment.req.NewDepartmentID = 0;
+                        formChangeDepartment.departmentOtps = dropDownDepartments;
+                        $('#changeDepartmentModal').modal('show')
+                    }
+                }).catch(err => {
+                    if (isAuthenTokenOK())
+                        $.notify({
+                            message: err.data,
+                            type: 'danger',
+                            placement: {
+                                from: 'top',
+                                align: 'center'
+                            }
+                        });
+                });
+            },
+
+            loadRoleModal: (Username) => {
+                post('/r/group/all').then(res => {
+                    if (res.Data) {
+                        formUpdateRole.roles.Role = res.Data;
+                    }
+                }).catch(err => {
+                    if (isAuthenTokenOK())
+                        $.notify({
+                            message: err.data,
+                            type: 'danger',
+                            placement: {
+                                from: 'top',
+                                align: 'center'
+                            }
+                        });
+                });
+                post('/r/user/loadrole', {
+                    Username: Username
+                }).then(res => {
+                    tmp = res.Data;
+                    formUpdateRole.resp.Username = Username;
+                    if (res.Data.TRole) {
+                        formUpdateRole.resp.Role = tmp.TRole;
+                    } else {
+                        formUpdateRole.resp.Role = [];
+                    }
+                    formUpdateRole.roles.TRole = tmp.TRole;
+                    $('#updateRoleModal').modal('show');
+
+                }).catch(err => {
+                    if (isAuthenTokenOK())
+                        $.notify({
+                            message: err.data,
+                            type: 'danger',
+                            placement: {
+                                from: 'top',
+                                align: 'center'
+                            }
+                        });
+                });
+            },
+
+            loadPermissionModal: (Username) => {
+                post('/r/user/allpermission').then(res => {
+                    if (res.Data) {
+                        formUpdatePermission.perm = res.Data;
+                    }
+                }).catch(err => {
+                    if (isAuthenTokenOK())
+                        $.notify({
+                            message: err.data,
+                            type: 'danger',
+                            placement: {
+                                from: 'top',
+                                align: 'center'
+                            }
+                        });
+                });
+                post('/r/user/loadpermission', {
+                    Username: Username
+                }).then(res => {
+                    formUpdatePermission.tperm = res.Data.TPerm;
+                    formUpdatePermission.resp.Username = Username;
+                    if (res.Data.TPerm) {
+                        formUpdatePermission.resp.Permission = res.Data.TPerm;
+                    } else {
+                        formUpdatePermission.resp.Permission = [];
+                    }
+                    $('#updatePermissionModal').modal('show');
+
+                }).catch(err => {
+                    if (isAuthenTokenOK())
+                        $.notify({
+                            message: err.data,
+                            type: 'danger',
+                            placement: {
+                                from: 'top',
+                                align: 'center'
+                            }
+                        });
+                });
+            },
+
+            loadUsersTable: () => {
+                p = users.page;
+                post('/r/user/view', {
+                    offset: (p - 1) * 5,
+                    limit: 10
+                }).then(res => {
+                    users.isLoad = true;
+                    if (!res.Data)
+                        users.users = [];
+                    else
+                        users.users = res.Data;
+                }).catch(err => {
+                    if (isAuthenTokenOK())
+                        $.notify({
+                            message: 'Fail to load from server',
+                            type: 'danger',
+                            placement: {
+                                from: 'top',
+                                align: 'center'
+                            }
+                        });
+                });
+            },
+            remove: (Username,ID) => {
+                if (confirm('Bạn có chắc chắn muốn xóa user này?')) {
+                    post('/r/user/delete', {
+                        Username: Username,
+                        ID: ID,
+                    }).then(res => {
+                        users.loadUsersTable();
+                        $.notify({
+                            message: 'Success',
+                            type: 'success',
+                            placement: {
+                                from: 'top',
+                                align: 'center'
+                            }
+                        });
+                    }).catch(err => {
+                        if (isAuthenTokenOK())
+                            $.notify({
+                                message: 'Fail to load from server',
+                                type: 'danger',
+                                placement: {
+                                    from: 'top',
+                                    align: 'center'
+                                }
+                            });
+                    });
+                }
+            },
+            pageChange: (v) => {
+                users.page = users.page + v < 1 ? 1 : users.page + v;
+                users.loadUsersTable();
+            },
+        }
+    });
+
+    var formSaveUser = new Vue({
+        el: '#formSaveUser',
+        data: {
+            user: {},
+            departmentOtps: [],
+        },
+        methods: {
+            save: (user) => {
+                post('/r/user/save', user).then(res => {
+                    $('#saveUserModal').modal('hide');
+                    users.loadUsersTable();
+                    $.notify({
+                        message: 'Success',
+                        type: 'success',
+                        placement: {
+                            from: 'top',
+                            align: 'center'
+                        }
+                    });
+                }).catch(err => {
+                    if (isAuthenTokenOK())
+                        $.notify({
+                            message: err.data,
+                            type: 'danger',
+                            placement: {
+                                from: 'top',
+                                align: 'center'
+                            }
+                        });
+                });
+            },
+            reload: () => {
+                users.loadUsersTable();
+            }
+        }
+    });
+
+    var formUpdateRole = new Vue({
+        el: "#formUpdateRole",
+        data: {
+            roles: {
+                Role: [],
+                TRole: [],
+            },
+            resp: {
+                Username: '',
+                Role: [],
+            },
+        },
+        methods: {
+            update: (resp) => {
+                post('/r/user/role', resp).then(res => {
+                    $('#updateRoleModal').modal('hide');
+                    users.loadUsersTable();
+                    $.notify({
+                        message: 'Success',
+                        type: 'success',
+                        placement: {
+                            from: 'top',
+                            align: 'center'
+                        }
+                    });
+                }).catch(err => {
+                    if (isAuthenTokenOK())
+                        $.notify({
+                            message: err.data,
+                            type: 'danger',
+                            placement: {
+                                from: 'top',
+                                align: 'center'
+                            }
+                        });
+                });
+            },
+
+            clicked: function (e) {
+                var role = e.target.value;
+                var found = resp.Role.indexOf(role);
+                if (found == -1) {
+                    resp.Role.push(role);
+                } else {
+                    resp.Role.splice(found, 1);
+                };
+            },
+
+            reload: () => {
+                users.loadUsersTable();
+            },
+        }
+    });
+
+    var formUpdatePermission = new Vue({
+        el: '#formUpdatePermission',
+        data: {
+            res: [],
+            act: [],
+            perm: [],
+            tperm: [
+                []
+            ],
+            resp: {
+                Username: [],
+                Permission: [
+                    []
+                ],
+            }
+        },
+        methods: {
+            update: (resp) => {
+                post('/r/user/permission', resp).then(res => {
+                    $('#updatePermissionModal').modal('hide');
+                    users.loadUsersTable();
+                    $.notify({
+                        message: 'Success',
+                        type: 'success',
+                        placement: {
+                            from: 'top',
+                            align: 'center'
+                        }
+                    });
+                }).catch(err => {
+                    if (isAuthenTokenOK())
+                        $.notify({
+                            message: err.data,
+                            type: 'danger',
+                            placement: {
+                                from: 'top',
+                                align: 'center'
+                            }
+                        });
+                });
+            },
+            reload: () => {
+                users.loadUsersTable();
+            },
+        }
+    });
+
+    var formChangePassword = new Vue({
+        el: '#formChangePassword',
+        data: {
+            req: {
+                Username: '',
+                OldPassword: '',
+                NewPassword: '',
+            },
+        },
+        methods: {
+            changePassword: (req) => {
+                post('r/user/passwd', req).then(res => {
+                    $('#changePasswordModal').modal('hide')
+                    users.loadUsersTable();
+                    $.notify({
+                        message: 'Success',
+                        type: 'success',
+                        placement: {
+                            from: 'top',
+                            align: 'center'
+                        }
+                    });
+                }).catch(err => {
+                    if (isAuthenTokenOK())
+                        $.notify({
+                            message: err.data,
+                            type: 'danger',
+                            placement: {
+                                from: 'top',
+                                align: 'center'
+                            }
+                        });
+                });
+            },
+            reload: () => {
+                users.loadUsersTable();
+            }
+        }
+    });
+
+    var formUpdateUserDetail = new Vue({
+        el: "#formUpdateUserDetail",
+        data: {
+            user: {},
+            dataset: {
+                DonePlan: [],
+                OnGoingPlan: [],
+            },
+            departmentOtps: [],
+        },
+        methods: {
+            save: (user) => {
+                post('/r/user/updateUserDetail', user).then(res => {
+                    $('#updateUserDetailModal').modal('hide');
+                    users.loadUsersTable();
+                    $.notify({ message: 'Success', type: 'success', placement: { from: 'top', align: 'center' } });
+                }).catch(err => {
+                    if (isAuthenTokenOK())
+                        $.notify({ message: err.data, type: 'danger', placement: { from: 'top', align: 'center' } });
+                });
+            },
+            reload: () => {
+                users.loadUsersTable();
+            }
+        }
+    });
+
+    var formChangeDepartment = new Vue({
+        el: "#formChangeDepartment",
+        data: {
+            olddepartment: {},
+            req: {
+                ID: 0,
+                OldDepartmentID: 0,
+                NewDepartmentID: 0,
+            },
+            departmentOtps: [],
+        },
+        methods: {
+            changeDepartment: (req) => {
+                post('r/user/updateUserDepartment', req).then(res => {
+                    $('#changeDepartmentModal').modal('hide')
+                    users.loadUsersTable();
+                    $.notify({
+                        message: 'Success',
+                        type: 'success',
+                        placement: {
+                            from: 'top',
+                            align: 'center'
+                        }
+                    });
+                }).catch(err => {
+                    if (isAuthenTokenOK())
+                        $.notify({
+                            message: err.data,
+                            type: 'danger',
+                            placement: {
+                                from: 'top',
+                                align: 'center'
+                            }
+                        });
+                });
+            },
+            reload: () => {
+                users.loadUsersTable();
+            }
+        }
+    })
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip({
+            html: true
+        });
+
+        // load user table
+        users.loadUsersTable();
+        loadDepartments();
+
+        $('#btnCreate').unbind('click').click(e => doubleClickPrevent($(this), function (e) {
+            e.preventDefault();
+            formSaveUser.user = {
+                Name: '',
+                DOB: '',
+                Sex: '',
+                Position: '',
+                PhoneNum: '',
+                NationalID:'',
+                Salary:'',
+                Username: '',
+                DepartmentID: '',
+                Password: '',
+            }
+            formSaveUser.departmentOtps = dropDownDepartments
+            $('#saveUserModal').modal('show');
+        }, e));
+    });
+</script>

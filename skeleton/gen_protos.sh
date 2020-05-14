@@ -10,8 +10,7 @@ my_dir=`dirname $0`
 #GO111MODULE=off go get -u -v google.golang.org/grpc
 
 
-# You are currently in /some/directory/github.com/cicdata-io/smartcic-core/:
-# and you want to be in /some/directory/ to get the "correct import path for generated code
+# you want to be in /some/directory/ to get the "correct import path for generated code
 cd ../../../../
 # current working directory now in /some/directory/
 
