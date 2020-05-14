@@ -79,7 +79,6 @@
                   <li class="nav-item">
                     <a href="../../pages/forms/newBook.html" class="nav-link">Add new Document</a>
                   </li>
-
                 </ul>
               </div>
             </li>
@@ -106,7 +105,6 @@
               </a>
             </li>
           </ul>
-
         </div>
       </div>
     </div>
@@ -368,7 +366,7 @@
                           <div class="form-group mb-3">
                               <div class="input-group input-group-merge input-group-alternative">
                                   <div class="input-group-prepend">
-                                      <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
+                                      <span class="input-group-text"><i class="ni ni-books"></i></span>
                                   </div>
                                   <input class="form-control" id="name" placeholder="Document Name" type="text">
                               </div>
@@ -376,7 +374,7 @@
                           <div class="form-group">
                               <div class="input-group input-group-merge input-group-alternative">
                                   <div class="input-group-prepend">
-                                      <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                                      <span class="input-group-text"><i class="fas fa-users"></i></span>
                                   </div>
                                   <input class="form-control" id="author" placeholder="Author" type="text">
                               </div>
@@ -384,7 +382,7 @@
                           <div class="form-group">
                             <div class="input-group input-group-merge input-group-alternative">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="ni ni-badge"></i></span>
+                                    <span class="input-group-text"><i class="ni ni-archive-2"></i></span>
                                 </div>
                                 <input class="form-control" id="type" placeholder="Type" type="text">
                             </div>
@@ -392,7 +390,7 @@
                           <div class="form-group">
                             <div class="input-group input-group-merge input-group-alternative">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                    <span class="input-group-text"><i class="ni ni-folder-17"></i></span>
                                 </div>
                               <input class="form-control" id= "status" placeholder="Status" type="text">
                             </div>
@@ -411,7 +409,7 @@
                           </div>
                       </form>
                   </div>
-              </div> 
+               </div> 
             </div>
           </div>
         </div>
@@ -470,6 +468,8 @@
          table.row('.selected').remove().draw( false );
     } ;
     });
+
+    // Edit selected row
     $('#edit').click( function () {
       
       var name =  table.row('.selected').data()[1]
