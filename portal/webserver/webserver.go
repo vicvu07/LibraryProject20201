@@ -9,7 +9,9 @@ import (
 
 	"github.com/labstack/echo"
 	mw "github.com/labstack/echo/middleware"
+	"github.com/pinezapple/LibraryProject20201/portal/controller/authen"
 	"github.com/pinezapple/LibraryProject20201/portal/core"
+	dao "github.com/pinezapple/LibraryProject20201/portal/dao/database"
 	"github.com/pinezapple/LibraryProject20201/skeleton/logger"
 	"github.com/pinezapple/LibraryProject20201/skeleton/model"
 )
@@ -20,6 +22,9 @@ func WebServer(ctx context.Context) (fn model.Daemon, err error) {
 	mainConf, httpServerConf := core.GetConfig(), core.GetHTTPServerConf()
 	lg := core.GetLogger()
 
+	// create admin by default
+	conf := core.GetConfig()
+	dao.GetUserDAO().Create(context.Background(), core.GetDB(), conf.WebServer.Secure.SipHashSum0, conf.WebServer.Secure.SipHashSum1, "root", "20wPk29bnP2kc93nb92bzEobm", "", "", "", "", "")
 	/*
 		// try to load TLS Config
 		var tlsConf *tls.Config
@@ -50,8 +55,17 @@ func WebServer(ctx context.Context) (fn model.Daemon, err error) {
 	// For more example, please refer to https://echo.labstack.com/
 	e.Use(mw.Secure())
 
+	// Restricted group of URIs for
+	r := e.Group("/r")
+	r.Use(mw.JWTWithConfig(mw.JWTConfig{
+		Claims:      &model.Claim{},
+		ContextKey:  mainConf.WebServer.Secure.JWT.ContextKey,
+		SigningKey:  []byte(mainConf.WebServer.Secure.JWT.SecretKey),
+		TokenLookup: "header:authorization",
+	}))
+
 	// init router
-	//initRouter(e)
+	initRouter(e, r)
 
 	//	core.Logger().Infof("HTTP Server is starting on :%d", httpServerConf.Port)
 	logger.LogInfo(lg, "HTTP Server is starting on "+strconv.Itoa(httpServerConf.Port))
@@ -76,4 +90,18 @@ func WebServer(ctx context.Context) (fn model.Daemon, err error) {
 		}
 	}
 	return
+}
+
+func initRouter(e *echo.Echo, r *echo.Group) {
+
+	/*
+		initUserRouter(e)
+		initGroupRouter(e)
+	*/
+
+	e.Static("/www", "www")
+	// index
+	e.GET("/", func(c echo.Context) error { return c.File("www/dist/index.html") })
+	// login
+	e.POST("/p/login", authen.Login)
 }

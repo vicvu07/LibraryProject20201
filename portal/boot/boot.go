@@ -32,6 +32,7 @@ var (
 	clientCAs         = flag.String("client_ca", "", "A CSV list of client's certs trusted by server")
 
 	shardNumber = flag.Int("shard_number", 0, "Docmanager Shards number")
+	adm         = flag.Int("adm", 0, "Create admin by default")
 )
 
 func Boot() {
