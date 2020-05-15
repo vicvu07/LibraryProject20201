@@ -69,7 +69,7 @@ func (d *docDAO) UpdateDoc(ctx context.Context, db *mssqlx.DBs, doc *docmanagerM
 		return core.ErrDBObjNull
 	}
 
-	_, err = db.ExecContext(ctx, sqlUpdate, doc.Name, doc.Author, doc.Type, doc.Descriptor, doc.Status, doc.Fee, time.Now().Format("2006-01-02 15:04:05"), doc.ID)
+	_, err = db.ExecContext(ctx, sqlUpdate, doc.Name, doc.Author, doc.Type, doc.Descriptor, doc.Status, doc.Fee, time.Now(), doc.ID)
 	return
 }
 
@@ -102,7 +102,7 @@ func (d *docDAO) SaveBorrowForm(ctx context.Context, db *mssqlx.DBs, form *docma
 		return err
 	}
 
-	_, err = db.ExecContext(ctx, sqlUpdateStatus, form.Status, form.ID, time.Now().Format("2006-01-02 15:04:05"), form.DocID)
+	_, err = db.ExecContext(ctx, sqlUpdateStatus, form.Status, form.ID, time.Now(), form.DocID)
 	return
 }
 
@@ -110,7 +110,7 @@ func (d *docDAO) UpdateBorrowFormStatus(ctx context.Context, db *mssqlx.DBs, id 
 	if db == nil {
 		return core.ErrDBObjNull
 	}
-	_, err = db.ExecContext(ctx, sqlUpdateBorrowFormStatus, status, time.Now().Format("2006-01-02 15:04:05"), id)
+	_, err = db.ExecContext(ctx, sqlUpdateBorrowFormStatus, status, time.Now(), id)
 	if err != nil {
 		return err
 	}
@@ -120,7 +120,7 @@ func (d *docDAO) UpdateBorrowFormStatus(ctx context.Context, db *mssqlx.DBs, id 
 		return err
 	}
 
-	_, err = db.ExecContext(ctx, sqlUpdateStatus, status, id, time.Now().Format("2006-01-02 15:04:05"), id_doc)
+	_, err = db.ExecContext(ctx, sqlUpdateStatus, status, id, time.Now(), id_doc)
 	return
 }
 

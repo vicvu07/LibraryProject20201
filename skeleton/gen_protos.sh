@@ -28,3 +28,4 @@ protoc \
     --gogofaster_out=plugins=grpc:$(pwd)             ` #output in /some/director                                              ` \
     -I=$GOPATH/src/github.com/gogo/protobuf/protobuf ` #runs fine without this line                                           ` \
     github.com/pinezapple/LibraryProject20201/skeleton/model/*.proto  ` #input file in /some/directory/github.com/cicdata-io/smartcic-core/rpc `
+#protoc -I=$GOPATH/src --gogofaster_out=plugins=grpc:. -I=$GOPATH/src/github.com/gogo/protobuf/protobuf github.com/pinezapple/LibraryProject20201/skeleton/model/docmanager.proto

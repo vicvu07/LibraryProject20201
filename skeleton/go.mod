@@ -11,6 +11,7 @@ require (
 	github.com/pkg/errors v0.8.2-0.20191109102316-7f95ac13edff // indirect
 	github.com/prometheus/client_golang v1.2.2-0.20191024231915-333f01cef0d6 // indirect
 	github.com/sirupsen/logrus v1.4.2
+	github.com/stretchr/testify v1.4.0
 	go.etcd.io/etcd v0.5.0-alpha.5.0.20191120073830-908ef19d865f
 	go.uber.org/zap v1.13.0 // indirect
 	golang.org/x/crypto v0.0.0-20191011191535-87dc89f01550 // indirect
