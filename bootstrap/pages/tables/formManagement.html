@@ -9,7 +9,7 @@
 
 =========================================================
 
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. 
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
  -->
 <!DOCTYPE html>
 <html>
@@ -138,7 +138,7 @@
               </button>
             </form> -->
 
-            <!-- Profile -->
+          <!-- Profile -->
             <ul class="navbar-nav align-items-center ml-auto ml-md-0" style=" position: absolute;right: 0; padding-right:30px;">
               <li class="nav-item dropdown">
                 <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -190,12 +190,12 @@
         <div class="header-body">
           <div class="row align-items-center py-4">
             <div class="col-lg-6 col-7">
-              <h6 class="h2 text-white d-inline-block mb-0">Reports</h6>
+              <h6 class="h2 text-white d-inline-block mb-0">Borrow Form Mangament</h6>
               <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                 <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                   <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
                   <li class="breadcrumb-item"><a href="#">Tables</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Document Management Report</li>
+                  <li class="breadcrumb-item active" aria-current="page">Borrow Form Management</li>
                 </ol>
               </nav>
             </div>
@@ -212,15 +212,21 @@
           <div class="card">
             <!-- Card header -->
             <div class="card-header">
-              <h3 class="mb-0">Document Management Report</h3>
+              <h3 class="mb-0">Borrow Form Management</h3>
               <p class="text-sm mb-0">
-                Report on document status :v idk
+                Update documents status  
               </p>
             </div>
             <div class="table-responsive py-4">
               
-              <table class="table table-flush" id="datatable-buttons">
+              <table class="table table-flush" id="datatable-basic">
+
                 <thead class="thead-light">
+                  <div class="col text-center">
+                    <div class="btn-group">
+                      <button type="button" id="update" class="btn btn-primary" data-toggle="modal" data-target="#modal-form">Update</button>
+                    </div>
+                  </div>
                   <tr>
                     <th>Document_ID</th>
                     <th>Document name</th>
@@ -253,7 +259,7 @@
                     <td>02</td>
                     <td>Accountant</td>
                     <td>2923912</td>
-                    <td>Overdue</td>
+                    <td>Borrowing</td>
                     <td>2011/07/25</td>
                     <td>$10</td>
                   </tr>
@@ -261,7 +267,7 @@
                     <td>03</td>
                     <td>Junior Technical Author</td>
                     <td>2921398</td>
-                    <td>Borrowing</td>
+                    <td>Overdue</td>
                     <td>2009/01/12</td>
                     <td>$0</td>
                   </tr>
@@ -280,9 +286,81 @@
         </div>
       </div>
       <!-- Footer -->
-
     </div>
   </div>
+<!--* Modal header *-->
+<!--* Modal body *-->
+<!--* Modal footer *-->
+<!--* Modal init *-->
+<div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+  <div class="modal-dialog modal- modal-dialog-centered modal-sm" role="document">
+      <div class="modal-content">
+        
+        <div class="modal-body p-0">
+              <div class="card bg-secondary border-0 mb-0">
+                <div class="card-body px-lg-5 py-lg-5">
+                    <div class="text-center text-muted mb-4">
+                        <small>Update Borrow Form</small>
+                    </div>
+                    <form role="form">
+                        <div class="form-group mb-3">
+                            <div class="input-group input-group-merge input-group-alternative">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="ni ni-books"></i></span>
+                                </div>
+                                <input class="form-control" id="name" placeholder="Document Name" type="text" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group input-group-merge input-group-alternative">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-users"></i></span>
+                                </div>
+                                <input class="form-control" id="author" placeholder="Author" type="text" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="input-group input-group-merge input-group-alternative">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text"><i class="ni ni-archive-2"></i></span>
+                              </div>
+                              <input class="form-control" id="type" placeholder="Type" type="text"readonly>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="input-group input-group-merge input-group-alternative">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text"><i class="ni ni-folder-17"></i></span>
+                              </div>
+                              <select class="form-control" id= "status" data-toggle="select" title="Select Sex" data-live-search="true" data-live-search-placeholder="Select">
+                                <option>Returned</option>
+                                <option>Borrowing</option>
+                                <option>Overdue</option>
+                              </select>
+                          </div>
+                        </div>                          
+                        <!-- <div class="form-group">
+                          <div class="input-group input-group-merge input-group-alternative">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                              </div>
+                              <input class="form-control" placeholder="Updated at" type="date">
+                          </div>
+                        </div> -->
+                        <div class="text-center">
+                            <button type="button" class="btn btn-primary my-4">Save</button>
+                            <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+             </div> 
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
   <!-- Argon Scripts -->
   <!-- Core -->
   <script src="../../assets/vendor/jquery/dist/jquery.min.js"></script>
@@ -304,50 +382,27 @@
   <script src='https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js'></script>
   <!-- Argon JS -->
   <script src="../../assets/js/argon.js?v=1.1.0"></script>
-  <!-- Demo JS - remove this in your project -->
-  <script src="../../assets/js/demo.min.js"></script>
   <script>
-$(document).ready(function() {
-  var table = $('#datatable-buttons').DataTable();
-  
-    $('#datatable-buttons tfoot th').each( function () {
-        var title = $(this).text();
-        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
-    } );
-    table.columns([0,1,2,4,5]).every(function () {
-        var that = this;
- 
-        $( 'input', this.footer() ).on( 'keyup change clear', function () {
-            if ( that.search() !== this.value ) {
-                that
-                    .search( this.value )
-                    .draw();
-            }
-        } );
-    } );
-        
-      table.columns([3]).every( function () {
-                var column = this;
-                var select = $('<select><option value="">Show all</option></select>')
-                    .appendTo( $(column.footer()).empty() )
-                    .on( 'change', function () {
-                        var val = $.fn.dataTable.util.escapeRegex(
-                            $(this).val()
-                        );
-                        column
-                            .search( val ? '^'+val+'$' : '', true, false )
-                            .draw();
-                    } );
- 
-                column.data().unique().sort().each( function ( d, j ) {
-                    select.append( '<option value="'+d+'">'+d+'</option>' )
-                } );
-            } );
-        
+     $(document).ready(function() {
+      document.getElementById("update").disabled = true;
+      var table = $('#datatable-basic').DataTable();
 
-    
-} );
+      $('#datatable-basic tbody').on( 'click', 'tr', function () {
+        if ( $(this).hasClass('selected') ) {
+            $(this).removeClass('selected');
+            document.getElementById("update").disabled = true;
+            // button.disabled = true
+        }
+        else {
+            table.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+            document.getElementById("update").disabled = false;
+            // button.disabled = false
+        }
+    } );
+     })
   </script>
+
 </body>
 
 </html>
