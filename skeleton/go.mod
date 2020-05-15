@@ -1,7 +1,6 @@
 module github.com/pinezapple/LibraryProject20201/skeleton
 
 require (
-	github.com/cicdata-io/smartcic v0.1.5 // indirect
 	github.com/dgrijalva/jwt-go v3.2.1-0.20190620180102-5e25c22bd5d6+incompatible
 	github.com/go-sql-driver/mysql v1.4.1-0.20191114115753-b4242bab7dc5
 	github.com/gogo/protobuf v1.3.1
