@@ -9,6 +9,6 @@ import (
 
 func getGRPCClientConn(serviceName string) (conn *grpc.ClientConn, err error) {
 	balancer := grpc.RoundRobin(&etcdnaming.GRPCResolver{Client: core.GetEtcdClient()})
-	conn, err = grpc.Dial(serviceName, grpc.WithInsecure(), grpc.WithBalancer(balancer))
+	conn, err = grpc.Dial(serviceName, grpc.WithInsecure(), grpc.WithBalancer(balancer), grpc.WithBlock())
 	return
 }

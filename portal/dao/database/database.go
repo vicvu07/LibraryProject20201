@@ -17,10 +17,11 @@ const (
 	sqlUserSelect                   = "SELECT * FROM user WHERE id = ?"
 	sqlUserSelectByUsername         = "SELECT * FROM user WHERE username = ?"
 	sqlUserSecSelectByUsername      = "SELECT * FROM user_security WHERE username = ?"
-	sqlUserInsert                   = "INSERT INTO user (username, status, checksum) VALUES (?,?,?)"
-	sqlUserInsertSec                = "INSERT INTO user_security (username, gr, role, password, checksum) VALUES (?,?,?,?,?)"
-	sqlUserSecUpdateWithPassword    = "UPDATE user_security SET gr = ?, role = ?, password = ?, checksum = ?, updated_at = ? WHERE username = ?"
-	sqlUserSecUpdateWithoutPassword = "UPDATE user_security SET gr = ?, role = ?, checksum = ?, updated_at = ? WHERE username = ?"
+	sqlUserInsert                   = "INSERT INTO user (username, status, checksum, name, role, dob, sex, phonenumber) VALUES (?,?,?,?,?,?,?,?)"
+	sqlUserInsertSec                = "INSERT INTO user_security (username, password, checksum) VALUES (?,?,?)"
+	sqlUserUpdateInfo               = "UPDATE user SET name = ?, role = ?, dob = ?, sex = ?, phonenumber = ?, updated_at = ? WHERE username = ?"
+	sqlUserSecUpdateWithPassword    = "UPDATE user_security SET password = ?, checksum = ?, updated_at = ? WHERE username = ?"
+	sqlUserSecUpdateWithoutPassword = "UPDATE user_security SET checksum = ?, updated_at = ? WHERE username = ?"
 	sqlUserUpdateStatus             = "UPDATE user SET status = ?, updated_at = ? WHERE id = ?"
 	sqlUserUpdatePasswordCounter    = "UPDATE user SET pwd_counter = ?, updated_at = ? WHERE id = ?"
 )
@@ -34,9 +35,9 @@ type IUserDAO interface {
 	// SelectSecByUsername select user sec by username
 	SelectSecByUsername(ctx context.Context, db *mssqlx.DBs, username string) (result *model.UserSecurity, err error)
 	// Create create new user
-	Create(ctx context.Context, db *mssqlx.DBs, k0, k1 uint64, username, password string, group, role uint64) (result *model.User, err error)
+	Create(ctx context.Context, db *mssqlx.DBs, k0, k1 uint64, username, password string, name, role, dob, sex, phonenumber string) (result *model.User, err error)
 	// Update update user
-	Update(ctx context.Context, db *mssqlx.DBs, k0, k1 uint64, id uint64, password string, group, role uint64) (err error)
+	Update(ctx context.Context, db *mssqlx.DBs, k0, k1 uint64, id uint64, password string, name, role, dob, sex, phonenumber string) (err error)
 	// UpdateStatus update user status
 	UpdateStatus(ctx context.Context, db *mssqlx.DBs, id uint64, status byte) (err error)
 	// UpdatePasswordCounter update user password counter
@@ -97,24 +98,29 @@ func (c *userDAO) SelectSecByUsername(ctx context.Context, db *mssqlx.DBs, usern
 }
 
 // Create create user
-func (c *userDAO) Create(ctx context.Context, db *mssqlx.DBs, k0, k1 uint64, username, password string, group, role uint64) (result *model.User, err error) {
+func (c *userDAO) Create(ctx context.Context, db *mssqlx.DBs, k0, k1 uint64, username, password string, name, role, dob, sex, phonenumber string) (result *model.User, err error) {
+	//	fmt.Println("init account root")
 	// Validate input
 	if db == nil {
 		err = core.ErrDBObjNull
+		//		fmt.Println("init account root 1")
 		return
 	}
 
 	user := &model.User{
 		Username: username,
 		// TODO: using const later
-		Status: 0,
+		Name:        name,
+		Role:        role,
+		Dob:         dob,
+		Sex:         sex,
+		PhoneNumber: phonenumber,
+		Status:      0,
 	}
 
 	p, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	sec := &model.UserSecurity{
 		Username: username,
-		Gr:       group,
-		Role:     role,
 		Password: p,
 	}
 	sec.Checksum = sec.Sum(k0, k1)
@@ -123,18 +129,23 @@ func (c *userDAO) Create(ctx context.Context, db *mssqlx.DBs, k0, k1 uint64, use
 	tx, e := db.Begin()
 	if e != nil {
 		err = e
+		//		fmt.Println("init account root 2")
 		return
 	}
 
 	if err = model.ExecTransaction(ctx, tx, func(ctx context.Context, tx *sql.Tx) (er error) {
-		if _, er = tx.ExecContext(ctx, sqlUserInsert, user.Username, user.Status, user.Checksum); er != nil {
+		if _, er = tx.ExecContext(ctx, sqlUserInsert, user.Username, user.Status, user.Checksum, user.Name, user.Role, user.Dob, user.Sex, user.PhoneNumber); er != nil {
+			//			fmt.Println("init account root 3")
 			return
 		}
-		if _, er = tx.ExecContext(ctx, sqlUserInsertSec, sec.Username, sec.Gr, sec.Role, sec.Password, sec.Checksum); er != nil {
+		if _, er = tx.ExecContext(ctx, sqlUserInsertSec, sec.Username, sec.Password, sec.Checksum); er != nil {
+			//fmt.Println(er)
 			return
 		}
+
 		return
 	}); err != nil {
+		//fmt.Println("init account root 5")
 		return
 	}
 
@@ -149,11 +160,12 @@ func (c *userDAO) Create(ctx context.Context, db *mssqlx.DBs, k0, k1 uint64, use
 	result.Checksum = result.Sum(k0, k1)
 
 	_, err = db.ExecContext(ctx, "UPDATE user SET checksum = ?, status = ? WHERE id = ?", result.Checksum, result.Status, result.ID)
+
 	return
 }
 
 // Update update user
-func (c *userDAO) Update(ctx context.Context, db *mssqlx.DBs, k0, k1 uint64, id uint64, password string, group, role uint64) (err error) {
+func (c *userDAO) Update(ctx context.Context, db *mssqlx.DBs, k0, k1 uint64, id uint64, password string, name, role, dob, sex, phonenumber string) (err error) {
 	// Validate input
 	if db == nil {
 		err = core.ErrDBObjNull
@@ -175,7 +187,6 @@ func (c *userDAO) Update(ctx context.Context, db *mssqlx.DBs, k0, k1 uint64, id 
 	}
 
 	// try to generate password
-	userSec.Gr, userSec.Role = group, role
 	if len(password) > 0 {
 		p, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 		userSec.Password = p
@@ -192,11 +203,17 @@ func (c *userDAO) Update(ctx context.Context, db *mssqlx.DBs, k0, k1 uint64, id 
 	err = model.ExecTransaction(ctx, tx, func(ctx context.Context, tx *sql.Tx) (er error) {
 		now := time.Now()
 		if len(password) > 0 {
-			if _, er = tx.ExecContext(ctx, sqlUserSecUpdateWithPassword, userSec.Gr, userSec.Role, userSec.Password, userSec.Checksum, now, user.Username); err != nil {
+			if _, er = tx.ExecContext(ctx, sqlUserUpdateInfo, name, role, dob, sex, phonenumber, now, user.Username); er != nil {
+				return
+			}
+			if _, er = tx.ExecContext(ctx, sqlUserSecUpdateWithPassword, userSec.Password, userSec.Checksum, now, user.Username); er != nil {
 				return
 			}
 		} else {
-			if _, er = tx.ExecContext(ctx, sqlUserSecUpdateWithoutPassword, userSec.Gr, userSec.Role, userSec.Checksum, now, user.Username); er != nil {
+			if _, er = tx.ExecContext(ctx, sqlUserUpdateInfo, name, role, dob, sex, phonenumber, now, user.Username); er != nil {
+				return
+			}
+			if _, er = tx.ExecContext(ctx, sqlUserSecUpdateWithoutPassword, userSec.Checksum, now, user.Username); er != nil {
 				return
 			}
 		}

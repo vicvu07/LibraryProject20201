@@ -16,7 +16,7 @@ const (
 	sqlDelete                 = "DELETE FROM doc WHERE id_doc = ?"
 	sqlUpdateStatus           = "UPDATE doc SET status = ?, id_borrow = ?,updated_at = ? WHERE id_doc= ?"
 	sqlUpdate                 = "UPDATE doc SET doc_name = ?, doc_author = ?, doc_type =?, doc_description = ?, status = ?, fee = ?, updated_at = ? WHERE id_doc = ?"
-	sqlSaveBorrowForm         = "INSERT INTO borrowform(id_borrow, id_doc, id_cus, id_lib, status) VALUE (?,?,?,?,?)"
+	sqlSaveBorrowForm         = "INSERT INTO borrowform(id_borrow, id_doc, id_cus, id_lib, status, start_at, end_at) VALUE (?,?,?,?,?,?,?)"
 	sqlUpdateBorrowFormStatus = "UPDATE borrowform SET status = ?, updated_at = ? WHERE id_borrow = ?"
 	sqlSelectBorrowFormByID   = "SELECT * FROM borrowform WHERE id_borrow = ?"
 	sqlSelecetIdDoc           = "SELECT id_doc FROM doc WHERE id_borrow = ?"
@@ -69,7 +69,7 @@ func (d *docDAO) UpdateDoc(ctx context.Context, db *mssqlx.DBs, doc *docmanagerM
 		return core.ErrDBObjNull
 	}
 
-	_, err = db.ExecContext(ctx, sqlUpdate, doc.Name, doc.Author, doc.Type, doc.Descriptor, doc.Status, doc.Fee, time.Now().Format("2006-01-02 15:04:05"), doc.ID)
+	_, err = db.ExecContext(ctx, sqlUpdate, doc.Name, doc.Author, doc.Type, doc.Descriptor, doc.Status, doc.Fee, time.Now(), doc.ID)
 	return
 }
 
@@ -97,12 +97,12 @@ func (d *docDAO) SaveBorrowForm(ctx context.Context, db *mssqlx.DBs, form *docma
 		return core.ErrDBObjNull
 	}
 
-	_, err = db.ExecContext(ctx, sqlSaveBorrowForm, form.ID, form.DocID, form.CusID, form.LibID, form.Status)
+	_, err = db.ExecContext(ctx, sqlSaveBorrowForm, form.ID, form.DocID, form.CusID, form.LibID, form.Status, form.StartAt, form.EndAt)
 	if err != nil {
 		return err
 	}
 
-	_, err = db.ExecContext(ctx, sqlUpdateStatus, form.Status, form.ID, time.Now().Format("2006-01-02 15:04:05"), form.DocID)
+	_, err = db.ExecContext(ctx, sqlUpdateStatus, form.Status, form.ID, time.Now(), form.DocID)
 	return
 }
 
@@ -110,7 +110,7 @@ func (d *docDAO) UpdateBorrowFormStatus(ctx context.Context, db *mssqlx.DBs, id 
 	if db == nil {
 		return core.ErrDBObjNull
 	}
-	_, err = db.ExecContext(ctx, sqlUpdateBorrowFormStatus, status, time.Now().Format("2006-01-02 15:04:05"), id)
+	_, err = db.ExecContext(ctx, sqlUpdateBorrowFormStatus, status, time.Now(), id)
 	if err != nil {
 		return err
 	}
@@ -120,7 +120,7 @@ func (d *docDAO) UpdateBorrowFormStatus(ctx context.Context, db *mssqlx.DBs, id 
 		return err
 	}
 
-	_, err = db.ExecContext(ctx, sqlUpdateStatus, status, id, time.Now().Format("2006-01-02 15:04:05"), id_doc)
+	_, err = db.ExecContext(ctx, sqlUpdateStatus, status, id, time.Now(), id_doc)
 	return
 }
 
