@@ -16,7 +16,7 @@ const (
 	sqlDelete                 = "DELETE FROM doc WHERE id_doc = ?"
 	sqlUpdateStatus           = "UPDATE doc SET status = ?, id_borrow = ?,updated_at = ? WHERE id_doc= ?"
 	sqlUpdate                 = "UPDATE doc SET doc_name = ?, doc_author = ?, doc_type =?, doc_description = ?, status = ?, fee = ?, updated_at = ? WHERE id_doc = ?"
-	sqlSaveBorrowForm         = "INSERT INTO borrowform(id_borrow, id_doc, id_cus, id_lib, status) VALUE (?,?,?,?,?)"
+	sqlSaveBorrowForm         = "INSERT INTO borrowform(id_borrow, id_doc, id_cus, id_lib, status, start_at, end_at) VALUE (?,?,?,?,?,?,?)"
 	sqlUpdateBorrowFormStatus = "UPDATE borrowform SET status = ?, updated_at = ? WHERE id_borrow = ?"
 	sqlSelectBorrowFormByID   = "SELECT * FROM borrowform WHERE id_borrow = ?"
 	sqlSelecetIdDoc           = "SELECT id_doc FROM doc WHERE id_borrow = ?"
@@ -97,7 +97,7 @@ func (d *docDAO) SaveBorrowForm(ctx context.Context, db *mssqlx.DBs, form *docma
 		return core.ErrDBObjNull
 	}
 
-	_, err = db.ExecContext(ctx, sqlSaveBorrowForm, form.ID, form.DocID, form.CusID, form.LibID, form.Status)
+	_, err = db.ExecContext(ctx, sqlSaveBorrowForm, form.ID, form.DocID, form.CusID, form.LibID, form.Status, form.StartAt, form.EndAt)
 	if err != nil {
 		return err
 	}

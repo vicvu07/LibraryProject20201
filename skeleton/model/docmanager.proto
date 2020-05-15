@@ -48,8 +48,10 @@ message BorrowForm {
 	uint64 CusID = 3 [(gogoproto.jsontag) = "id_cus", (gogoproto.moretags) = "db:\"id_cus\""];	
 	uint64 LibID = 4 [(gogoproto.jsontag) = "id_lib", (gogoproto.moretags) = "db:\"id_lib\""];	
 	int32  Status = 5 [(gogoproto.jsontag) = "status", (gogoproto.moretags) = "db:\"status\""];
-	model.Time Created_at = 6 [(gogoproto.jsontag) = "created_at", (gogoproto.moretags) = "db:\"created_at\""];
-	model.Time Updated_at = 7 [(gogoproto.jsontag) = "updated_at", (gogoproto.moretags) = "db:\"updated_at\""];
+	model.Time Start_at = 6 [(gogoproto.jsontag) = "start_at", (gogoproto.moretags) = "db:\"start_at\""];
+	model.Time End_at = 7 [(gogoproto.jsontag) = "end_at", (gogoproto.moretags) = "db:\"end_at\""];
+	model.Time Created_at = 8 [(gogoproto.jsontag) = "created_at", (gogoproto.moretags) = "db:\"created_at\""];
+	model.Time Updated_at = 9 [(gogoproto.jsontag) = "updated_at", (gogoproto.moretags) = "db:\"updated_at\""];
 }
 
 message SelectAllDocReq {
