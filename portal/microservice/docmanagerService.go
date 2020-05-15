@@ -20,7 +20,7 @@ type DocmanagerShardServiceWrapper struct {
 var docmanagerShardServices atomic.Value
 
 func GetDocmanagerShardServices() map[uint64]*DocmanagerShardServiceWrapper {
-	fmt.Println("in get docmanager shard service")
+	//	fmt.Println("in get docmanager shard service")
 	if r, stored := docmanagerShardServices.Load().(map[uint64]*DocmanagerShardServiceWrapper); stored {
 		/*
 			fmt.Print("in stored")

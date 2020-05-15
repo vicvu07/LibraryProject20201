@@ -5,7 +5,7 @@
             "CaCert": "",
             "ClientCert": "",
             "ClientKey": "",
-            "DB": "docmanager0",
+            "DB": "docmanager",
             "Masters": [
                 "127.0.0.1:3306"
             ],
@@ -27,7 +27,7 @@
             "CaCert": "",
             "ClientCert": "",
             "ClientKey": "",
-            "DB": "docmanager1",
+            "DB": "docmanager",
             "Masters": [
                 "127.0.0.1:3306"
             ],

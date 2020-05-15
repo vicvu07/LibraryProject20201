@@ -182,17 +182,17 @@ func NewSecureCookieMW(config SecureCookieConfig) echo.MiddlewareFunc {
 
 // User model user
 type User struct {
-	ID          uint64 `json:"id_user" db:"id_user"`
-	Username    string `json:"username" db:"username"`
-	Name        string `json:"name" db:"name"`
-	Role        string `json:"role" db:"role"`
-	Dob         string `json:"dob" db:"dob"`
-	Sex         string `json:"sex" db:"sex"`
-	PhoneNumber string `json:"phonenumber" db:"phonenumber"`
-	Status      byte   `json:"status" db:"status"`
-	CreatedAt   string `json:"created_at" db:"created_at"`
-	UpdatedAt   string `json:"updated_at" db:"updated_at"`
-	Checksum    uint64 `json:"checksum" db:"checksum"`
+	ID          uint64    `json:"id_user" db:"id_user"`
+	Username    string    `json:"username" db:"username"`
+	Name        string    `json:"name" db:"name"`
+	Role        string    `json:"role" db:"role"`
+	Dob         string    `json:"dob" db:"dob"`
+	Sex         string    `json:"sex" db:"sex"`
+	PhoneNumber string    `json:"phonenumber" db:"phonenumber"`
+	Status      byte      `json:"status" db:"status"`
+	CreatedAt   time.Time `json:"created_at" db:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at" db:"updated_at"`
+	Checksum    uint64    `json:"checksum" db:"checksum"`
 }
 
 // Sum calculate sip hash sum
