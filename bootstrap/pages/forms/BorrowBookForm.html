@@ -121,7 +121,7 @@
     <!-- Topnav -->
     <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
       <div class="container-fluid">
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent" style ="padding: 10px;">
           <!-- Search form -->
           <!-- <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
             <div class="form-group mb-0">
@@ -211,11 +211,24 @@
             <div class="card">
               <!-- Card header -->
               <div class="card-header">
-                <h3 class="mb-0">Student Info</h3>
+                <h3 class="mb-0">Form details</h3>
               </div>
               <!-- Card body -->
               <div class="card-body">
                 <form id='borrowForm'>
+                <!-- input groups with icon -->
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <div class="input-group input-group-merge">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-id-card-alt"></i></span>
+                          </div>
+                          <input class="form-control" placeholder="Librarian ID" type="text" required>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   <!-- Input groups with icon -->
                   <div class="row">
                     <div class="col-md-6">
@@ -258,7 +271,7 @@
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-globe-americas"></i></span>
                           </div>
-                          <input class="form-control" placeholder="Phone number" type="text">
+                          <input class="form-control" placeholder="Phone number" type="number">
                           <div class="input-group-append">
                             <span class="input-group-text"><i class="fas fa-phone"></i></span>
                           </div>
@@ -266,20 +279,34 @@
                       </div>
                     </div>
                   </div>
-                    <div class="row input-daterange datepicker align-items-center">
-                    <div class="col">
+
+                  <!-- Date input -->
+                  <div class="row">
+                    <div class="col-md-6">
                       <div class="form-group">
-                        <label class="form-control-label">Start date</label>
-                        <input class="form-control" placeholder="Start date" type="text" >
+                        <div class="input-group input-group-merge">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                          </div>
+                          <input class="form-control" placeholder="Duration" type="number" required>
+                          <div class="input-group-append">
+                            <span class="input-group-text">day(s)</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <div class="col">
+                    <div class="col-md-6">
                       <div class="form-group">
-                        <label class="form-control-label">End date</label>
-                        <input class="form-control" placeholder="End date" type="text">
+                        <div class="input-group input-group-merge">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="ni ni-books"></i></span>
+                          </div>
+                          <input class="form-control" id=docId placeholder="Document_ID" type="text">
+                        </div>
                       </div>
+                    </div>
                   </div>
-                </div>
+                  <!-- button -->
                 <button class="btn btn-primary" type="submit">Submit form</button>
                 <button type="button" class="btn btn-danger" style = "float: right;" onclick="reset()">Cancel</button>
                 </form>
@@ -319,6 +346,18 @@
           <!-- Tables -->
           <div class="w-100"></div>
           <div class="col">
+            <!-- <table class="table table-striped mt-5" id = "displayDoc">
+              <thead>
+                <tr>
+                  <th>Document_ID</th>
+                  <th>Document name</th>
+                  <th>Author</th>
+                  <th>Type</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="doc-list"></tbody>
+            </table> -->
             <div class="card">
               <!-- Card header -->
               <div class="card-header">
@@ -326,6 +365,11 @@
               </div>
               <div class="table-responsive py-4 w-100 d-block d-md-table">
                 <table class="table table-flush " id="datatable-basic">
+                  <div class="col text-center">
+                    <div class="btn-group">
+                      <button type="button" id="add" class="btn btn-primary">Add</button>
+                    </div>
+                  </div>
                   <thead class="thead-light">
                     <tr>
                     <th>Document_ID</th>
@@ -354,6 +398,7 @@
                       <td>Software</td>
                       <td>2019/04/25</td>
                       <td>80</td>
+                    
                     </tr>
                       
                       <tr>
@@ -363,6 +408,7 @@
                         <td>Math</td>
                         <td>2019/07/25</td>
                         <td>50</td>
+                    
                        
                       </tr>
                       <tr>
@@ -372,6 +418,7 @@
                         <td>Software</td>
                         <td>2009/01/12</td>
                         <td>86</td>
+                    
                         
                       </tr>
                       <tr>
@@ -382,13 +429,12 @@
                         <td>2019/03/29</td>
                         <td>60</td>
                        
+
                       </tr>
                   </tbody>
                 </table>
               </div>
             </div>
-
-          
         <!-- </form> -->
         </div>
     
@@ -409,9 +455,9 @@
   <script src="../../assets/vendor/select2/dist/js/select2.min.js"></script>
   <script src="../../assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
   <script src="../../assets/vendor/nouislider/distribute/nouislider.min.js"></script>
-  <script src="../../assets/vendor/quill/dist/quill.min.js"></script>
-  <script src="../../assets/vendor/dropzone/dist/min/dropzone.min.js"></script>
-  <script src="../../assets/vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+  <!-- <script src="../../assets/vendor/quill/dist/quill.min.js"></script> -->
+  <!-- <script src="../../assets/vendor/dropzone/dist/min/dropzone.min.js"></script> -->
+  <!-- <script src="../../assets/vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script> -->
   <script src="../../assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
   <script src="../../assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
   <script src="../../assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
@@ -425,9 +471,59 @@
   <!-- Demo JS - remove this in your project -->
   <script src="../../assets/js/demo.min.js"></script>
   <script>
-    function reset() {
+  function reset() {
   document.getElementById("borrowForm").reset();
   }
+  // function removeRow(oButton) {
+  //     var display = document.getElementById("displayDoc")
+  //     display.deleteRow(oButton.parentNode.parentNode.rowIndex); // buttton -> td -> tr
+  //     $("#docId").val("");
+  // }
+
+  $(document).ready(function() {
+  document.getElementById("add").disabled = true;
+  var table = $('#datatable-basic').DataTable();
+
+  $('#datatable-basic tbody').on( 'click', 'tr', function () {
+        if ( $(this).hasClass('selected') ) {
+            $(this).removeClass('selected');
+             document.getElementById("add").disabled = true;
+            // button.disabled = true
+        }
+        else {
+            table.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+            document.getElementById("add").disabled = false;
+            // button.disabled = false
+        }
+    });
+
+    // add docId to form
+    $('#add').click( function () {
+      var docId =  table.row('.selected').data()[0]
+      // var docName =  table.row('.selected').data()[1]
+      // var author =  table.row('.selected').data()[2]
+      // var docType =  table.row('.selected').data()[3]
+      $("#docId").val(docId)
+      // display document
+
+      // var display = document.getElementById("displayDoc")
+      // var btn = document.createElement("BUTTON"); 
+      // btn.setAttribute('type', 'button');
+      // btn.setAttribute('onclick', 'removeRow(this)');
+      // var row = display.insertRow(0);
+      // var cell1 = row.insertCell(0);
+      // var cell2 = row.insertCell(1);
+      // var cell3 = row.insertCell(2);
+      // var cell4 = row.insertCell(3);
+      // var cell5 = row.insertCell(4);
+      // cell1.innerHTML = docId
+      // cell2.innerHTML = docName
+      // cell3.innerHTML = author
+      // cell4.innerHTML = docType
+      // cell5.appendChild(btn)
+    });
+  })
   </script>
 </body>
 
